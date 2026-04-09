@@ -53,8 +53,9 @@ async function bootstrap() {
     res.json({ status: 'ok', timestamp: new Date().toISOString(), env });
   });
 
-  await app.listen(port);
-  logger.log(`🚀 SitePilot API running on http://localhost:${port}/${apiPrefix}`);
+  await app.listen(port, '0.0.0.0');
+  console.log('Server started');
+  logger.log(`🚀 SitePilot API running on port ${port} [${env}]`);
 }
 
 bootstrap();
