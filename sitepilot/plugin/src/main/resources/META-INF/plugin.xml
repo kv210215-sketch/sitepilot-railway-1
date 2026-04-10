@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idea-plugin>
+    <id>com.sitepilot.sitepilot-plugin</id>
+    <name>SitePilot Plugin</name>
+    <version>1.0.0</version>
+    <vendor email="support@sitepilot.com" url="https://sitepilot.com">SitePilot</vendor>
+
+    <description><![CDATA[
+        SitePilot Plugin for JetBrains IDEs - Automate deployment, testing, and content management for your projects.
+        Integrates with SitePilot platform for seamless devops workflows, Tilda exports, and Playwright testing.
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <ul>
+            <li>Initial release</li>
+            <li>Basic integration with SitePilot platform</li>
+            <li>Support for automated deployment</li>
+            <li>Tilda export functionality</li>
+            <li>Playwright test integration</li>
+        </ul>
+    ]]></change-notes>
+
+    <idea-version since-build="233.0"/>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.jetbrains.plugins.webDeployment</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <action id="SitePilotAction" class="com.sitepilot.SitePilotAction" text="SitePilot" description="SitePilot Plugin Action">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
+    </actions>
+</idea-plugin>
