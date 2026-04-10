@@ -14,6 +14,7 @@ async function bootstrap() {
   const apiPrefix = config.get<string>('app.apiPrefix') ?? 'api/v1';
   const env = config.get<string>('app.nodeEnv');
   const corsOrigins = config.get<string[]>('app.corsOrigins') ?? [];
+  const allowAllOrigins = corsOrigins.includes('*');
 
   const logger = new Logger('Bootstrap');
 
@@ -22,10 +23,10 @@ async function bootstrap() {
 
   // ── CORS ────────────────────────────────────────────────────────────────────
   app.enableCors({
-    origin: corsOrigins,
+    origin: allowAllOrigins ? true : corsOrigins,
     methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
+    credentials: !allowAllOrigins,
   });
 
   // ── Swagger (dev only) ──────────────────────────────────────────────────────
