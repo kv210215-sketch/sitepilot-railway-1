@@ -1,4 +1,4 @@
-import { NestFactory, Reflector } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
@@ -11,26 +11,33 @@ async function bootstrap() {
   });
 
   const config = app.get(ConfigService);
-  const port = config.get<number>('app.port') ?? 3001;
+  const port    = Number(process.env.PORT) || 3000;
   const apiPrefix = config.get<string>('app.apiPrefix') ?? 'api/v1';
-  const env = config.get<string>('app.nodeEnv');
-  const corsOrigins = config.get<string[]>('app.corsOrigins') ?? [];
+  const env       = config.get<string>('app.nodeEnv');
+  const corsOrigins    = config.get<string[]>('app.corsOrigins') ?? [];
   const allowAllOrigins = corsOrigins.includes('*');
 
   const logger = new Logger('Bootstrap');
 
-  // ── Global prefix ───────────────────────────────────────────────────────────
-  app.setGlobalPrefix(apiPrefix);
-
-  // ── CORS ────────────────────────────────────────────────────────────────────
-  app.enableCors({
-    origin: allowAllOrigins ? true : corsOrigins,
-    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: !allowAllOrigins,
+  // ── Health check ─────────────────────────────────────────────────────────────
+  // Registered as raw Express middleware BEFORE the global prefix so Railway's
+  // healthcheck always gets a 200 regardless of NestJS routing state.
+  app.use('/health', (_req: unknown, res: any) => {
+    res.status(200).json({ status: 'ok', timestamp: new Date().toISOString(), env });
   });
 
-  // ── Swagger (dev only) ──────────────────────────────────────────────────────
+  // ── Global prefix ────────────────────────────────────────────────────────────
+  app.setGlobalPrefix(apiPrefix);
+
+  // ── CORS ─────────────────────────────────────────────────────────────────────
+  app.enableCors({
+    origin:         allowAllOrigins ? true : corsOrigins,
+    methods:        ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials:    !allowAllOrigins,
+  });
+
+  // ── Swagger (dev only) ───────────────────────────────────────────────────────
   if (env !== 'production') {
     const swaggerConfig = new DocumentBuilder()
       .setTitle('SitePilot API')
@@ -48,15 +55,7 @@ async function bootstrap() {
     logger.log(`Swagger: http://localhost:${port}/docs`);
   }
 
-  // ── Health check ─────────────────────────────────────────────────────────────
-  // Quick endpoint without loading full module — just confirm server is alive
-  const httpAdapter = app.getHttpAdapter();
-  httpAdapter.get('/health', (_req: unknown, res: { json: (v: unknown) => void }) => {
-    res.json({ status: 'ok', timestamp: new Date().toISOString(), env });
-  });
-
   await app.listen(port, '0.0.0.0');
-  console.log('Server started');
   logger.log(`🚀 SitePilot API running on port ${port} [${env}]`);
 }
 
