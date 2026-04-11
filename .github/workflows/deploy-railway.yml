@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      backend_url:
+        description: 'Backend URL for health check (e.g. https://xxx.up.railway.app)'
+        required: false
 
 jobs:
   deploy-backend:
@@ -11,6 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check RAILWAY_TOKEN
+        run: |
+          if [ -z "${{ secrets.RAILWAY_TOKEN }}" ]; then
+            echo "❌ RAILWAY_TOKEN secret is not set."
+            echo "   Go to: repo Settings → Secrets and variables → Actions → New repository secret"
+            echo "   Name: RAILWAY_TOKEN"
+            echo "   Value: your Railway token (Railway dashboard → Account → Tokens)"
+            exit 1
+          fi
+          echo "✅ RAILWAY_TOKEN is set"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -25,33 +40,50 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           cd sitepilot/backend
-          railway up --service sitepilot-railway
+          railway up --service sitepilot-railway --detach
 
       - name: Verify backend health
         env:
-          BACKEND_URL: ${{ secrets.RAILWAY_BACKEND_URL }}
+          BACKEND_URL: ${{ secrets.RAILWAY_BACKEND_URL || inputs.backend_url }}
         run: |
-          if [ -z "$BACKEND_URL" ]; then
-            echo "RAILWAY_BACKEND_URL secret not set — skipping health check"
+          URL="${{ secrets.RAILWAY_BACKEND_URL }}"
+          if [ -z "$URL" ]; then
+            URL="${{ github.event.inputs.backend_url }}"
+          fi
+          if [ -z "$URL" ]; then
+            echo "ℹ️  RAILWAY_BACKEND_URL not set — skipping health check"
+            echo "   Add secret RAILWAY_BACKEND_URL with your backend Railway URL to enable"
             exit 0
           fi
-          echo "Waiting 30s for deploy to settle..."
-          sleep 30
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$BACKEND_URL/health")
-          if [ "$STATUS" = "200" ]; then
-            echo "✅ Backend healthy: $BACKEND_URL/health → 200"
-            curl -s "$BACKEND_URL/health"
-          else
-            echo "❌ Health check failed: HTTP $STATUS"
-            exit 1
-          fi
+          echo "Waiting 60s for deployment to settle..."
+          sleep 60
+          for i in 1 2 3; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$URL/health" 2>/dev/null || echo "000")
+            if [ "$STATUS" = "200" ]; then
+              echo "✅ Backend healthy!"
+              curl -s "$URL/health"
+              exit 0
+            fi
+            echo "Attempt $i: HTTP $STATUS — retrying in 15s..."
+            sleep 15
+          done
+          echo "❌ Health check failed after 3 attempts"
+          exit 1
 
   deploy-frontend:
     name: Deploy Frontend
     runs-on: ubuntu-latest
     needs: deploy-backend
+    if: always() && needs.deploy-backend.result == 'success'
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check RAILWAY_TOKEN
+        run: |
+          if [ -z "${{ secrets.RAILWAY_TOKEN }}" ]; then
+            echo "❌ RAILWAY_TOKEN secret is not set"
+            exit 1
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -66,4 +98,4 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           cd sitepilot/frontend
-          railway up --service sitepilot-frontend
+          railway up --service sitepilot-frontend --detach
