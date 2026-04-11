@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Plus, RefreshCw, Archive, Trash2, Eye, Edit3, Zap } from 'lucide-react';
@@ -51,7 +51,7 @@ function SeoScore({ page }: { page: Page }) {
   );
 }
 
-export default function PagesPage() {
+function PagesContent() {
   const searchParams = useSearchParams();
   const projectId    = searchParams.get('projectId') ?? DEFAULT_PROJECT;
 
@@ -255,5 +255,13 @@ export default function PagesPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function PagesPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PagesContent />
+    </Suspense>
   );
 }
