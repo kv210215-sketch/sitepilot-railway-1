@@ -1,0 +1,13 @@
+{
+  "name": "sitepilot-backend",
+  "version": "1.0.0",
+  "description": "SitePilot NestJS backend — forwarding shim for Railway root-directory compatibility",
+  "scripts": {
+    "build": "cd ../sitepilot/backend && npm install && npm run build",
+    "start:prod": "cd ../sitepilot/backend && node dist/main.js",
+    "start": "cd ../sitepilot/backend && node dist/main.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
