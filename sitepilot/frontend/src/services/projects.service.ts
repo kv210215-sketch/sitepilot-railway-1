@@ -1,4 +1,4 @@
-import api from '@/lib/api-client';
+import { api } from '@/lib/api';
 
 export type ProjectType   = 'landing' | 'multi_page' | 'catalog' | 'service_site' | 'solar_commercial';
 export type ProjectStatus = 'active' | 'archived' | 'draft' | 'deleted';

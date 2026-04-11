@@ -1,4 +1,4 @@
-import api from '@/lib/api-client';
+import { api } from '@/lib/api';
 
 export type PublishScope  = 'page' | 'project' | 'selected';
 export type PublishStatus = 'pending' | 'queued' | 'processing' | 'success' | 'failed' | 'cancelled' | 'retrying';

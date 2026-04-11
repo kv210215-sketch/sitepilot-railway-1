@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FolderOpen, FileText, Rocket, AlertTriangle } from 'lucide-react';
 import { Card, CardHeader, CardBody, Badge, Progress, Spinner } from '@/components/ui';
-import api from '@/lib/api-client';
+import { api } from '@/lib/api';
 
 interface DashboardStats {
   projectsTotal:  number;

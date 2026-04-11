@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronRight, ChevronLeft, Zap } from 'lucide-react';
 import { Button, Card, CardHeader, CardBody, Input, Select, Spinner, cn } from '@/components/ui';
@@ -27,7 +27,7 @@ const UA_CITIES = [
 
 type Step = 'template' | 'params' | 'preview';
 
-export default function NewPagePage() {
+function NewPageContent() {
   const router       = useRouter();
   const searchParams = useSearchParams();
   const projectId    = searchParams.get('projectId') ?? '';
@@ -261,5 +261,13 @@ export default function NewPagePage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function NewPagePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <NewPageContent />
+    </Suspense>
   );
 }

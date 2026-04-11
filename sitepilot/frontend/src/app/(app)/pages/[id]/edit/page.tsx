@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Eye, Save, RotateCcw, ExternalLink } from 'lucide-react';
-import { Button, Card, CardHeader, CardBody, Input, Spinner, cn } from '@/components/ui';
+import { Button, Card, CardBody, CardHeader, Input, Spinner, cn } from '@/components/ui';
 import { usePage } from '@/hooks/usePages';
+import { ExternalLink, Eye, RotateCcw, Save } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useState } from 'react';
 
 const BLOCK_ICONS: Record<string, string> = {
   hero: '🦸', pain: '⚡', steps: '📋', numbers: '📊',
@@ -19,27 +19,27 @@ const BLOCK_NAMES: Record<string, string> = {
   faq: 'FAQ — Питання та відповіді',
 };
 
-export default function EditPagePage({ params }: { params: { id: string } }) {
-  const router       = useRouter();
+function EditContent({ params }: { params: { id: string } }) {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const projectId    = searchParams.get('projectId') ?? '';
+  const projectId = searchParams.get('projectId') ?? '';
   const { page, loading, saving, save, regenerateSeo } = usePage(projectId, params.id);
 
-  const [tab,     setTab]     = useState<'blocks' | 'seo'>('blocks');
+  const [tab, setTab] = useState<'blocks' | 'seo'>('blocks');
   const [seoForm, setSeoForm] = useState<Record<string, string>>({});
   const [seoInit, setSeoInit] = useState(false);
 
   if (loading) return <div className="flex justify-center py-16"><Spinner size={24} /></div>;
-  if (!page)   return <div className="text-center py-16 text-text2">Сторінку не знайдено</div>;
+  if (!page) return <div className="text-center py-16 text-text2">Сторінку не знайдено</div>;
 
   // Ініціалізуємо SEO форму з даних сторінки
   if (!seoInit && page) {
     setSeoForm({
-      seoTitle:       page.seoTitle       ?? '',
+      seoTitle: page.seoTitle ?? '',
       seoDescription: page.seoDescription ?? '',
-      seoKeywords:    page.seoKeywords    ?? '',
-      ogTitle:        page.ogTitle        ?? '',
-      ogDescription:  page.ogDescription  ?? '',
+      seoKeywords: page.seoKeywords ?? '',
+      ogTitle: page.ogTitle ?? '',
+      ogDescription: page.ogDescription ?? '',
     });
     setSeoInit(true);
   }
@@ -214,5 +214,13 @@ export default function EditPagePage({ params }: { params: { id: string } }) {
         </div>
       )}
     </div>
+  );
+}
+
+export default function EditPagePage({ params }: { params: { id: string } }) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <EditContent params={params} />
+    </Suspense>
   );
 }

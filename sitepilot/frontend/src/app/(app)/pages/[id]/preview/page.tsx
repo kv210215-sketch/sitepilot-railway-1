@@ -1,23 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Edit3, ExternalLink, RefreshCw } from 'lucide-react';
 import { Button, Spinner } from '@/components/ui';
 import { pagesService } from '@/services/pages.service';
+import { ArrowLeft, Edit3, RefreshCw } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 
-export default function PreviewPage({ params }: { params: { id: string } }) {
-  const router       = useRouter();
+function PreviewContent({ params }: { params: { id: string } }) {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const projectId    = searchParams.get('projectId') ?? '';
+  const projectId = searchParams.get('projectId') ?? '';
 
-  const [html,     setHtml]     = useState<string | null>(null);
-  const [loading,  setLoading]  = useState(true);
-  const [device,   setDevice]   = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
+  const [html, setHtml] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [device, setDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
 
   const DEVICE_W = { desktop: '100%', tablet: '768px', mobile: '390px' };
 
-  const loadPreview = async () => {
+  const loadPreview = useCallback(async () => {
     setLoading(true);
     try {
       const res = await pagesService.preview(projectId, params.id);
@@ -27,9 +27,9 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [projectId, params.id]);
 
-  useEffect(() => { loadPreview(); }, [params.id, projectId]);
+  useEffect(() => { loadPreview(); }, [loadPreview]);
 
   return (
     <div className="flex flex-col h-full -m-6">
@@ -50,11 +50,10 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
             <button
               key={d}
               onClick={() => setDevice(d)}
-              className={`px-3 py-1 text-[12px] rounded-[4px] transition-colors ${
-                device === d
-                  ? 'bg-surface text-text shadow-sm'
-                  : 'text-text2 hover:text-text'
-              }`}
+              className={`px-3 py-1 text-[12px] rounded-[4px] transition-colors ${device === d
+                ? 'bg-surface text-text shadow-sm'
+                : 'text-text2 hover:text-text'
+                }`}
             >
               {d === 'desktop' ? '🖥' : d === 'tablet' ? '📱' : '📲'}
               <span className="ml-1.5 hidden sm:inline capitalize">{d}</span>
@@ -103,5 +102,13 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
         <span>Пристрій: {device}</span>
       </div>
     </div>
+  );
+}
+
+export default function PreviewPage({ params }: { params: { id: string } }) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PreviewContent params={params} />
+    </Suspense>
   );
 }

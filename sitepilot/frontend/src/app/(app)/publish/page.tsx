@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Zap, RefreshCw, StopCircle, RotateCcw, FileText } from 'lucide-react';
 import { Button, Badge, Progress, Card, CardHeader, CardBody, Modal, Spinner, cn } from '@/components/ui';
@@ -65,7 +65,7 @@ function StatCard({ label, value, sub, color }: {
   );
 }
 
-export default function PublishPage() {
+function PublishContent() {
   const searchParams = useSearchParams();
   const projectId    = searchParams.get('projectId') ?? DEFAULT_PROJECT;
 
@@ -305,5 +305,13 @@ export default function PublishPage() {
         )}
       </Modal>
     </div>
+  );
+}
+
+export default function PublishPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PublishContent />
+    </Suspense>
   );
 }

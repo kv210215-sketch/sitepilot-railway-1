@@ -2,89 +2,89 @@
 
 export const dynamic = 'force-dynamic';
 
-import { useState, useEffect, useCallback } from 'react';
+import { Select, Spinner, cn } from '@/components/ui';
+import { ActivityItem, activityService } from '@/services/publish.service';
 import { useSearchParams } from 'next/navigation';
-import { Spinner, Select, cn } from '@/components/ui';
-import { activityService, ActivityItem } from '@/services/publish.service';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const DEFAULT_PROJECT = process.env.NEXT_PUBLIC_DEFAULT_PROJECT ?? '';
 
 const ACTION_ICON: Record<string, string> = {
-  publish_success:    '🚀',
-  publish_failed:     '❌',
-  publish_started:    '⏳',
-  publish_cancelled:  '🚫',
-  page_created:       '📄',
-  page_updated:       '✏️',
-  page_generated:     '⚡',
-  page_archived:      '📦',
-  page_deleted:       '🗑',
-  template_applied:   '🎨',
-  backup_created:     '💾',
-  backup_restored:    '🔄',
-  team_member_added:  '👥',
-  team_member_removed:'👤',
-  role_changed:       '🔑',
-  content_changed:    '✏️',
-  seo_updated:        '🔍',
-  settings_changed:   '⚙️',
-  project_created:    '🗂',
-  project_updated:    '📝',
-  user_login:         '🔐',
+  publish_success: '🚀',
+  publish_failed: '❌',
+  publish_started: '⏳',
+  publish_cancelled: '🚫',
+  page_created: '📄',
+  page_updated: '✏️',
+  page_generated: '⚡',
+  page_archived: '📦',
+  page_deleted: '🗑',
+  template_applied: '🎨',
+  backup_created: '💾',
+  backup_restored: '🔄',
+  team_member_added: '👥',
+  team_member_removed: '👤',
+  role_changed: '🔑',
+  content_changed: '✏️',
+  seo_updated: '🔍',
+  settings_changed: '⚙️',
+  project_created: '🗂',
+  project_updated: '📝',
+  user_login: '🔐',
 };
 
 const ACTION_LABEL: Record<string, string> = {
-  publish_success:   'Опубліковано',
-  publish_failed:    'Помилка публікації',
-  publish_started:   'Публікацію запущено',
+  publish_success: 'Опубліковано',
+  publish_failed: 'Помилка публікації',
+  publish_started: 'Публікацію запущено',
   publish_cancelled: 'Публікацію скасовано',
-  page_created:      'Сторінку створено',
-  page_updated:      'Сторінку оновлено',
-  page_generated:    'Сторінку згенеровано',
-  page_archived:     'Сторінку архівовано',
-  page_deleted:      'Сторінку видалено',
-  template_applied:  'Шаблон застосовано',
-  backup_created:    'Бекап створено',
-  backup_restored:   'Бекап відновлено',
+  page_created: 'Сторінку створено',
+  page_updated: 'Сторінку оновлено',
+  page_generated: 'Сторінку згенеровано',
+  page_archived: 'Сторінку архівовано',
+  page_deleted: 'Сторінку видалено',
+  template_applied: 'Шаблон застосовано',
+  backup_created: 'Бекап створено',
+  backup_restored: 'Бекап відновлено',
   team_member_added: 'Учасника додано',
   team_member_removed: 'Учасника видалено',
-  role_changed:      'Роль змінено',
-  content_changed:   'Контент змінено',
-  seo_updated:       'SEO оновлено',
-  settings_changed:  'Налаштування змінено',
-  project_created:   'Проєкт створено',
-  project_updated:   'Проєкт оновлено',
-  user_login:        'Вхід у систему',
+  role_changed: 'Роль змінено',
+  content_changed: 'Контент змінено',
+  seo_updated: 'SEO оновлено',
+  settings_changed: 'Налаштування змінено',
+  project_created: 'Проєкт створено',
+  project_updated: 'Проєкт оновлено',
+  user_login: 'Вхід у систему',
 };
 
 const ACTION_COLOR: Record<string, string> = {
-  publish_success:  'bg-success/10',
-  publish_failed:   'bg-danger/10',
-  publish_started:  'bg-accent/10',
-  page_generated:   'bg-info/10',
-  backup_created:   'bg-accent/10',
-  team_member_added:'bg-purple/10',
-  default:          'bg-surface2',
+  publish_success: 'bg-success/10',
+  publish_failed: 'bg-danger/10',
+  publish_started: 'bg-accent/10',
+  page_generated: 'bg-info/10',
+  backup_created: 'bg-accent/10',
+  team_member_added: 'bg-purple/10',
+  default: 'bg-surface2',
 };
 
 function timeAgo(iso: string): string {
   const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
-  if (diff < 60)    return `${diff}с тому`;
-  if (diff < 3600)  return `${Math.floor(diff / 60)}хв тому`;
+  if (diff < 60) return `${diff}с тому`;
+  if (diff < 3600) return `${Math.floor(diff / 60)}хв тому`;
   if (diff < 86400) return `${Math.floor(diff / 3600)}год тому`;
   return new Date(iso).toLocaleDateString('uk', { day: 'numeric', month: 'short' });
 }
 
-export default function ActivityPage() {
+function ActivityContent() {
   const searchParams = useSearchParams();
-  const projectId    = searchParams.get('projectId') ?? DEFAULT_PROJECT;
+  const projectId = searchParams.get('projectId') ?? DEFAULT_PROJECT;
 
-  const [items,    setItems]    = useState<ActivityItem[]>([]);
-  const [total,    setTotal]    = useState(0);
-  const [loading,  setLoading]  = useState(true);
-  const [page,     setPage]     = useState(1);
-  const [filter,   setFilter]   = useState('');
+  const [items, setItems] = useState<ActivityItem[]>([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState('');
 
   const load = useCallback(async () => {
     if (!projectId) return;
@@ -106,13 +106,13 @@ export default function ActivityPage() {
 
   const FILTER_OPTIONS = [
     { value: '', label: 'Всі дії' },
-    { value: 'publish_success',  label: '🚀 Публікації успішні' },
-    { value: 'publish_failed',   label: '❌ Помилки публікації' },
-    { value: 'page_generated',   label: '⚡ Генерації сторінок' },
-    { value: 'page_updated',     label: '✏️ Редагування' },
-    { value: 'seo_updated',      label: '🔍 SEO оновлення' },
-    { value: 'backup_created',   label: '💾 Бекапи' },
-    { value: 'team_member_added',label: '👥 Команда' },
+    { value: 'publish_success', label: '🚀 Публікації успішні' },
+    { value: 'publish_failed', label: '❌ Помилки публікації' },
+    { value: 'page_generated', label: '⚡ Генерації сторінок' },
+    { value: 'page_updated', label: '✏️ Редагування' },
+    { value: 'seo_updated', label: '🔍 SEO оновлення' },
+    { value: 'backup_created', label: '💾 Бекапи' },
+    { value: 'team_member_added', label: '👥 Команда' },
   ];
 
   return (
@@ -155,9 +155,9 @@ export default function ActivityPage() {
             </thead>
             <tbody>
               {items.map(item => {
-                const icon  = ACTION_ICON[item.action]  ?? '▪';
+                const icon = ACTION_ICON[item.action] ?? '▪';
                 const label = ACTION_LABEL[item.action] ?? item.action;
-                const bg    = ACTION_COLOR[item.action] ?? ACTION_COLOR.default;
+                const bg = ACTION_COLOR[item.action] ?? ACTION_COLOR.default;
 
                 return (
                   <tr key={item.id} className="hover:bg-surface2/40 transition-colors group">
@@ -246,5 +246,13 @@ export default function ActivityPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ActivityPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ActivityContent />
+    </Suspense>
   );
 }
