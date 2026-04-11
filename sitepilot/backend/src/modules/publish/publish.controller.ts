@@ -1,10 +1,9 @@
 import {
   Controller, Get, Post, Patch, Body, Param,
   Query, HttpCode, HttpStatus, UseGuards, ParseUUIDPipe,
-  IsOptional, IsString, IsBoolean,
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse, ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray } from 'class-validator';
+import { IsArray, IsOptional, IsString, IsBoolean } from 'class-validator';
 
 import { PublishService } from './publish.service';
 import {

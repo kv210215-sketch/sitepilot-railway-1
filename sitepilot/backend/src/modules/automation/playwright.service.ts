@@ -44,7 +44,8 @@ export class PlaywrightService {
     log(`Starting Playwright publish: project=${opts.projectId} dryRun=${opts.dryRun ?? false}`);
 
     // Dynamically require playwright to avoid startup crash when not installed
-    let chromium: import('@playwright/test').BrowserType | null = null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let chromium: any | null = null;
     try {
       const pw = await import('playwright');
       chromium = pw.chromium;
