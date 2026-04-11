@@ -48,3 +48,16 @@ export const throttleConfig = registerAs('throttle', () => ({
   ttl: parseInt(process.env.THROTTLE_TTL || '60000', 10),
   limit: parseInt(process.env.THROTTLE_LIMIT || '100', 10),
 }));
+
+export const billingConfig = registerAs('billing', () => ({
+  stripeSecretKey:    process.env.STRIPE_SECRET_KEY ?? '',
+  stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET ?? '',
+  stripePriceStarter: process.env.STRIPE_PRICE_STARTER ?? '',
+  stripePricePro:     process.env.STRIPE_PRICE_PRO ?? '',
+  stripePriceAgency:  process.env.STRIPE_PRICE_AGENCY ?? '',
+}));
+
+export const automationConfig = registerAs('automation', () => ({
+  tildaEmail:    process.env.TILDA_EMAIL ?? '',
+  tildaPassword: process.env.TILDA_PASSWORD ?? '',
+}));

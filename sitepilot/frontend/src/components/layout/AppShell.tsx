@@ -6,11 +6,12 @@ import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard, FolderOpen, FileText, Upload,
   Activity, LayoutTemplate, HardDrive, Users,
-  BarChart3, Bell, Plus, ChevronDown,
+  BarChart3, Bell, Plus, ChevronDown, Sparkles,
 } from 'lucide-react';
 import { cn } from '@/components/ui';
 import { useAuthStore } from '@/store/auth.store';
 import { useAuth } from '@/hooks/useAuth';
+import AiSalesChat from '@/components/AiSalesChat';
 
 const NAV = [
   {
@@ -40,6 +41,12 @@ const NAV = [
     items: [
       { href: '/team',       icon: Users,            label: 'Команда' },
       { href: '/analytics',  icon: BarChart3,        label: 'Аналітика' },
+    ],
+  },
+  {
+    label: 'Старт',
+    items: [
+      { href: '/onboarding', icon: Sparkles, label: 'Онбординг', badge: 'NEW', badgeColor: 'green' },
     ],
   },
 ];
@@ -197,6 +204,9 @@ export default function AppShell({ children }: { children: ReactNode }) {
           {children}
         </main>
       </div>
+
+      {/* ── AI Sales Chat Widget ──────────────────────────────────── */}
+      <AiSalesChat />
     </div>
   );
 }

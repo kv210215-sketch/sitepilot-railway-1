@@ -27,6 +27,17 @@ JWT_SECRET=<openssl rand -hex 32>
 JWT_REFRESH_SECRET=<openssl rand -hex 32>
 DB_SYNC=true
 CORS_ORIGINS=*
+
+# Stripe Billing (optional — leave empty to skip billing)
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+STRIPE_PRICE_STARTER=price_...
+STRIPE_PRICE_PRO=price_...
+STRIPE_PRICE_AGENCY=price_...
+
+# Tilda Publish Engine (optional — leave empty for simulation mode)
+TILDA_EMAIL=your@email.com
+TILDA_PASSWORD=your_tilda_password
 ```
 `DATABASE_URL` is auto-linked from Postgres — no need to add manually.
 

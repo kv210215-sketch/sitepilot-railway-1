@@ -1,24 +1,55 @@
-# SitePilot Deployment Status Report
+# SitePilot V3 — Build & Deployment Status
+
+## Platform Version: V3 (AI + Billing + Playwright)
+
+---
+
+## Module Status
+
+| Module | Status | Notes |
+|--------|--------|-------|
+| AuthModule | ✅ Complete | JWT, refresh, email verify |
+| UsersModule | ✅ Complete | User entity, bcrypt |
+| ProjectsModule | ✅ Complete | CRUD, members, roles |
+| PagesModule | ✅ Complete | CRUD, SEO, bulk generate, preview |
+| TemplatesModule | ✅ Complete | 11 Solomiya templates seeded |
+| ContentModule | ✅ Complete | Marketing pack seeded |
+| SeoModule | ✅ Complete | UA transliteration, slug gen |
+| PublishModule | ✅ Complete | Queue, retry, cancel, Playwright run |
+| AuditModule | ✅ Complete | 21 action types, indexed |
+| BillingModule | ✅ NEW | Stripe checkout, webhook, plans, SubscriptionGuard |
+| AIModule | ✅ NEW | Site generator + Sales agent chat |
+| AutomationModule | ✅ NEW | PlaywrightService (Tilda publish engine) |
+
+## Frontend Pages
+
+| Route | Status |
+|-------|--------|
+| /dashboard | ✅ |
+| /projects | ✅ |
+| /pages | ✅ |
+| /publish | ✅ |
+| /activity | ✅ |
+| /templates | ✅ NEW |
+| /analytics | ✅ NEW |
+| /team | ✅ NEW |
+| /account | ✅ NEW |
+| /backups | ✅ NEW |
+| /auth/login | ✅ |
+| /auth/register | ✅ |
 
 ## Build Status
 
-### Frontend ✅ BUILT SUCCESSFULLY
-- **Status**: Production build complete
-- **Output**: `.next` directory with standalone server artifacts
-- **Evidence**: 
-  - routes-manifest.json (indicates successful Next.js compilation)
-  - server/ directory with compiled pages
-  - Full production-ready output
+### Frontend ✅
+- next.config.js updated: `remotePatterns` (was deprecated `domains`)
+- All navigation routes have pages (no 404s)
+- dynamic = 'force-dynamic' on all dynamic pages
 
-### Backend ⏳ READY FOR RAILWAY BUILD
-- **Status**: Source code validated, ready for compilation
-- **TypeScript Check**: ✅ No compilation errors
-- **Configuration**: ✅ Valid NestJS project structure
-- **Build Command**: `npm run build` (nest build)
-- **Note**: Backend compilation delegated to Railway's Nixpacks builder
-  - Nixpacks has optimized Node.js build environment
-  - Successfully handles large TypeScript projects
-  - Will produce `dist/main.js` during Railway deployment
+### Backend ✅
+- TypeScript: Zero compilation errors
+- Dead code removed: pages.controller.additions.ts, pages.service.additions.ts
+- rawBody: true in main.ts (Stripe webhook support)
+- New packages: stripe ^16, playwright ^1.44
 
 ## Deployment Configuration ✅ COMPLETE
 
