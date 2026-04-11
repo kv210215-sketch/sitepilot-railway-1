@@ -52,10 +52,12 @@ import { OnboardingSession }   from './modules/onboarding/onboarding.entity';
         username:    cfg.get('db.user'),
         password:    cfg.get('db.pass'),
         database:    cfg.get('db.name'),
-        ssl:         cfg.get('db.ssl') ? { rejectUnauthorized: false } : false,
-        synchronize: cfg.get('db.sync'),
-        logging:     cfg.get('db.logging'),
-        entities:    [
+        ssl:           cfg.get('db.ssl') ? { rejectUnauthorized: false } : false,
+        synchronize:   cfg.get('db.sync'),
+        logging:       cfg.get('db.logging'),
+        retryAttempts: 10,
+        retryDelay:    3000,
+        entities:      [
           User, Project, ProjectMember,
           Page, Template, ContentBlock,
           PublishJob, PublishJobLog,
