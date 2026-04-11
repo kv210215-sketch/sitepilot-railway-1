@@ -1,6 +1,6 @@
 import {
   IsString, IsOptional, IsEnum, IsNumber, IsBoolean,
-  Min, Max, IsArray, IsEmail,
+  Min, Max,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -23,7 +23,30 @@ export enum SiteGoal {
   BRAND         = 'brand',
 }
 
-// ── Generate Site ─────────────────────────────────────────────────────────────
+// ── Generate Site — leaf classes first (emitDecoratorMetadata requires this) ──
+
+export class GeneratedBlockDto {
+  @ApiProperty() type:  string;
+  @ApiProperty() order: number;
+  @ApiProperty({ type: Object }) data: Record<string, unknown>;
+}
+
+export class GeneratedPageDto {
+  @ApiProperty() title:       string;
+  @ApiProperty() slug:        string;
+  @ApiProperty() description: string;
+  @ApiProperty() purpose:     string;
+  @ApiProperty({ type: [GeneratedBlockDto] }) blocks: GeneratedBlockDto[];
+}
+
+export class GeneratedSiteDto {
+  @ApiProperty() projectName:  string;
+  @ApiProperty() slug:         string;
+  @ApiProperty() description:  string;
+  @ApiProperty({ type: [GeneratedPageDto] }) pages: GeneratedPageDto[];
+  @ApiProperty() seoStrategy:  string;
+  @ApiProperty() ctaStrategy:  string;
+}
 
 export class GenerateSiteDto {
   @ApiProperty({ enum: SiteType }) @IsEnum(SiteType)
@@ -45,30 +68,15 @@ export class GenerateSiteDto {
   companyName?: string;
 }
 
-export class GeneratedSiteDto {
-  @ApiProperty() projectName:  string;
-  @ApiProperty() slug:         string;
-  @ApiProperty() description:  string;
-  @ApiProperty({ type: [Object] }) pages: GeneratedPageDto[];
-  @ApiProperty() seoStrategy:  string;
-  @ApiProperty() ctaStrategy:  string;
-}
+// ── Legacy Chat — ProposalDto MUST be declared before ChatResponseDto ─────────
 
-export class GeneratedPageDto {
-  @ApiProperty() title:       string;
-  @ApiProperty() slug:        string;
-  @ApiProperty() description: string;
-  @ApiProperty() purpose:     string;
-  @ApiProperty({ type: [Object] }) blocks: GeneratedBlockDto[];
+export class ProposalDto {
+  @ApiProperty() powerKw:       number;
+  @ApiProperty() estimatedCost: string;
+  @ApiProperty() paybackYears:  number;
+  @ApiProperty() monthlySaving: string;
+  @ApiProperty() annualSaving:  string;
 }
-
-export class GeneratedBlockDto {
-  @ApiProperty() type:  string;
-  @ApiProperty() order: number;
-  @ApiProperty({ type: Object }) data: Record<string, unknown>;
-}
-
-// ── Legacy Chat (kept for backward compat) ────────────────────────────────────
 
 export class ChatMessageDto {
   @ApiProperty() @IsString()
@@ -87,42 +95,9 @@ export class ChatMessageDto {
 export class ChatResponseDto {
   @ApiProperty() reply:          string;
   @ApiProperty() conversationId: string;
-  @ApiProperty() stage:          'qualify' | 'calculate' | 'close' | 'book';
-  @ApiPropertyOptional({ type: Object }) proposal?: ProposalDto;
-  @ApiProperty() quickReplies:   string[];
-}
-
-export class ProposalDto {
-  @ApiProperty() powerKw:       number;
-  @ApiProperty() estimatedCost: string;
-  @ApiProperty() paybackYears:  number;
-  @ApiProperty() monthlySaving: string;
-  @ApiProperty() annualSaving:  string;
-}
-
-// ── Sales Chat (production AI consultant) ─────────────────────────────────────
-
-export class SalesChatDto {
-  @ApiProperty({ example: 'Привіт, цікавить СЕС для дому' }) @IsString()
-  message: string;
-
-  @ApiPropertyOptional({ example: 'sales_abc123' }) @IsOptional() @IsString()
-  conversationId?: string;
-
-  @ApiPropertyOptional({ enum: SiteType }) @IsOptional() @IsEnum(SiteType)
-  clientType?: SiteType;
-
-  @ApiPropertyOptional({ example: 'Київ' }) @IsOptional() @IsString()
-  city?: string;
-}
-
-export class SalesChatResponseDto {
-  @ApiProperty() reply:           string;
-  @ApiProperty() conversationId:  string;
-  @ApiProperty() stage:           string;
-  @ApiProperty() quickReplies:    string[];
-  @ApiPropertyOptional({ type: Object }) leadData?: LeadQualifyResultDto;
-  @ApiPropertyOptional({ type: Object }) recommendation?: RecommendResultDto;
+  @ApiProperty() stage:          string;
+  @ApiPropertyOptional({ type: ProposalDto }) proposal?: ProposalDto;
+  @ApiProperty({ type: [String] }) quickReplies: string[];
 }
 
 // ── Lead Qualify ──────────────────────────────────────────────────────────────
@@ -138,7 +113,7 @@ export class LeadQualifyResultDto {
   @ApiProperty({ enum: ['backup', 'saving'] }) intent:    'backup' | 'saving';
   @ApiPropertyOptional() region?:      string | null;
   @ApiPropertyOptional() consumption?: number | null;
-  @ApiProperty() battery:  boolean;
+  @ApiProperty() battery:   boolean;
   @ApiProperty({ enum: ['ground', 'roof'] }) mounting: 'ground' | 'roof';
 }
 
@@ -165,6 +140,31 @@ export class RecommendResultDto {
   @ApiProperty() budget:    string;
   @ApiProperty() payback:   string;
   @ApiProperty() next:      string;
+}
+
+// ── Sales Chat — LeadQualifyResultDto and RecommendResultDto declared above ───
+
+export class SalesChatDto {
+  @ApiProperty({ example: 'Привіт, цікавить СЕС для дому' }) @IsString()
+  message: string;
+
+  @ApiPropertyOptional({ example: 'sales_abc123' }) @IsOptional() @IsString()
+  conversationId?: string;
+
+  @ApiPropertyOptional({ enum: SiteType }) @IsOptional() @IsEnum(SiteType)
+  clientType?: SiteType;
+
+  @ApiPropertyOptional({ example: 'Київ' }) @IsOptional() @IsString()
+  city?: string;
+}
+
+export class SalesChatResponseDto {
+  @ApiProperty() reply:          string;
+  @ApiProperty() conversationId: string;
+  @ApiProperty() stage:          string;
+  @ApiProperty({ type: [String] }) quickReplies: string[];
+  @ApiPropertyOptional({ type: LeadQualifyResultDto }) leadData?:       LeadQualifyResultDto;
+  @ApiPropertyOptional({ type: RecommendResultDto })  recommendation?: RecommendResultDto;
 }
 
 // ── Close Lead ────────────────────────────────────────────────────────────────
