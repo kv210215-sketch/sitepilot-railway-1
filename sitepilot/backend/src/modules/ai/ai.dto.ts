@@ -1,4 +1,7 @@
-import { IsString, IsOptional, IsEnum, IsNumber, Min, Max, IsArray } from 'class-validator';
+import {
+  IsString, IsOptional, IsEnum, IsNumber, IsBoolean,
+  Min, Max, IsArray, IsEmail,
+} from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export enum SiteType {
@@ -65,7 +68,7 @@ export class GeneratedBlockDto {
   @ApiProperty({ type: Object }) data: Record<string, unknown>;
 }
 
-// ── Sales Agent (Chat) ────────────────────────────────────────────────────────
+// ── Legacy Chat (kept for backward compat) ────────────────────────────────────
 
 export class ChatMessageDto {
   @ApiProperty() @IsString()
@@ -95,4 +98,78 @@ export class ProposalDto {
   @ApiProperty() paybackYears:  number;
   @ApiProperty() monthlySaving: string;
   @ApiProperty() annualSaving:  string;
+}
+
+// ── Sales Chat (production AI consultant) ─────────────────────────────────────
+
+export class SalesChatDto {
+  @ApiProperty({ example: 'Привіт, цікавить СЕС для дому' }) @IsString()
+  message: string;
+
+  @ApiPropertyOptional({ example: 'sales_abc123' }) @IsOptional() @IsString()
+  conversationId?: string;
+
+  @ApiPropertyOptional({ enum: SiteType }) @IsOptional() @IsEnum(SiteType)
+  clientType?: SiteType;
+
+  @ApiPropertyOptional({ example: 'Київ' }) @IsOptional() @IsString()
+  city?: string;
+}
+
+export class SalesChatResponseDto {
+  @ApiProperty() reply:           string;
+  @ApiProperty() conversationId:  string;
+  @ApiProperty() stage:           string;
+  @ApiProperty() quickReplies:    string[];
+  @ApiPropertyOptional({ type: Object }) leadData?: LeadQualifyResultDto;
+  @ApiPropertyOptional({ type: Object }) recommendation?: RecommendResultDto;
+}
+
+// ── Lead Qualify ──────────────────────────────────────────────────────────────
+
+export class LeadQualifyDto {
+  @ApiProperty({ example: 'Потрібна СЕС 10 кВт для бізнесу в Харкові, хочу АКБ' })
+  @IsString()
+  input: string;
+}
+
+export class LeadQualifyResultDto {
+  @ApiProperty({ enum: ['business', 'home'] }) lead_type: 'business' | 'home';
+  @ApiProperty({ enum: ['backup', 'saving'] }) intent:    'backup' | 'saving';
+  @ApiPropertyOptional() region?:      string | null;
+  @ApiPropertyOptional() consumption?: number | null;
+  @ApiProperty() battery:  boolean;
+  @ApiProperty({ enum: ['ground', 'roof'] }) mounting: 'ground' | 'roof';
+}
+
+// ── Recommend ─────────────────────────────────────────────────────────────────
+
+export class RecommendInputDto {
+  @ApiProperty({ enum: ['business', 'home'] }) @IsString()
+  lead_type: 'business' | 'home';
+
+  @ApiPropertyOptional() @IsOptional() @IsNumber() @Min(0)
+  consumption?: number;
+
+  @ApiProperty() @IsBoolean()
+  battery: boolean;
+
+  @ApiPropertyOptional() @IsOptional() @IsString()
+  region?: string;
+}
+
+export class RecommendResultDto {
+  @ApiProperty() system_kw: string;
+  @ApiProperty() inverter:  string;
+  @ApiProperty() battery:   string;
+  @ApiProperty() budget:    string;
+  @ApiProperty() payback:   string;
+  @ApiProperty() next:      string;
+}
+
+// ── Close Lead ────────────────────────────────────────────────────────────────
+
+export class CloseLeadResponseDto {
+  @ApiProperty() message: string;
+  @ApiProperty() cta:     string;
 }

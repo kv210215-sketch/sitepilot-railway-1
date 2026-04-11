@@ -18,9 +18,10 @@ import { ContentModule }    from './modules/content/content.module';
 import { SeoModule }        from './modules/seo/seo.module';
 import { PublishModule }    from './modules/publish/publish.module';
 import { AuditModule }      from './modules/audit/audit.module';
-import { BillingModule }    from './modules/billing/billing.module';
-import { AiModule }         from './modules/ai/ai.module';
-import { AutomationModule } from './modules/automation/automation.module';
+import { BillingModule }     from './modules/billing/billing.module';
+import { AiModule }          from './modules/ai/ai.module';
+import { AutomationModule }  from './modules/automation/automation.module';
+import { OnboardingModule }  from './modules/onboarding/onboarding.module';
 
 // ── Entities ──────────────────────────────────────────────────────────────────
 import { User }          from './modules/users/user.entity';
@@ -31,7 +32,8 @@ import { Template }      from './modules/templates/template.entity';
 import { ContentBlock }  from './modules/content/content-block.entity';
 import { PublishJob, PublishJobLog } from './modules/publish/publish-job.entity';
 import { AuditLog }      from './modules/audit/audit-log.entity';
-import { Subscription }  from './modules/billing/billing.entity';
+import { Subscription }        from './modules/billing/billing.entity';
+import { OnboardingSession }   from './modules/onboarding/onboarding.entity';
 
 @Module({
   imports: [
@@ -59,6 +61,7 @@ import { Subscription }  from './modules/billing/billing.entity';
           PublishJob, PublishJobLog,
           AuditLog,
           Subscription,
+          OnboardingSession,
         ],
       }),
     }),
@@ -76,7 +79,7 @@ import { Subscription }  from './modules/billing/billing.entity';
     AuthModule, ProjectsModule, PagesModule,
     TemplatesModule, ContentModule, SeoModule,
     AuditModule, PublishModule,
-    BillingModule, AiModule, AutomationModule,
+    BillingModule, AiModule, AutomationModule, OnboardingModule,
   ],
 
   providers: [
