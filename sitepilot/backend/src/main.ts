@@ -1,3 +1,4 @@
+import * as http from 'http';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -5,39 +6,50 @@ import { Logger } from '@nestjs/common';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
+  const port = Number(process.env.PORT) || 3000;
+  const logger = new Logger('Bootstrap');
+
+  // ── Pre-start health server ───────────────────────────────────────────────
+  // Starts immediately — before NestJS module init (which blocks on TypeORM
+  // DB retries). Railway healthcheck gets 200 from the first probe.
+  const preServer = http.createServer((req, res) => {
+    if (req.url === '/health' && req.method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ status: 'ok', starting: true, ts: new Date().toISOString() }));
+    } else {
+      res.writeHead(503);
+      res.end();
+    }
+  });
+  await new Promise<void>(resolve => preServer.listen(port, '0.0.0.0', resolve));
+  logger.log(`⚡ Pre-start health server listening on port ${port}`);
+
+  // ── NestJS bootstrap (TypeORM retries happen here) ────────────────────────
   const app = await NestFactory.create(AppModule, {
     logger:  ['error', 'warn', 'log', 'debug'],
     rawBody: true, // required for Stripe webhook signature verification
   });
 
-  const config = app.get(ConfigService);
-  const port    = Number(process.env.PORT) || 3000;
-  const apiPrefix = config.get<string>('app.apiPrefix') ?? 'api/v1';
-  const env       = config.get<string>('app.nodeEnv');
-  const corsOrigins    = config.get<string[]>('app.corsOrigins') ?? [];
-  const allowAllOrigins = corsOrigins.includes('*');
+  const config        = app.get(ConfigService);
+  const apiPrefix     = config.get<string>('app.apiPrefix') ?? 'api/v1';
+  const env           = config.get<string>('app.nodeEnv');
+  const corsOrigins   = config.get<string[]>('app.corsOrigins') ?? [];
+  const allowAll      = corsOrigins.includes('*');
 
-  const logger = new Logger('Bootstrap');
-
-  // ── Health check ─────────────────────────────────────────────────────────────
-  // Registered as raw Express middleware BEFORE the global prefix so Railway's
-  // healthcheck always gets a 200 regardless of NestJS routing state.
+  // Health endpoint on the NestJS app (after handoff)
   app.use('/health', (_req: unknown, res: any) => {
     res.status(200).json({ status: 'ok', timestamp: new Date().toISOString(), env });
   });
 
-  // ── Global prefix ────────────────────────────────────────────────────────────
   app.setGlobalPrefix(apiPrefix);
 
-  // ── CORS ─────────────────────────────────────────────────────────────────────
   app.enableCors({
-    origin:         allowAllOrigins ? true : corsOrigins,
+    origin:         allowAll ? true : corsOrigins,
     methods:        ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials:    !allowAllOrigins,
+    credentials:    !allowAll,
   });
 
-  // ── Swagger (dev only) ───────────────────────────────────────────────────────
   if (env !== 'production') {
     const swaggerConfig = new DocumentBuilder()
       .setTitle('SitePilot API')
@@ -46,15 +58,14 @@ async function bootstrap() {
       .addBearerAuth()
       .addServer(`http://localhost:${port}`, 'Local')
       .build();
-
-    const document = SwaggerModule.createDocument(app, swaggerConfig);
-    SwaggerModule.setup('docs', app, document, {
+    SwaggerModule.setup('docs', app, SwaggerModule.createDocument(app, swaggerConfig), {
       swaggerOptions: { persistAuthorization: true },
     });
-
     logger.log(`Swagger: http://localhost:${port}/docs`);
   }
 
+  // ── Hand off: close pre-server, start NestJS on same port ────────────────
+  await new Promise<void>(resolve => preServer.close(() => resolve()));
   await app.listen(port, '0.0.0.0');
   logger.log(`🚀 SitePilot API running on port ${port} [${env}]`);
 }
