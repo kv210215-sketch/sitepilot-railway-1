@@ -39,10 +39,10 @@ export class Page {
   @JoinColumn({ name: 'project_id' })
   project: Project;
 
-  @Column({ name: 'parent_id', nullable: true })
+  @Column({ name: 'parent_id', type: 'uuid', nullable: true })
   parentId: string | null;
 
-  @Column({ name: 'template_id', nullable: true })
+  @Column({ name: 'template_id', type: 'uuid', nullable: true })
   templateId: string | null;
 
   @Column({ length: 300 })
@@ -51,7 +51,7 @@ export class Page {
   @Column({ length: 300 })
   slug: string;
 
-  @Column({ name: 'url_path', length: 500, nullable: true })
+  @Column({ name: 'url_path', type: 'varchar', length: 500, nullable: true })
   urlPath: string | null;
 
   @Column({ type: 'enum', enum: PageStatus, default: PageStatus.DRAFT })
@@ -65,7 +65,7 @@ export class Page {
   previewHtml: string | null;
 
   // ── SEO ──────────────────────────────────────────────────────────────────────
-  @Column({ name: 'seo_title', length: 300, nullable: true })
+  @Column({ name: 'seo_title', type: 'varchar', length: 300, nullable: true })
   seoTitle: string | null;
 
   @Column({ name: 'seo_description', type: 'text', nullable: true })
@@ -74,16 +74,16 @@ export class Page {
   @Column({ name: 'seo_keywords', type: 'text', nullable: true })
   seoKeywords: string | null;
 
-  @Column({ name: 'og_title', length: 300, nullable: true })
+  @Column({ name: 'og_title', type: 'varchar', length: 300, nullable: true })
   ogTitle: string | null;
 
   @Column({ name: 'og_description', type: 'text', nullable: true })
   ogDescription: string | null;
 
-  @Column({ name: 'og_image_url', length: 500, nullable: true })
+  @Column({ name: 'og_image_url', type: 'varchar', length: 500, nullable: true })
   ogImageUrl: string | null;
 
-  @Column({ name: 'canonical_url', length: 500, nullable: true })
+  @Column({ name: 'canonical_url', type: 'varchar', length: 500, nullable: true })
   canonicalUrl: string | null;
 
   @Column({ length: 100, default: 'index, follow' })
@@ -102,14 +102,14 @@ export class Page {
   @Column({ name: 'scheduled_at', type: 'timestamptz', nullable: true })
   scheduledAt: Date | null;
 
-  @Column({ name: 'created_by', nullable: true })
+  @Column({ name: 'created_by', type: 'uuid', nullable: true })
   createdBy: string | null;
 
   @ManyToOne(() => User, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'created_by' })
   creator: User;
 
-  @Column({ name: 'updated_by', nullable: true })
+  @Column({ name: 'updated_by', type: 'uuid', nullable: true })
   updatedBy: string | null;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })

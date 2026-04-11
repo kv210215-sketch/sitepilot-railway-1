@@ -34,7 +34,7 @@ export class PublishJob {
   @JoinColumn({ name: 'project_id' })
   project: Project;
 
-  @Column({ name: 'initiated_by', nullable: true })
+  @Column({ name: 'initiated_by', type: 'uuid', nullable: true })
   initiatedBy: string | null;
 
   @ManyToOne(() => User, { onDelete: 'SET NULL' })
@@ -83,7 +83,7 @@ export class PublishJob {
   @Column({ name: 'completed_at', type: 'timestamptz', nullable: true })
   completedAt: Date | null;
 
-  @Column({ name: 'duration_ms', nullable: true })
+  @Column({ name: 'duration_ms', type: 'int', nullable: true })
   durationMs: number | null;
 
   @Column({ name: 'next_retry_at', type: 'timestamptz', nullable: true })
@@ -116,7 +116,7 @@ export class PublishJobLog {
   @JoinColumn({ name: 'job_id' })
   job: PublishJob;
 
-  @Column({ name: 'page_id', nullable: true })
+  @Column({ name: 'page_id', type: 'uuid', nullable: true })
   pageId: string | null;
 
   @Column({ length: 10, default: 'info' })
@@ -128,7 +128,7 @@ export class PublishJobLog {
   @Column({ type: 'jsonb', default: {} })
   context: Record<string, unknown>;
 
-  @Column({ name: 'duration_ms', nullable: true })
+  @Column({ name: 'duration_ms', type: 'int', nullable: true })
   durationMs: number | null;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
