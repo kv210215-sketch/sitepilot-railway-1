@@ -5,19 +5,22 @@ import { ThrottlerModule, ThrottlerModuleOptions } from '@nestjs/throttler';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
 
-import { appConfig, dbConfig, jwtConfig, throttleConfig } from './config/configuration';
+import { appConfig, dbConfig, jwtConfig, throttleConfig, billingConfig, automationConfig } from './config/configuration';
 import { GlobalExceptionFilter } from './modules/common/filters/http-exception.filter';
 import { JwtAuthGuard }          from './modules/auth/guards';
 
 // ── Modules ───────────────────────────────────────────────────────────────────
-import { AuthModule }      from './modules/auth/auth.module';
-import { ProjectsModule }  from './modules/projects/projects.module';
-import { PagesModule }     from './modules/pages/pages.module';
-import { TemplatesModule } from './modules/templates/templates.module';
-import { ContentModule }   from './modules/content/content.module';
-import { SeoModule }       from './modules/seo/seo.module';
-import { PublishModule }   from './modules/publish/publish.module';   // ← Sprint 3
-import { AuditModule }     from './modules/audit/audit.module';       // ← Sprint 3
+import { AuthModule }       from './modules/auth/auth.module';
+import { ProjectsModule }   from './modules/projects/projects.module';
+import { PagesModule }      from './modules/pages/pages.module';
+import { TemplatesModule }  from './modules/templates/templates.module';
+import { ContentModule }    from './modules/content/content.module';
+import { SeoModule }        from './modules/seo/seo.module';
+import { PublishModule }    from './modules/publish/publish.module';
+import { AuditModule }      from './modules/audit/audit.module';
+import { BillingModule }    from './modules/billing/billing.module';
+import { AiModule }         from './modules/ai/ai.module';
+import { AutomationModule } from './modules/automation/automation.module';
 
 // ── Entities ──────────────────────────────────────────────────────────────────
 import { User }          from './modules/users/user.entity';
@@ -26,14 +29,15 @@ import { ProjectMember } from './modules/projects/project-member.entity';
 import { Page }          from './modules/pages/page.entity';
 import { Template }      from './modules/templates/template.entity';
 import { ContentBlock }  from './modules/content/content-block.entity';
-import { PublishJob, PublishJobLog } from './modules/publish/publish-job.entity'; // ← Sprint 3
-import { AuditLog }      from './modules/audit/audit-log.entity';                // ← Sprint 3
+import { PublishJob, PublishJobLog } from './modules/publish/publish-job.entity';
+import { AuditLog }      from './modules/audit/audit-log.entity';
+import { Subscription }  from './modules/billing/billing.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal:    true,
-      load:        [appConfig, dbConfig, jwtConfig, throttleConfig],
+      load:        [appConfig, dbConfig, jwtConfig, throttleConfig, billingConfig, automationConfig],
       envFilePath: ['.env', '.env.local'],
     }),
 
@@ -52,8 +56,9 @@ import { AuditLog }      from './modules/audit/audit-log.entity';               
         entities:    [
           User, Project, ProjectMember,
           Page, Template, ContentBlock,
-          PublishJob, PublishJobLog,  // Sprint 3
-          AuditLog,                  // Sprint 3
+          PublishJob, PublishJobLog,
+          AuditLog,
+          Subscription,
         ],
       }),
     }),
@@ -68,12 +73,10 @@ import { AuditLog }      from './modules/audit/audit-log.entity';               
       }),
     }),
 
-    // Sprint 1
     AuthModule, ProjectsModule, PagesModule,
     TemplatesModule, ContentModule, SeoModule,
-    // Sprint 3
-    AuditModule,
-    PublishModule,
+    AuditModule, PublishModule,
+    BillingModule, AiModule, AutomationModule,
   ],
 
   providers: [

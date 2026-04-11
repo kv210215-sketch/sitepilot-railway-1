@@ -14,7 +14,11 @@ const nextConfig = {
   },
 
   images: {
-    domains: ['localhost', 'app.solomiya-energy.com'],
+    remotePatterns: [
+      { protocol: 'http',  hostname: 'localhost' },
+      { protocol: 'https', hostname: 'app.solomiya-energy.com' },
+      { protocol: 'https', hostname: 'solomiya-energy.com' },
+    ],
   },
 };
 
