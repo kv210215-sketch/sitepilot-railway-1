@@ -37,7 +37,7 @@ export class ProjectMember {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.VIEWER })
   role: UserRole;
 
-  @Column({ name: 'added_by', nullable: true })
+  @Column({ name: 'added_by', type: 'uuid', nullable: true })
   addedBy: string | null;
 
   @Column({ type: 'jsonb', default: {} })

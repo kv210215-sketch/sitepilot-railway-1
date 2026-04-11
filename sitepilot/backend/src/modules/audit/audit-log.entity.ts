@@ -27,14 +27,14 @@ export class AuditLog {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'user_id', nullable: true })
+  @Column({ name: 'user_id', type: 'uuid', nullable: true })
   userId: string | null;
 
   @ManyToOne(() => User, { onDelete: 'SET NULL', nullable: true })
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @Column({ name: 'project_id', nullable: true })
+  @Column({ name: 'project_id', type: 'uuid', nullable: true })
   projectId: string | null;
 
   @ManyToOne(() => Project, { onDelete: 'CASCADE', nullable: true })
@@ -44,13 +44,13 @@ export class AuditLog {
   @Column({ length: 80 })
   action: AuditAction;
 
-  @Column({ name: 'entity_type', length: 50, nullable: true })
+  @Column({ name: 'entity_type', type: 'varchar', length: 50, nullable: true })
   entityType: string | null;
 
-  @Column({ name: 'entity_id', nullable: true })
+  @Column({ name: 'entity_id', type: 'text', nullable: true })
   entityId: string | null;
 
-  @Column({ name: 'entity_name', length: 300, nullable: true })
+  @Column({ name: 'entity_name', type: 'varchar', length: 300, nullable: true })
   entityName: string | null;
 
   @Column({ type: 'jsonb', default: {} })

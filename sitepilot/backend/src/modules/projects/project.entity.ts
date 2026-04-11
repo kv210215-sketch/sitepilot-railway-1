@@ -38,7 +38,7 @@ export class Project {
   @Column({ length: 200 })
   slug: string;
 
-  @Column({ length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   domain: string | null;
 
   @Column({
@@ -55,10 +55,10 @@ export class Project {
   @Column({ type: 'enum', enum: ProjectStatus, default: ProjectStatus.DRAFT })
   status: ProjectStatus;
 
-  @Column({ name: 'favicon_url', length: 500, nullable: true })
+  @Column({ name: 'favicon_url', type: 'varchar', length: 500, nullable: true })
   faviconUrl: string | null;
 
-  @Column({ name: 'thumbnail_url', length: 500, nullable: true })
+  @Column({ name: 'thumbnail_url', type: 'varchar', length: 500, nullable: true })
   thumbnailUrl: string | null;
 
   @Column({ type: 'jsonb', default: {} })

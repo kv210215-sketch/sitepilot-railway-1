@@ -28,7 +28,7 @@ export class User {
   @Column({ length: 150 })
   name: string;
 
-  @Column({ name: 'avatar_url', length: 500, nullable: true })
+  @Column({ name: 'avatar_url', type: 'varchar', length: 500, nullable: true })
   avatarUrl: string | null;
 
   @Column({ type: 'enum', enum: UserStatus, default: UserStatus.PENDING_VERIFICATION })
@@ -38,14 +38,14 @@ export class User {
   emailVerified: boolean;
 
   @Exclude()
-  @Column({ name: 'email_verify_token', length: 255, nullable: true })
+  @Column({ name: 'email_verify_token', type: 'varchar', length: 255, nullable: true })
   emailVerifyToken: string | null;
 
   @Column({ name: 'email_verify_expires', type: 'timestamptz', nullable: true })
   emailVerifyExpires: Date | null;
 
   @Exclude()
-  @Column({ name: 'reset_password_token', length: 255, nullable: true })
+  @Column({ name: 'reset_password_token', type: 'varchar', length: 255, nullable: true })
   resetPasswordToken: string | null;
 
   @Column({ name: 'reset_password_expires', type: 'timestamptz', nullable: true })

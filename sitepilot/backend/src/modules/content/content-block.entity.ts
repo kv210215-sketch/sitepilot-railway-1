@@ -15,7 +15,7 @@ export class ContentBlock {
   @Column({ length: 200 })
   name: string;
 
-  @Column({ length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   category: string | null;
 
   @Column({ type: 'jsonb', default: {} })

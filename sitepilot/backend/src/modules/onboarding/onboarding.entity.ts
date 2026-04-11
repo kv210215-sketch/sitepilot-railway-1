@@ -30,7 +30,7 @@ export class OnboardingSession {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'user_id', nullable: true })
+  @Column({ name: 'user_id', type: 'uuid', nullable: true })
   userId: string | null;
 
   @Column({ type: 'enum', enum: OnboardingStep, default: OnboardingStep.START })

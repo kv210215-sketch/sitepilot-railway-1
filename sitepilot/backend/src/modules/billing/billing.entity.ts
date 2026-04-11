@@ -52,13 +52,13 @@ export class Subscription {
   @Column({ type: 'enum', enum: SubscriptionStatus, default: SubscriptionStatus.INACTIVE })
   status: SubscriptionStatus;
 
-  @Column({ name: 'stripe_customer_id', nullable: true })
+  @Column({ name: 'stripe_customer_id', type: 'text', nullable: true })
   stripeCustomerId: string | null;
 
-  @Column({ name: 'stripe_subscription_id', nullable: true })
+  @Column({ name: 'stripe_subscription_id', type: 'text', nullable: true })
   stripeSubscriptionId: string | null;
 
-  @Column({ name: 'stripe_price_id', nullable: true })
+  @Column({ name: 'stripe_price_id', type: 'text', nullable: true })
   stripePriceId: string | null;
 
   @Column({ name: 'current_period_start', type: 'timestamptz', nullable: true })

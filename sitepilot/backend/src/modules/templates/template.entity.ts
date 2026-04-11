@@ -34,10 +34,10 @@ export class Template {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'project_id', nullable: true })
+  @Column({ name: 'project_id', type: 'uuid', nullable: true })
   projectId: string | null;
 
-  @Column({ name: 'created_by', nullable: true })
+  @Column({ name: 'created_by', type: 'uuid', nullable: true })
   createdBy: string | null;
 
   @Column({ length: 200 })
@@ -46,7 +46,7 @@ export class Template {
   @Column({ type: 'text', nullable: true })
   description: string | null;
 
-  @Column({ length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   category: string | null;
 
   @Column({ type: 'text', array: true, default: [] })
@@ -55,7 +55,7 @@ export class Template {
   @Column({ type: 'jsonb', default: { blocks: [], seoRules: {}, requiredVars: [] } })
   structure: TemplateStructure;
 
-  @Column({ name: 'thumbnail_url', length: 500, nullable: true })
+  @Column({ name: 'thumbnail_url', type: 'varchar', length: 500, nullable: true })
   thumbnailUrl: string | null;
 
   @Column({ name: 'is_global', default: false })
