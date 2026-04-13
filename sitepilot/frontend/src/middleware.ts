@@ -6,6 +6,7 @@ const PUBLIC_PATHS = [
   '/auth/forgot-password',
   '/auth/reset-password',
   '/health',
+  '/api/health',
 ];
 
 export function middleware(request: NextRequest) {

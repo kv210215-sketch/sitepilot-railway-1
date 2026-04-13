@@ -28,7 +28,7 @@ export enum SiteGoal {
 export class GeneratedBlockDto {
   @ApiProperty() type:  string;
   @ApiProperty() order: number;
-  @ApiProperty({ type: Object }) data: Record<string, unknown>;
+  @ApiProperty({ type: 'object', additionalProperties: true }) data: Record<string, unknown>;
 }
 
 export class GeneratedPageDto {
@@ -96,7 +96,7 @@ export class ChatResponseDto {
   @ApiProperty() reply:          string;
   @ApiProperty() conversationId: string;
   @ApiProperty() stage:          string;
-  @ApiPropertyOptional({ type: ProposalDto }) proposal?: ProposalDto;
+  @ApiPropertyOptional({ type: () => ProposalDto }) proposal?: ProposalDto;
   @ApiProperty({ type: [String] }) quickReplies: string[];
 }
 
@@ -163,8 +163,8 @@ export class SalesChatResponseDto {
   @ApiProperty() conversationId: string;
   @ApiProperty() stage:          string;
   @ApiProperty({ type: [String] }) quickReplies: string[];
-  @ApiPropertyOptional({ type: LeadQualifyResultDto }) leadData?:       LeadQualifyResultDto;
-  @ApiPropertyOptional({ type: RecommendResultDto })  recommendation?: RecommendResultDto;
+  @ApiPropertyOptional({ type: () => LeadQualifyResultDto }) leadData?:       LeadQualifyResultDto;
+  @ApiPropertyOptional({ type: () => RecommendResultDto }) recommendation?: RecommendResultDto;
 }
 
 // ── Close Lead ────────────────────────────────────────────────────────────────

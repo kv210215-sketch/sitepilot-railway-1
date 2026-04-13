@@ -119,7 +119,7 @@ export class PublishJobLog {
   @Column({ name: 'page_id', type: 'uuid', nullable: true })
   pageId: string | null;
 
-  @Column({ length: 10, default: 'info' })
+  @Column({ type: 'varchar', length: 10, default: 'info' })
   level: 'info' | 'warn' | 'error';
 
   @Column({ type: 'text' })

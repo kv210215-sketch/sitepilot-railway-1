@@ -1,7 +1,7 @@
 import {
   IsString, IsEnum, IsOptional, IsUUID,
   MinLength, MaxLength, IsInt, Min, IsBoolean,
-  IsObject,
+  IsObject, ValidateNested,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
@@ -75,11 +75,13 @@ export class UpdatePageDto extends PartialType(CreatePageDto) {
   @IsOptional() @IsEnum(PageStatus)
   status?: PageStatus;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: 'object', additionalProperties: true })
   @IsOptional() @IsObject()
   content?: Record<string, unknown>;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: () => UpdateSeoDto })
+  @ValidateNested()
+  @Type(() => UpdateSeoDto)
   @IsOptional()
   seo?: UpdateSeoDto;
 }
@@ -147,7 +149,7 @@ export class PageResponseDto {
   @ApiProperty({ nullable: true }) urlPath: string | null;
   @ApiProperty({ enum: PageStatus }) status: PageStatus;
   @ApiProperty({ nullable: true }) templateId: string | null;
-  @ApiProperty() content: Record<string, unknown>;
+  @ApiProperty({ type: 'object', additionalProperties: true }) content: Record<string, unknown>;
   @ApiProperty({ nullable: true }) previewHtml: string | null;
   @ApiProperty({ nullable: true }) seoTitle: string | null;
   @ApiProperty({ nullable: true }) seoDescription: string | null;

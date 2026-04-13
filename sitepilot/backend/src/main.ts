@@ -1,11 +1,16 @@
+import * as dotenv from 'dotenv';
 import * as http from 'http';
+import { join } from 'path';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
-import { AppModule } from './app.module';
+
+dotenv.config({ path: join(__dirname, '../.env') });
+dotenv.config({ path: join(__dirname, '../.env.local'), override: true });
 
 async function bootstrap() {
+  const { AppModule } = await import('./app.module');
   const port = Number(process.env.PORT) || 3000;
   const logger = new Logger('Bootstrap');
 

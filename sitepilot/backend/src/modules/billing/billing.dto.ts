@@ -8,6 +8,12 @@ export class CreateCheckoutDto {
   plan: BillingPlan;
 }
 
+export class SubscriptionLimitsDto {
+  @ApiProperty() projects: number;
+  @ApiProperty() pages: number;
+  @ApiProperty() publishJobs: number;
+}
+
 export class SubscriptionResponseDto {
   @ApiProperty() id: string;
   @ApiProperty({ enum: BillingPlan }) plan: BillingPlan;
@@ -15,11 +21,7 @@ export class SubscriptionResponseDto {
   @ApiPropertyOptional() currentPeriodEnd?: Date | null;
   @ApiPropertyOptional() cancelAtPeriodEnd?: boolean;
   @ApiPropertyOptional() trialEnd?: Date | null;
-  @ApiProperty() limits: {
-    projects: number;
-    pages: number;
-    publishJobs: number;
-  };
+  @ApiProperty({ type: () => SubscriptionLimitsDto }) limits: SubscriptionLimitsDto;
 }
 
 export class CheckoutSessionDto {

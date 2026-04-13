@@ -6,7 +6,10 @@ export const appConfig = registerAs('app', () => ({
   url: process.env.APP_URL || 'http://localhost:3001',
   frontendUrl: process.env.FRONTEND_URL || 'http://localhost:3000',
   apiPrefix: process.env.API_PREFIX || 'api/v1',
-  corsOrigins: (process.env.CORS_ORIGINS || 'http://localhost:3000').split(','),
+  corsOrigins: (process.env.CORS_ORIGINS || 'http://localhost:3000')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean),
   bcryptRounds: parseInt(process.env.BCRYPT_ROUNDS || '12', 10),
 }));
 
@@ -15,6 +18,7 @@ export const dbConfig = registerAs('db', () => {
   if (databaseUrl) {
     const url = new URL(databaseUrl);
     return {
+      url: databaseUrl,
       host:    url.hostname,
       port:    parseInt(url.port || '5432', 10),
       name:    url.pathname.replace(/^\//, ''),
@@ -26,6 +30,7 @@ export const dbConfig = registerAs('db', () => {
     };
   }
   return {
+    url: undefined,
     host:    process.env.DB_HOST || 'localhost',
     port:    parseInt(process.env.DB_PORT || '5432', 10),
     name:    process.env.DB_NAME || 'sitepilot',

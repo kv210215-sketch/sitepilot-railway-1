@@ -35,13 +35,13 @@ export class OnboardingStatusDto {
   @ApiProperty({ enum: OnboardingStep }) step: OnboardingStep;
   @ApiProperty() completed:  boolean;
   @ApiProperty() published:  boolean;
-  @ApiPropertyOptional({ type: Object }) generatedSite?: Record<string, unknown> | null;
-  @ApiPropertyOptional({ type: Object }) data?: Record<string, unknown>;
+  @ApiPropertyOptional({ type: 'object', additionalProperties: true }) generatedSite?: Record<string, unknown> | null;
+  @ApiPropertyOptional({ type: 'object', additionalProperties: true }) data?: Record<string, unknown>;
 }
 
 export class OnboardingStepResponseDto {
   @ApiProperty() sessionId:  string;
   @ApiProperty({ enum: OnboardingStep }) step: OnboardingStep;
   @ApiProperty() message:    string;
-  @ApiPropertyOptional({ type: Object }) payload?: Record<string, unknown>;
+  @ApiPropertyOptional({ type: 'object', additionalProperties: true }) payload?: Record<string, unknown>;
 }

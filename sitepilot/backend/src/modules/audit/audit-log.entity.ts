@@ -41,7 +41,7 @@ export class AuditLog {
   @JoinColumn({ name: 'project_id' })
   project: Project;
 
-  @Column({ length: 80 })
+  @Column({ type: 'varchar', length: 80 })
   action: AuditAction;
 
   @Column({ name: 'entity_type', type: 'varchar', length: 50, nullable: true })

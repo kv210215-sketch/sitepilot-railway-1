@@ -115,9 +115,9 @@ export class AuthUserDto {
 }
 
 export class AuthResponseDto {
-  @ApiProperty()
+  @ApiProperty({ type: () => AuthUserDto })
   user: AuthUserDto;
 
-  @ApiProperty()
+  @ApiProperty({ type: () => AuthTokensDto })
   tokens: AuthTokensDto;
 }

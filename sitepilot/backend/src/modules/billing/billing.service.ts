@@ -1,5 +1,5 @@
 import {
-  Injectable, Logger, BadRequestException, NotFoundException,
+  Injectable, Logger, BadRequestException, NotFoundException, ServiceUnavailableException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -15,20 +15,28 @@ import { CreateCheckoutDto, SubscriptionResponseDto } from './billing.dto';
 @Injectable()
 export class BillingService {
   private readonly logger = new Logger(BillingService.name);
-  private readonly stripe: Stripe;
+  private readonly stripe: Stripe | null;
 
   constructor(
     @InjectRepository(Subscription)
     private readonly subRepo: Repository<Subscription>,
     private readonly config: ConfigService,
   ) {
-    const secretKey = this.config.get<string>('billing.stripeSecretKey') ?? '';
-    this.stripe = new Stripe(secretKey, { apiVersion: '2024-06-20' });
+    const secretKey = this.config.get<string>('billing.stripeSecretKey')?.trim() ?? '';
+    this.stripe = secretKey
+      ? new Stripe(secretKey, { apiVersion: '2024-06-20' })
+      : null;
+
+    if (!this.stripe) {
+      this.logger.warn('Stripe secret key is not configured. Billing checkout and webhooks are disabled.');
+    }
   }
 
   // ── Checkout session ──────────────────────────────────────────────────────
 
   async createCheckout(userId: string, dto: CreateCheckoutDto): Promise<{ url: string }> {
+    const stripe = this.getStripe();
+
     if (dto.plan === BillingPlan.FREE) {
       throw new BadRequestException('Cannot checkout free plan');
     }
@@ -43,13 +51,13 @@ export class BillingService {
 
     // Create customer if needed
     if (!customerId) {
-      const customer = await this.stripe.customers.create({ metadata: { userId } });
+      const customer = await stripe.customers.create({ metadata: { userId } });
       customerId = customer.id;
     }
 
     const frontendUrl = this.config.get<string>('app.frontendUrl') ?? 'http://localhost:3000';
 
-    const session = await this.stripe.checkout.sessions.create({
+    const session = await stripe.checkout.sessions.create({
       mode:       'subscription',
       customer:   customerId,
       line_items: [{ price: priceId, quantity: 1 }],
@@ -69,6 +77,7 @@ export class BillingService {
   // ── Customer portal (manage subscription) ────────────────────────────────
 
   async createPortalSession(userId: string): Promise<{ url: string }> {
+    const stripe = this.getStripe();
     const sub = await this.subRepo.findOne({ where: { userId } });
     if (!sub?.stripeCustomerId) {
       throw new BadRequestException('No active Stripe customer found');
@@ -76,7 +85,7 @@ export class BillingService {
 
     const frontendUrl = this.config.get<string>('app.frontendUrl') ?? 'http://localhost:3000';
 
-    const session = await this.stripe.billingPortal.sessions.create({
+    const session = await stripe.billingPortal.sessions.create({
       customer:   sub.stripeCustomerId,
       return_url: `${frontendUrl}/account`,
     });
@@ -87,11 +96,12 @@ export class BillingService {
   // ── Webhook handler ───────────────────────────────────────────────────────
 
   async handleWebhook(rawBody: Buffer, signature: string): Promise<void> {
+    const stripe = this.getStripe();
     const webhookSecret = this.config.get<string>('billing.stripeWebhookSecret') ?? '';
 
     let event: Stripe.Event;
     try {
-      event = this.stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
+      event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
       this.logger.error(`Webhook signature verification failed: ${msg}`);
@@ -168,13 +178,14 @@ export class BillingService {
   // ── Private helpers ───────────────────────────────────────────────────────
 
   private async onCheckoutCompleted(session: Stripe.Checkout.Session): Promise<void> {
+    const stripe = this.getStripe();
     const userId = session.metadata?.userId;
     if (!userId) return;
 
     const stripeSubId = session.subscription as string;
     if (!stripeSubId) return;
 
-    const stripeSub = await this.stripe.subscriptions.retrieve(stripeSubId);
+    const stripeSub = await stripe.subscriptions.retrieve(stripeSubId);
     await this.syncSubscription(stripeSub, userId);
   }
 
@@ -258,5 +269,13 @@ export class BillingService {
       trialEnd:          sub.trialEnd,
       limits:            PLAN_LIMITS[sub.plan],
     };
+  }
+
+  private getStripe(): Stripe {
+    if (!this.stripe) {
+      throw new ServiceUnavailableException('Stripe billing is not configured');
+    }
+
+    return this.stripe;
   }
 }

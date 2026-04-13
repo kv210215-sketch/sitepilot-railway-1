@@ -52,11 +52,11 @@ export class UpdateProjectDto extends PartialType(CreateProjectDto) {
   @IsEnum(ProjectStatus)
   status?: ProjectStatus;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: 'object', additionalProperties: true })
   @IsOptional()
   seoDefaults?: Record<string, unknown>;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: 'object', additionalProperties: true })
   @IsOptional()
   settings?: Record<string, unknown>;
 }
@@ -118,8 +118,8 @@ export class ProjectResponseDto {
   @ApiProperty({ enum: ProjectType }) projectType: ProjectType;
   @ApiProperty({ enum: ProjectStatus }) status: ProjectStatus;
   @ApiProperty({ nullable: true }) description: string | null;
-  @ApiProperty() settings: Record<string, unknown>;
-  @ApiProperty() seoDefaults: Record<string, unknown>;
+  @ApiProperty({ type: 'object', additionalProperties: true }) settings: Record<string, unknown>;
+  @ApiProperty({ type: 'object', additionalProperties: true }) seoDefaults: Record<string, unknown>;
   @ApiProperty() createdAt: Date;
   @ApiProperty() updatedAt: Date;
   @ApiPropertyOptional() pagesCount?: number;

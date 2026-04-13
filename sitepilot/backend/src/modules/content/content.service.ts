@@ -36,6 +36,11 @@ export class ContentService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
+    if (!(await this.tableExists('content_blocks'))) {
+      this.logger.warn('Skipping content seed because the "content_blocks" table does not exist yet.');
+      return;
+    }
+
     const count = await this.repo.count();
     if (count === 0) await this.seedMarketingPack();
   }
@@ -182,5 +187,14 @@ export class ContentService implements OnModuleInit {
     }
 
     this.logger.log('✅ Solomiya Energy marketing pack seeded');
+  }
+
+  private async tableExists(tableName: string): Promise<boolean> {
+    const [result] = await this.repo.query(
+      'SELECT to_regclass(current_schema() || \'.\' || $1) AS regclass',
+      [tableName],
+    );
+
+    return Boolean(result?.regclass);
   }
 }

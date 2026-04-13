@@ -23,6 +23,11 @@ export class TemplatesService implements OnModuleInit {
   // ── Seed шаблонів при старті ──────────────────────────────────────────────
 
   async onModuleInit() {
+    if (!(await this.tableExists('templates'))) {
+      this.logger.warn('Skipping template seed because the "templates" table does not exist yet.');
+      return;
+    }
+
     const count = await this.repo.count({ where: { isGlobal: true } });
     if (count === 0) {
       await this.seedSolomiyaTemplates();
@@ -330,5 +335,14 @@ export class TemplatesService implements OnModuleInit {
     }
 
     this.logger.log(`✅ Seeded ${templates.length} Solomiya Energy templates`);
+  }
+
+  private async tableExists(tableName: string): Promise<boolean> {
+    const [result] = await this.repo.query(
+      'SELECT to_regclass(current_schema() || \'.\' || $1) AS regclass',
+      [tableName],
+    );
+
+    return Boolean(result?.regclass);
   }
 }

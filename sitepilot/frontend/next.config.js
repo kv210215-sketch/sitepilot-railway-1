@@ -1,10 +1,24 @@
 /** @type {import('next').NextConfig} */
+const isWindows = process.platform === 'win32';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
+
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
 
-  // Standalone output for containerized deployments
-  output: 'standalone',
+  // Use standalone only in Linux CI/container builds.
+  ...(isWindows ? {} : { output: 'standalone' }),
+
+  // Local Windows builds in this repo can stall forever during file tracing.
+  ...(isWindows
+    ? {
+        experimental: {
+          outputFileTracingExcludes: {
+            '/*': ['./node_modules/**/*', './.next/cache/**/*'],
+          },
+        },
+      }
+    : {}),
 
   // Security headers
   async headers() {
@@ -29,12 +43,16 @@ const nextConfig = {
     ];
   },
 
-  // Проксі API запитів у dev (уникаємо CORS)
+  // Proxy API requests only in development to avoid freezing production rewrites at build time.
   async rewrites() {
+    if (process.env.NODE_ENV !== 'development') {
+      return [];
+    }
+
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'}/api/:path*`,
+        destination: `${apiUrl}/api/:path*`,
       },
     ];
   },
