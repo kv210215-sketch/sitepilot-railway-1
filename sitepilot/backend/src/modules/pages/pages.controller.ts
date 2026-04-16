@@ -13,7 +13,8 @@ import {
   CreatePageDto, UpdatePageDto, ListPagesDto, GeneratePageDto,
   PageResponseDto, PaginatedPagesDto,
 } from './pages.dto';
-import { JwtAuthGuard } from '../auth/guards';
+import { JwtAuthGuard, OrgRolesGuard, Roles } from '../auth/guards';
+import { UserRole } from '../projects/project-member.entity';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { RequestUser } from '../auth/jwt.strategy';
 
@@ -31,7 +32,7 @@ class BulkGenerateDtoValidator {
 
 @ApiTags('Pages')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, OrgRolesGuard)
 @Controller('projects/:projectId/pages')
 export class PagesController {
   constructor(private readonly pages: PagesService) {}
@@ -41,6 +42,7 @@ export class PagesController {
   @Get()
   @ApiOperation({ summary: 'Список сторінок проєкту' })
   @ApiResponse({ status: 200, type: PaginatedPagesDto })
+  @ApiResponse({ status: 403, description: 'Не є учасником проєкту' })
   list(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Query() query: ListPagesDto,
@@ -60,8 +62,10 @@ export class PagesController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @Roles(UserRole.OWNER, UserRole.MANAGER, UserRole.EDITOR, UserRole.TECHNICAL)
   @ApiOperation({ summary: 'Створити порожню сторінку' })
   @ApiResponse({ status: 201, type: PageResponseDto })
+  @ApiResponse({ status: 403, description: 'Потрібна роль editor або вище' })
   create(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Body() dto: CreatePageDto,
@@ -72,6 +76,7 @@ export class PagesController {
 
   @Post('generate')
   @HttpCode(HttpStatus.CREATED)
+  @Roles(UserRole.OWNER, UserRole.MANAGER, UserRole.EDITOR, UserRole.TECHNICAL)
   @ApiOperation({ summary: 'Згенерувати сторінку з шаблону' })
   @ApiResponse({ status: 201, type: PageResponseDto })
   generate(
@@ -83,6 +88,7 @@ export class PagesController {
   }
 
   @Patch(':pageId')
+  @Roles(UserRole.OWNER, UserRole.MANAGER, UserRole.EDITOR, UserRole.TECHNICAL)
   @ApiOperation({ summary: 'Оновити сторінку (контент + SEO)' })
   @ApiResponse({ status: 200, type: PageResponseDto })
   update(
@@ -95,6 +101,7 @@ export class PagesController {
   }
 
   @Post(':pageId/regenerate-seo')
+  @Roles(UserRole.OWNER, UserRole.MANAGER, UserRole.EDITOR, UserRole.TECHNICAL)
   @ApiOperation({ summary: 'Перегенерувати SEO автоматично' })
   @ApiResponse({ status: 200, type: PageResponseDto })
   regenerateSeo(
@@ -115,7 +122,9 @@ export class PagesController {
   }
 
   @Patch(':pageId/archive')
+  @Roles(UserRole.OWNER, UserRole.MANAGER)
   @ApiOperation({ summary: 'Архівувати сторінку' })
+  @ApiResponse({ status: 403, description: 'Потрібна роль manager або owner' })
   archive(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('pageId',    ParseUUIDPipe) pageId:    string,
@@ -124,8 +133,10 @@ export class PagesController {
   }
 
   @Delete(':pageId')
+  @Roles(UserRole.OWNER, UserRole.MANAGER)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Видалити сторінку (soft delete)' })
+  @ApiResponse({ status: 403, description: 'Потрібна роль manager або owner' })
   remove(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('pageId',    ParseUUIDPipe) pageId:    string,
@@ -137,7 +148,9 @@ export class PagesController {
 
   @Post('bulk-generate')
   @HttpCode(HttpStatus.CREATED)
+  @Roles(UserRole.OWNER, UserRole.MANAGER)
   @ApiOperation({ summary: 'Масова генерація сторінок (міста × шаблон)' })
+  @ApiResponse({ status: 403, description: 'Потрібна роль manager або owner' })
   bulkGenerate(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Body() dto: BulkGenerateDtoValidator,
