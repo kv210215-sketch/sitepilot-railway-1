@@ -8,9 +8,10 @@ import { PublishJobLog }     from './publish-job.entity';
 import { Page }              from '../pages/page.entity';
 import { AuditModule }       from '../audit/audit.module';
 import { AutomationModule }  from '../automation/automation.module';
+import { ProjectsModule }    from '../projects/projects.module';
 
 @Module({
-  imports:     [TypeOrmModule.forFeature([PublishJob, PublishJobLog, Page]), AuditModule, AutomationModule],
+  imports:     [TypeOrmModule.forFeature([PublishJob, PublishJobLog, Page]), AuditModule, AutomationModule, ProjectsModule],
   controllers: [PublishController],
   providers:   [PublishService],
   exports:     [PublishService],

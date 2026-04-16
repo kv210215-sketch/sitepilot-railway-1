@@ -10,7 +10,8 @@ import {
   CreatePublishJobDto, ListJobsDto,
   PublishJobResponseDto, PaginatedJobsDto,
 } from './publish.dto';
-import { JwtAuthGuard } from '../auth/guards';
+import { JwtAuthGuard, OrgRolesGuard, Roles } from '../auth/guards';
+import { UserRole } from '../projects/project-member.entity';
 import { CurrentUser }  from '../common/decorators/current-user.decorator';
 import { RequestUser }  from '../auth/jwt.strategy';
 import { PlaywrightService } from '../automation/playwright.service';
@@ -33,7 +34,7 @@ class RunPlaywrightDto {
 
 @ApiTags('Publish')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, OrgRolesGuard)
 @Controller('projects/:projectId/publish')
 export class PublishController {
   constructor(
@@ -41,10 +42,12 @@ export class PublishController {
     private readonly playwright: PlaywrightService,
   ) {}
 
-  // ── Список jobs ───────────────────────────────────────────────────────────
+  // ── Read (any member) ───────────────────────────────────────────────────
+
   @Get()
   @ApiOperation({ summary: 'Черга публікацій проєкту' })
   @ApiResponse({ status: 200, type: PaginatedJobsDto })
+  @ApiResponse({ status: 403, description: 'Не є учасником проєкту' })
   list(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Query() query: ListJobsDto,
@@ -52,14 +55,12 @@ export class PublishController {
     return this.svc.list(projectId, query);
   }
 
-  // ── Статистика ────────────────────────────────────────────────────────────
   @Get('stats')
   @ApiOperation({ summary: 'Статистика публікацій проєкту' })
   stats(@Param('projectId', ParseUUIDPipe) projectId: string) {
     return this.svc.getStats(projectId);
   }
 
-  // ── Деталі одного job ─────────────────────────────────────────────────────
   @Get(':jobId')
   @ApiOperation({ summary: 'Деталі publish job' })
   @ApiResponse({ status: 200, type: PublishJobResponseDto })
@@ -70,7 +71,6 @@ export class PublishController {
     return this.svc.getOne(projectId, jobId);
   }
 
-  // ── Логи job ─────────────────────────────────────────────────────────────
   @Get(':jobId/logs')
   @ApiOperation({ summary: 'Логи publish job' })
   getLogs(
@@ -80,11 +80,14 @@ export class PublishController {
     return this.svc.getLogs(projectId, jobId);
   }
 
-  // ── Створити job ──────────────────────────────────────────────────────────
+  // ── Write (editor+) ──────────────────────────────────────────────────
+
   @Post()
+  @Roles(UserRole.OWNER, UserRole.MANAGER, UserRole.EDITOR, UserRole.TECHNICAL)
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Запустити публікацію (page / project / selected)' })
   @ApiResponse({ status: 201, type: PublishJobResponseDto })
+  @ApiResponse({ status: 403, description: 'Потрібна роль editor або вище' })
   create(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Body() dto: CreatePublishJobDto,
@@ -93,9 +96,10 @@ export class PublishController {
     return this.svc.create(projectId, dto, user.id);
   }
 
-  // ── Retry ─────────────────────────────────────────────────────────────────
   @Post(':jobId/retry')
+  @Roles(UserRole.OWNER, UserRole.MANAGER, UserRole.EDITOR, UserRole.TECHNICAL)
   @ApiOperation({ summary: 'Перезапустити failed job' })
+  @ApiResponse({ status: 403, description: 'Потрібна роль editor або вище' })
   retry(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('jobId',     ParseUUIDPipe) jobId:     string,
@@ -104,9 +108,12 @@ export class PublishController {
     return this.svc.retry(projectId, jobId, user.id);
   }
 
-  // ── Cancel ────────────────────────────────────────────────────────────────
+  // ── Management (manager / owner) ───────────────────────────────────────
+
   @Patch(':jobId/cancel')
+  @Roles(UserRole.OWNER, UserRole.MANAGER)
   @ApiOperation({ summary: 'Скасувати queued/pending job' })
+  @ApiResponse({ status: 403, description: 'Потрібна роль manager або owner' })
   cancel(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('jobId',     ParseUUIDPipe) jobId:     string,
@@ -115,10 +122,11 @@ export class PublishController {
     return this.svc.cancel(projectId, jobId, user.id);
   }
 
-  // ── Playwright publish (Tilda) ────────────────────────────────────────────
   @Post('run')
+  @Roles(UserRole.OWNER, UserRole.MANAGER)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Run Playwright publish engine against Tilda' })
+  @ApiResponse({ status: 403, description: 'Потрібна роль manager або owner' })
   runPlaywright(
     @Param('projectId', ParseUUIDPipe) _projectId: string,
     @Body() dto: RunPlaywrightDto,
