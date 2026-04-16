@@ -48,17 +48,14 @@ export class OrgRolesGuard implements CanActivate {
 
     if (!member) throw new ForbiddenException('Немає доступу до цієї організації');
 
-    // If specific roles required, check them
-    if (required && required.length > 0) {
-      // OWNER always has access
-      if (member.role === OrgRole.OWNER) return true;
-      if (!required.includes(member.role)) {
-        throw new ForbiddenException(`Потрібна роль: ${required.join(' або ')}`);
-      }
+    // Always attach member to request for downstream use
+    request.orgMember = member;
+
+    // If specific roles required, enforce them (OWNER always passes)
+    if (required?.length && member.role !== OrgRole.OWNER && !required.includes(member.role)) {
+      throw new ForbiddenException(`Потрібна роль: ${required.join(' або ')}`);
     }
 
-    // Attach member to request for downstream use
-    request.orgMember = member;
     return true;
   }
 }

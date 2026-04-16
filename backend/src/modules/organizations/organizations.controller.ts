@@ -11,6 +11,8 @@ import {
 import { JwtAuthGuard } from '../auth/guards';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { RequestUser } from '../auth/jwt.strategy';
+import { OrgRolesGuard, OrgRoles } from '../common/guards/org-roles.guard';
+import { OrgRole } from './entities/organization-member.entity';
 import { OrganizationsService } from './organizations.service';
 
 import {
@@ -36,6 +38,7 @@ export class OrganizationsController {
   constructor(private readonly organizationsService: OrganizationsService) {}
 
   // ── GET /organizations ────────────────────────────────────────────────────────
+  // No org-scoped guard — service filters by userId membership internally
 
   @Get()
   @ApiOperation({ summary: 'Список організацій для поточного користувача' })
@@ -52,6 +55,7 @@ export class OrganizationsController {
   }
 
   // ── POST /organizations ───────────────────────────────────────────────────────
+  // Any authenticated user may create an org (becomes OWNER automatically)
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -65,11 +69,15 @@ export class OrganizationsController {
   }
 
   // ── GET /organizations/:id ────────────────────────────────────────────────────
+  // Requires active membership (any role). SUPER_ADMIN bypasses.
 
   @Get(':id')
+  @UseGuards(OrgRolesGuard)
+  @OrgRoles()
   @ApiOperation({ summary: 'Отримати організацію по ID' })
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200, type: OrganizationResponseDto })
+  @ApiResponse({ status: 403, description: 'Not a member of this organization' })
   findOne(
     @Param('id') id: string,
     @CurrentUser() currentUser: RequestUser,
@@ -78,11 +86,15 @@ export class OrganizationsController {
   }
 
   // ── PATCH /organizations/:id ──────────────────────────────────────────────────
+  // Requires org OWNER or ADMIN. SUPER_ADMIN bypasses.
 
   @Patch(':id')
+  @UseGuards(OrgRolesGuard)
+  @OrgRoles(OrgRole.ADMIN, OrgRole.OWNER)
   @ApiOperation({ summary: 'Оновити організацію (owner або admin)' })
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200, type: OrganizationResponseDto })
+  @ApiResponse({ status: 403, description: 'Requires owner or admin role' })
   update(
     @Param('id') id: string,
     @Body() dto: UpdateOrganizationDto,
@@ -92,12 +104,16 @@ export class OrganizationsController {
   }
 
   // ── DELETE /organizations/:id ─────────────────────────────────────────────────
+  // Requires org OWNER only. SUPER_ADMIN bypasses.
 
   @Delete(':id')
+  @UseGuards(OrgRolesGuard)
+  @OrgRoles(OrgRole.OWNER)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Деактивувати організацію (тільки owner або SUPER_ADMIN)' })
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200 })
+  @ApiResponse({ status: 403, description: 'Requires owner role' })
   deactivate(
     @Param('id') id: string,
     @CurrentUser() currentUser: RequestUser,
@@ -106,11 +122,16 @@ export class OrganizationsController {
   }
 
   // ── GET /organizations/:organizationId/members ────────────────────────────────
+  // Requires active membership (any role). SUPER_ADMIN bypasses.
+  // Previously: no access control — any authenticated user could enumerate members.
 
   @Get(':organizationId/members')
-  @ApiOperation({ summary: 'Список учасників організації' })
+  @UseGuards(OrgRolesGuard)
+  @OrgRoles()
+  @ApiOperation({ summary: 'Список учасників організації (тільки члени організації)' })
   @ApiParam({ name: 'organizationId', type: String })
   @ApiResponse({ status: 200, type: PaginatedOrganizationMembersDto })
+  @ApiResponse({ status: 403, description: 'Not a member of this organization' })
   getMembers(
     @Param('organizationId') organizationId: string,
     @Query() query: ListOrganizationMembersQueryDto,
@@ -119,12 +140,16 @@ export class OrganizationsController {
   }
 
   // ── POST /organizations/:organizationId/members ───────────────────────────────
+  // Requires org OWNER or ADMIN. SUPER_ADMIN bypasses.
 
   @Post(':organizationId/members')
+  @UseGuards(OrgRolesGuard)
+  @OrgRoles(OrgRole.ADMIN, OrgRole.OWNER)
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Додати учасника до організації (owner або admin)' })
   @ApiParam({ name: 'organizationId', type: String })
   @ApiResponse({ status: 201, type: OrganizationMemberResponseDto })
+  @ApiResponse({ status: 403, description: 'Requires owner or admin role' })
   addMember(
     @Param('organizationId') organizationId: string,
     @Body() dto: AddOrganizationMemberDto,
@@ -134,12 +159,16 @@ export class OrganizationsController {
   }
 
   // ── PATCH /organizations/:organizationId/members/:memberId ────────────────────
+  // Requires org OWNER or ADMIN. SUPER_ADMIN bypasses.
 
   @Patch(':organizationId/members/:memberId')
+  @UseGuards(OrgRolesGuard)
+  @OrgRoles(OrgRole.ADMIN, OrgRole.OWNER)
   @ApiOperation({ summary: 'Змінити роль учасника (owner або admin)' })
   @ApiParam({ name: 'organizationId', type: String })
   @ApiParam({ name: 'memberId', type: String })
   @ApiResponse({ status: 200, type: OrganizationMemberResponseDto })
+  @ApiResponse({ status: 403, description: 'Requires owner or admin role' })
   updateMemberRole(
     @Param('organizationId') organizationId: string,
     @Param('memberId') memberId: string,
@@ -155,13 +184,17 @@ export class OrganizationsController {
   }
 
   // ── DELETE /organizations/:organizationId/members/:memberId ───────────────────
+  // Requires org OWNER or ADMIN. SUPER_ADMIN bypasses.
 
   @Delete(':organizationId/members/:memberId')
+  @UseGuards(OrgRolesGuard)
+  @OrgRoles(OrgRole.ADMIN, OrgRole.OWNER)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Видалити учасника з організації' })
   @ApiParam({ name: 'organizationId', type: String })
   @ApiParam({ name: 'memberId', type: String })
   @ApiResponse({ status: 200 })
+  @ApiResponse({ status: 403, description: 'Requires owner or admin role' })
   removeMember(
     @Param('organizationId') organizationId: string,
     @Param('memberId') memberId: string,
