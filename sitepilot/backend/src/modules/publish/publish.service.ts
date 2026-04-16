@@ -193,7 +193,7 @@ export class PublishService {
 
   // ── Retry ─────────────────────────────────────────────────────────────────
 
-  async retry(projectId: string, jobId: string, userId: string): Promise<PublishJobResponseDto> {
+  async retry(projectId: string, jobId: string, _userId: string): Promise<PublishJobResponseDto> {
     const job = await this.findJob(projectId, jobId);
 
     if (job.status !== PublishStatus.FAILED && job.status !== PublishStatus.CANCELLED) {

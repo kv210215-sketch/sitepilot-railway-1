@@ -2,10 +2,7 @@
 import {
   Entity, PrimaryGeneratedColumn, Column,
   CreateDateColumn, UpdateDateColumn, DeleteDateColumn,
-  ManyToOne, JoinColumn,
 } from 'typeorm';
-import { User }    from '../users/user.entity';
-import { Project } from '../projects/project.entity';
 
 export enum TemplateCategory {
   HOME       = 'home',

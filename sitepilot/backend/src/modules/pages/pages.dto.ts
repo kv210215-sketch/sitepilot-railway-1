@@ -1,6 +1,6 @@
 import {
   IsString, IsEnum, IsOptional, IsUUID,
-  MinLength, MaxLength, IsInt, Min, IsBoolean,
+  MinLength, MaxLength, IsInt, Min,
   IsObject, ValidateNested,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';

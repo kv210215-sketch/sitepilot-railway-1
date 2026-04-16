@@ -1,6 +1,6 @@
 import {
   IsString, IsEnum, IsOptional,
-  MinLength, MaxLength, IsUrl, Matches,
+  MinLength, MaxLength, Matches,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';

@@ -14,7 +14,8 @@ import {
   AddMemberDto, UpdateMemberRoleDto,
   ProjectResponseDto, PaginatedProjectsDto,
 } from './projects.dto';
-import { JwtAuthGuard } from '../auth/guards';
+import { JwtAuthGuard, ProjectRoleGuard, ProjectRoles } from '../auth/guards';
+import { UserRole } from './project-member.entity';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { RequestUser } from '../auth/jwt.strategy';
 
@@ -24,8 +25,6 @@ import { RequestUser } from '../auth/jwt.strategy';
 @Controller('projects')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
-
-  // ── List ─────────────────────────────────────────────────────────────────────
 
   @Get()
   @ApiOperation({ summary: 'Список проєктів поточного користувача' })
@@ -37,12 +36,12 @@ export class ProjectsController {
     return this.projectsService.listForUser(user.id, query);
   }
 
-  // ── Get one ──────────────────────────────────────────────────────────────────
-
   @Get(':projectId')
+  @UseGuards(ProjectRoleGuard)
   @ApiOperation({ summary: 'Деталі проєкту' })
   @ApiParam({ name: 'projectId', type: 'string', format: 'uuid' })
   @ApiResponse({ status: 200, type: ProjectResponseDto })
+  @ApiResponse({ status: 403, description: 'Не є учасником проєкту' })
   @ApiResponse({ status: 404, description: 'Проєкт не знайдено' })
   getOne(
     @Param('projectId', ParseUUIDPipe) projectId: string,
@@ -50,8 +49,6 @@ export class ProjectsController {
   ): Promise<ProjectResponseDto> {
     return this.projectsService.getOne(projectId, user.id);
   }
-
-  // ── Create ───────────────────────────────────────────────────────────────────
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -64,12 +61,13 @@ export class ProjectsController {
     return this.projectsService.create(dto, user.id);
   }
 
-  // ── Update ───────────────────────────────────────────────────────────────────
-
   @Patch(':projectId')
+  @UseGuards(ProjectRoleGuard)
+  @ProjectRoles(UserRole.OWNER, UserRole.MANAGER)
   @ApiOperation({ summary: 'Оновити проєкт (owner / manager)' })
   @ApiParam({ name: 'projectId', type: 'string', format: 'uuid' })
   @ApiResponse({ status: 200, type: ProjectResponseDto })
+  @ApiResponse({ status: 403, description: 'Потрібна роль owner або manager' })
   update(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Body() dto: UpdateProjectDto,
@@ -78,11 +76,12 @@ export class ProjectsController {
     return this.projectsService.update(projectId, dto, user.id);
   }
 
-  // ── Archive ──────────────────────────────────────────────────────────────────
-
   @Patch(':projectId/archive')
+  @UseGuards(ProjectRoleGuard)
+  @ProjectRoles(UserRole.OWNER)
   @ApiOperation({ summary: 'Архівувати проєкт (тільки owner)' })
   @ApiParam({ name: 'projectId', type: 'string', format: 'uuid' })
+  @ApiResponse({ status: 403, description: 'Потрібна роль owner' })
   archive(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @CurrentUser() user: RequestUser,
@@ -90,12 +89,13 @@ export class ProjectsController {
     return this.projectsService.archive(projectId, user.id);
   }
 
-  // ── Delete ───────────────────────────────────────────────────────────────────
-
   @Delete(':projectId')
+  @UseGuards(ProjectRoleGuard)
+  @ProjectRoles(UserRole.OWNER)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Видалити проєкт (soft delete, тільки owner)' })
   @ApiParam({ name: 'projectId', type: 'string', format: 'uuid' })
+  @ApiResponse({ status: 403, description: 'Потрібна роль owner' })
   remove(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @CurrentUser() user: RequestUser,
@@ -103,11 +103,11 @@ export class ProjectsController {
     return this.projectsService.remove(projectId, user.id);
   }
 
-  // ── Members ──────────────────────────────────────────────────────────────────
-
   @Get(':projectId/members')
+  @UseGuards(ProjectRoleGuard)
   @ApiOperation({ summary: 'Учасники проєкту' })
   @ApiParam({ name: 'projectId', type: 'string', format: 'uuid' })
+  @ApiResponse({ status: 403, description: 'Не є учасником проєкту' })
   getMembers(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @CurrentUser() user: RequestUser,
@@ -116,9 +116,12 @@ export class ProjectsController {
   }
 
   @Post(':projectId/members')
+  @UseGuards(ProjectRoleGuard)
+  @ProjectRoles(UserRole.OWNER, UserRole.MANAGER)
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Додати учасника (owner / manager)' })
   @ApiParam({ name: 'projectId', type: 'string', format: 'uuid' })
+  @ApiResponse({ status: 403, description: 'Потрібна роль owner або manager' })
   addMember(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Body() dto: AddMemberDto,
@@ -128,9 +131,12 @@ export class ProjectsController {
   }
 
   @Patch(':projectId/members/:memberId/role')
+  @UseGuards(ProjectRoleGuard)
+  @ProjectRoles(UserRole.OWNER)
   @ApiOperation({ summary: 'Змінити роль учасника (тільки owner)' })
   @ApiParam({ name: 'projectId', type: 'string', format: 'uuid' })
   @ApiParam({ name: 'memberId', type: 'string', format: 'uuid' })
+  @ApiResponse({ status: 403, description: 'Потрібна роль owner' })
   updateMemberRole(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('memberId', ParseUUIDPipe) memberId: string,
@@ -141,10 +147,13 @@ export class ProjectsController {
   }
 
   @Delete(':projectId/members/:memberId')
+  @UseGuards(ProjectRoleGuard)
+  @ProjectRoles(UserRole.OWNER, UserRole.MANAGER)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Видалити учасника (owner / manager)' })
   @ApiParam({ name: 'projectId', type: 'string', format: 'uuid' })
   @ApiParam({ name: 'memberId', type: 'string', format: 'uuid' })
+  @ApiResponse({ status: 403, description: 'Потрібна роль owner або manager' })
   removeMember(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('memberId', ParseUUIDPipe) memberId: string,

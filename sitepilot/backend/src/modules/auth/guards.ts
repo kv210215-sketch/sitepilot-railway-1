@@ -1,10 +1,15 @@
 import {
   Injectable, ExecutionContext, SetMetadata,
-  CanActivate,
+  CanActivate, ForbiddenException, NotFoundException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { ProjectMember, UserRole } from '../projects/project-member.entity';
+import { Project, ProjectStatus } from '../projects/project.entity';
 
 // ── JWT Auth Guard ────────────────────────────────────────────────────────────
 
@@ -28,15 +33,17 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 }
 
 // ── Project Role Guard ────────────────────────────────────────────────────────
+//
+// Attach with @UseGuards(ProjectRoleGuard) on every :projectId route.
+//
+// Empty @ProjectRoles() = any active project member (no bypass).
+// @ProjectRoles(UserRole.OWNER, ...) = requires one of the listed roles.
+// project.ownerId === userId always passes (owner has full access).
+// SUPER_ADMIN bypass: deferred — User entity has no admin flag yet.
+// Attaches request.projectMember after every successful membership check.
 
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { ProjectMember, UserRole } from '../projects/project-member.entity';
-import { Project, ProjectStatus } from '../projects/project.entity';
-import { ForbiddenException, NotFoundException } from '@nestjs/common';
-
-export const ROLES_KEY = 'roles';
-export const Roles = (...roles: UserRole[]) => SetMetadata(ROLES_KEY, roles);
+export const PROJECT_ROLES_KEY = 'projectRoles';
+export const ProjectRoles = (...roles: UserRole[]) => SetMetadata(PROJECT_ROLES_KEY, roles);
 
 @Injectable()
 export class ProjectRoleGuard implements CanActivate {
@@ -49,13 +56,10 @@ export class ProjectRoleGuard implements CanActivate {
   ) {}
 
   async canActivate(ctx: ExecutionContext): Promise<boolean> {
-    const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(ROLES_KEY, [
+    const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(PROJECT_ROLES_KEY, [
       ctx.getHandler(),
       ctx.getClass(),
     ]);
-
-    // No role restriction set — allow any authenticated member
-    if (!requiredRoles || requiredRoles.length === 0) return true;
 
     const request = ctx.switchToHttp().getRequest();
     const userId: string = request.user?.id;
@@ -63,7 +67,6 @@ export class ProjectRoleGuard implements CanActivate {
 
     if (!userId || !projectId) return false;
 
-    // Ensure project exists and is not deleted
     const project = await this.projectRepo.findOne({
       where: { id: projectId },
       withDeleted: false,
@@ -74,24 +77,25 @@ export class ProjectRoleGuard implements CanActivate {
       throw new NotFoundException('Проєкт не знайдено');
     }
 
-    // Owner always has full access
-    if (project.ownerId === userId) return true;
+    if (project.ownerId === userId) {
+      request.projectMember = { projectId, userId, role: UserRole.OWNER } as ProjectMember;
+      return true;
+    }
 
-    // Check membership and role
-    const member = await this.memberRepo.findOne({
-      where: { projectId, userId },
-    });
+    const member = await this.memberRepo.findOne({ where: { projectId, userId } });
 
     if (!member) throw new ForbiddenException('Немає доступу до цього проєкту');
 
-    if (!requiredRoles.includes(member.role)) {
-      throw new ForbiddenException(
-        `Для цієї дії потрібна роль: ${requiredRoles.join(' або ')}`,
-      );
+    if (requiredRoles?.length && !requiredRoles.includes(member.role)) {
+      throw new ForbiddenException(`Для цієї дії потрібна роль: ${requiredRoles.join(' або ')}`);
     }
 
-    // Attach member role to request for downstream use
-    request.memberRole = member.role;
+    request.projectMember = member;
     return true;
   }
 }
+
+// Backward-compatible aliases
+export { ProjectRoleGuard as OrgRolesGuard };
+export { ProjectRoles as Roles };
+export { PROJECT_ROLES_KEY as ROLES_KEY };

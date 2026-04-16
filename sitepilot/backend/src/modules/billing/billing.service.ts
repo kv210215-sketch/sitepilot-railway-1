@@ -1,5 +1,5 @@
 import {
-  Injectable, Logger, BadRequestException, NotFoundException, ServiceUnavailableException,
+  Injectable, Logger, BadRequestException, ServiceUnavailableException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -46,7 +46,7 @@ export class BillingService {
       throw new BadRequestException(`Stripe price ID not configured for plan: ${dto.plan}`);
     }
 
-    let sub = await this.subRepo.findOne({ where: { userId } });
+    const sub = await this.subRepo.findOne({ where: { userId } });
     let customerId = sub?.stripeCustomerId ?? undefined;
 
     // Create customer if needed

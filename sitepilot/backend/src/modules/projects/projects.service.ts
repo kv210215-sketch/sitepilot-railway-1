@@ -3,7 +3,7 @@ import {
   ForbiddenException, BadRequestException, Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, ILike, FindManyOptions } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { Project, ProjectStatus } from './project.entity';
 import { ProjectMember, UserRole } from './project-member.entity';
