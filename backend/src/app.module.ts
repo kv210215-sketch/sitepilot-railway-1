@@ -8,6 +8,7 @@ import { join } from 'path';
 import { appConfig, automationConfig, billingConfig, dbConfig, jwtConfig, throttleConfig } from './config/configuration';
 import { validateEnv } from './config/env.validation';
 import { JwtAuthGuard } from './modules/auth/guards';
+import { RolesGuard } from './modules/common/guards/roles.guard';
 import { GlobalExceptionFilter } from './modules/common/filters/http-exception.filter';
 
 // ── Modules ───────────────────────────────────────────────────────────────────
@@ -23,6 +24,8 @@ import { ProjectsModule } from './modules/projects/projects.module';
 import { PublishModule } from './modules/publish/publish.module';
 import { SeoModule } from './modules/seo/seo.module';
 import { TemplatesModule } from './modules/templates/templates.module';
+import { UsersModule } from './modules/users/users.module';
+import { OrganizationsModule } from './modules/organizations/organizations.module';
 
 import { AuditLog } from './modules/audit/audit-log.entity';
 import { Subscription } from './modules/billing/billing.entity';
@@ -34,6 +37,8 @@ import { Project } from './modules/projects/project.entity';
 import { PublishJob, PublishJobLog } from './modules/publish/publish-job.entity';
 import { Template } from './modules/templates/template.entity';
 import { User } from './modules/users/user.entity';
+import { Organization } from './modules/organizations/entities/organization.entity';
+import { OrganizationMember } from './modules/organizations/entities/organization-member.entity';
 
 @Module({
   imports: [
@@ -78,6 +83,7 @@ import { User } from './modules/users/user.entity';
             AuditLog,
             Subscription,
             OnboardingSession,
+            Organization, OrganizationMember,
           ],
         };
       },
@@ -92,15 +98,17 @@ import { User } from './modules/users/user.entity';
       }),
     }),
 
-    AuthModule, ProjectsModule, PagesModule,
+    AuthModule, UsersModule, ProjectsModule, PagesModule,
     TemplatesModule, ContentModule, SeoModule,
     AuditModule, PublishModule,
     BillingModule, AiModule, AutomationModule, OnboardingModule,
+    OrganizationsModule,
   ],
 
   providers: [
     { provide: APP_FILTER, useClass: GlobalExceptionFilter },
     { provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
     { provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor },
     {
       provide: APP_PIPE,

@@ -87,10 +87,15 @@ export class UsersController {
       throw new ForbiddenException('Немає доступу до даних іншого користувача');
     }
 
-    // Non-admins cannot change role or status
+    // Non-admins can only update safe profile fields
     if (!isAdmin) {
-      delete dto.role;
-      delete dto.status;
+      const safeUpdate: Pick<UpdateUserDto, 'name' | 'avatarUrl' | 'timezone' | 'locale'> = {
+        ...(dto.name !== undefined && { name: dto.name }),
+        ...(dto.avatarUrl !== undefined && { avatarUrl: dto.avatarUrl }),
+        ...(dto.timezone !== undefined && { timezone: dto.timezone }),
+        ...(dto.locale !== undefined && { locale: dto.locale }),
+      };
+      return this.usersService.update(id, safeUpdate);
     }
 
     return this.usersService.update(id, dto);
