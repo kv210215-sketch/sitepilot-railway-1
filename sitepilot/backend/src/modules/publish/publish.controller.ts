@@ -10,10 +10,10 @@ import {
   CreatePublishJobDto, ListJobsDto,
   PublishJobResponseDto, PaginatedJobsDto,
 } from './publish.dto';
-import { JwtAuthGuard, OrgRolesGuard, Roles } from '../auth/guards';
+import { JwtAuthGuard, ProjectRoleGuard, ProjectRoles } from '../auth/guards';
 import { UserRole } from '../projects/project-member.entity';
-import { CurrentUser }  from '../common/decorators/current-user.decorator';
-import { RequestUser }  from '../auth/jwt.strategy';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { RequestUser } from '../auth/jwt.strategy';
 import { PlaywrightService } from '../automation/playwright.service';
 
 class RunPlaywrightDto {
@@ -34,15 +34,13 @@ class RunPlaywrightDto {
 
 @ApiTags('Publish')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard, OrgRolesGuard)
+@UseGuards(JwtAuthGuard, ProjectRoleGuard)
 @Controller('projects/:projectId/publish')
 export class PublishController {
   constructor(
     private readonly svc: PublishService,
     private readonly playwright: PlaywrightService,
   ) {}
-
-  // ── Read (any member) ───────────────────────────────────────────────────
 
   @Get()
   @ApiOperation({ summary: 'Черга публікацій проєкту' })
@@ -80,10 +78,8 @@ export class PublishController {
     return this.svc.getLogs(projectId, jobId);
   }
 
-  // ── Write (editor+) ──────────────────────────────────────────────────
-
   @Post()
-  @Roles(UserRole.OWNER, UserRole.MANAGER, UserRole.EDITOR, UserRole.TECHNICAL)
+  @ProjectRoles(UserRole.OWNER, UserRole.MANAGER, UserRole.EDITOR, UserRole.TECHNICAL)
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Запустити публікацію (page / project / selected)' })
   @ApiResponse({ status: 201, type: PublishJobResponseDto })
@@ -97,7 +93,7 @@ export class PublishController {
   }
 
   @Post(':jobId/retry')
-  @Roles(UserRole.OWNER, UserRole.MANAGER, UserRole.EDITOR, UserRole.TECHNICAL)
+  @ProjectRoles(UserRole.OWNER, UserRole.MANAGER, UserRole.EDITOR, UserRole.TECHNICAL)
   @ApiOperation({ summary: 'Перезапустити failed job' })
   @ApiResponse({ status: 403, description: 'Потрібна роль editor або вище' })
   retry(
@@ -108,10 +104,8 @@ export class PublishController {
     return this.svc.retry(projectId, jobId, user.id);
   }
 
-  // ── Management (manager / owner) ───────────────────────────────────────
-
   @Patch(':jobId/cancel')
-  @Roles(UserRole.OWNER, UserRole.MANAGER)
+  @ProjectRoles(UserRole.OWNER, UserRole.MANAGER)
   @ApiOperation({ summary: 'Скасувати queued/pending job' })
   @ApiResponse({ status: 403, description: 'Потрібна роль manager або owner' })
   cancel(
@@ -123,7 +117,7 @@ export class PublishController {
   }
 
   @Post('run')
-  @Roles(UserRole.OWNER, UserRole.MANAGER)
+  @ProjectRoles(UserRole.OWNER, UserRole.MANAGER)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Run Playwright publish engine against Tilda' })
   @ApiResponse({ status: 403, description: 'Потрібна роль manager або owner' })

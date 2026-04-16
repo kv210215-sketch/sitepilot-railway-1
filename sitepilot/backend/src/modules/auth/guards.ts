@@ -32,17 +32,21 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 }
 
-// ── Org Roles Guard ───────────────────────────────────────────────────────────
+// ── Project Role Guard ────────────────────────────────────────────────────────
 //
-// Applied to every org-scoped (project-scoped) route.
-// Always verifies active membership — even when no @Roles() is set.
-// Attaches request.memberRole for downstream use.
+// Attach with @UseGuards(ProjectRoleGuard) on every :projectId route.
+//
+// Empty @ProjectRoles() = any active project member (no bypass).
+// @ProjectRoles(UserRole.OWNER, ...) = requires one of the listed roles.
+// project.ownerId === userId always passes (owner has full access).
+// SUPER_ADMIN bypass: deferred — User entity has no admin flag yet.
+// Attaches request.projectMember after every successful membership check.
 
-export const ROLES_KEY = 'roles';
-export const Roles = (...roles: UserRole[]) => SetMetadata(ROLES_KEY, roles);
+export const PROJECT_ROLES_KEY = 'projectRoles';
+export const ProjectRoles = (...roles: UserRole[]) => SetMetadata(PROJECT_ROLES_KEY, roles);
 
 @Injectable()
-export class OrgRolesGuard implements CanActivate {
+export class ProjectRoleGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
     @InjectRepository(ProjectMember)
@@ -52,7 +56,7 @@ export class OrgRolesGuard implements CanActivate {
   ) {}
 
   async canActivate(ctx: ExecutionContext): Promise<boolean> {
-    const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(ROLES_KEY, [
+    const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(PROJECT_ROLES_KEY, [
       ctx.getHandler(),
       ctx.getClass(),
     ]);
@@ -73,28 +77,25 @@ export class OrgRolesGuard implements CanActivate {
       throw new NotFoundException('Проєкт не знайдено');
     }
 
-    // Project owner always has full access
     if (project.ownerId === userId) {
-      request.memberRole = UserRole.OWNER;
+      request.projectMember = { projectId, userId, role: UserRole.OWNER } as ProjectMember;
       return true;
     }
 
-    const member = await this.memberRepo.findOne({
-      where: { projectId, userId },
-    });
+    const member = await this.memberRepo.findOne({ where: { projectId, userId } });
 
     if (!member) throw new ForbiddenException('Немає доступу до цього проєкту');
 
     if (requiredRoles?.length && !requiredRoles.includes(member.role)) {
-      throw new ForbiddenException(
-        `Для цієї дії потрібна роль: ${requiredRoles.join(' або ')}`,
-      );
+      throw new ForbiddenException(`Для цієї дії потрібна роль: ${requiredRoles.join(' або ')}`);
     }
 
-    request.memberRole = member.role;
+    request.projectMember = member;
     return true;
   }
 }
 
-// Backward-compatible alias
-export { OrgRolesGuard as ProjectRoleGuard };
+// Backward-compatible aliases
+export { ProjectRoleGuard as OrgRolesGuard };
+export { ProjectRoles as Roles };
+export { PROJECT_ROLES_KEY as ROLES_KEY };
