@@ -15,7 +15,6 @@ import {
 import { JwtAuthGuard } from '../auth/guards';
 import { SubscriptionGuard, RequiredPlan } from '../billing/subscription.guard';
 import { BillingPlan } from '../billing/billing.entity';
-import { Public } from '../auth/guards';
 
 @ApiTags('AI Engine')
 @ApiBearerAuth()

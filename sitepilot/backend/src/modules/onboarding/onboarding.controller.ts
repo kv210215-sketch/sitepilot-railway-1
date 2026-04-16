@@ -1,15 +1,14 @@
 import {
   Controller, Post, Get, Body, Query,
-  HttpCode, HttpStatus, UseGuards,
+  HttpCode, HttpStatus,
 } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
 
 import { OnboardingService } from './onboarding.service';
 import {
   StartResponseDto, SetTypeDto, SetGoalDto, SetDataDto, SessionStepDto,
   OnboardingStatusDto, OnboardingStepResponseDto,
 } from './onboarding.dto';
-import { JwtAuthGuard } from '../auth/guards';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { RequestUser } from '../auth/jwt.strategy';
 import { Public } from '../auth/guards';

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException, Logger, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Template, TemplateStructure, TemplateBlockDef } from './template.entity';
+import { Template, TemplateBlockDef } from './template.entity';
 
 interface BuildBlocksInput {
   content:      Record<string, unknown>;

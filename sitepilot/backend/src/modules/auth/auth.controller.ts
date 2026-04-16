@@ -1,11 +1,11 @@
 import {
   Controller, Post, Body, HttpCode, HttpStatus,
-  Req, UseGuards, Get, Param, Patch,
+  UseGuards, Get, Param, Patch,
   Ip,
 } from '@nestjs/common';
 import {
   ApiTags, ApiOperation, ApiResponse,
-  ApiBearerAuth, ApiBody,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { ThrottlerGuard } from '@nestjs/throttler';
 

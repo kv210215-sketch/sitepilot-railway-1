@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import {
-  GenerateSiteDto, GeneratedSiteDto, GeneratedPageDto, GeneratedBlockDto,
+  GenerateSiteDto, GeneratedSiteDto, GeneratedPageDto,
   ChatMessageDto, ChatResponseDto, ProposalDto,
   SiteType, BudgetRange, SiteGoal,
   SalesChatDto, SalesChatResponseDto,
@@ -330,7 +330,7 @@ export class AiService {
     };
   }
 
-  private getSalesQuickReplies(step: SalesState['step'], conv: SalesState): string[] {
+  private getSalesQuickReplies(step: SalesState['step'], _conv: SalesState): string[] {
     if (step === 'type') return ['Для дому 🏠', 'Для бізнесу 🏭'];
     if (step === 'priority') return ['Економія 💰', 'Резерв живлення 🔋'];
     if (step === 'config') return ['АКБ потрібен ✅', 'Без АКБ ❌', 'Дах 🏠', 'Земля 🌱'];
@@ -417,7 +417,7 @@ export class AiService {
 
   // ── Private — site builder ────────────────────────────────────────────────
 
-  private buildMainPage(dto: GenerateSiteDto, city: string, powerKw: number, company: string): GeneratedPageDto {
+  private buildMainPage(dto: GenerateSiteDto, city: string, powerKw: number, _company: string): GeneratedPageDto {
     const isHome = dto.type === SiteType.HOME;
     const title  = isHome
       ? `Сонячна електростанція ${powerKw} кВт для дому — ${city}`
@@ -435,7 +435,7 @@ export class AiService {
     };
   }
 
-  private buildServicesPage(dto: GenerateSiteDto, city: string, powerKw: number): GeneratedPageDto {
+  private buildServicesPage(dto: GenerateSiteDto, city: string, _powerKw: number): GeneratedPageDto {
     const isHome = dto.type === SiteType.HOME;
     return {
       title:       isHome ? `Послуги монтажу СЕС у ${city}` : `B2B послуги — промислові СЕС у ${city}`,
@@ -471,7 +471,7 @@ export class AiService {
     };
   }
 
-  private buildCalculatorPage(city: string, powerKw: number, isHome: boolean): GeneratedPageDto {
+  private buildCalculatorPage(city: string, _powerKw: number, _isHome: boolean): GeneratedPageDto {
     return {
       title: `Калькулятор окупності СЕС — ${city}`, slug: 'calculator',
       description: 'Онлайн-калькулятор', purpose: 'lead-gen',
