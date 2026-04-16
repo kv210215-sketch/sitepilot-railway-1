@@ -3,13 +3,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ThrottlerModule, ThrottlerModuleOptions } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { join } from 'path';
 
-import { appConfig, automationConfig, billingConfig, dbConfig, jwtConfig, throttleConfig } from './config/configuration';
 import { JwtAuthGuard } from './modules/auth/guards';
 import { GlobalExceptionFilter } from './modules/common/filters/http-exception.filter';
 
-// ── Modules ───────────────────────────────────────────────────────────────────
+// ── Feature modules ───────────────────────────────────────────────────────────
 import { AiModule } from './modules/ai/ai.module';
 import { AuditModule } from './modules/audit/audit.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -23,69 +21,46 @@ import { PublishModule } from './modules/publish/publish.module';
 import { SeoModule } from './modules/seo/seo.module';
 import { TemplatesModule } from './modules/templates/templates.module';
 
-import { AuditLog } from './modules/audit/audit-log.entity';
-import { Subscription } from './modules/billing/billing.entity';
-import { ContentBlock } from './modules/content/content-block.entity';
-import { OnboardingSession } from './modules/onboarding/onboarding.entity';
-import { Page } from './modules/pages/page.entity';
-import { ProjectMember } from './modules/projects/project-member.entity';
-import { Project } from './modules/projects/project.entity';
-import { PublishJob, PublishJobLog } from './modules/publish/publish-job.entity';
-import { Template } from './modules/templates/template.entity';
-import { User } from './modules/users/user.entity';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, dbConfig, jwtConfig, throttleConfig, billingConfig, automationConfig],
-      envFilePath: [
-        join(__dirname, '..', '.env.local'),
-        join(__dirname, '..', '.env'),
-      ],
+      expandVariables: true,
     }),
 
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (cfg: ConfigService) => {
-        const url = cfg.get<string>('db.url');
-        const ssl = cfg.get<boolean>('db.ssl') ? { rejectUnauthorized: false } : false;
-        const synchronize = cfg.get<boolean>('db.sync');
-        const logging = cfg.get<boolean>('db.logging');
+        const url = cfg.get<string>('DATABASE_URL');
+        const isProduction = cfg.get<string>('NODE_ENV') === 'production';
 
         return {
           type: 'postgres',
           ...(url
             ? { url }
             : {
-                host: cfg.get<string>('db.host'),
-                port: cfg.get<number>('db.port'),
-                username: cfg.get<string>('db.user'),
-                password: cfg.get<string>('db.pass'),
-                database: cfg.get<string>('db.name'),
+                host: cfg.get<string>('DB_HOST') ?? 'localhost',
+                port: cfg.get<number>('DB_PORT') ?? 5432,
+                username: cfg.get<string>('DB_USERNAME'),
+                password: cfg.get<string>('DB_PASSWORD'),
+                database: cfg.get<string>('DB_NAME'),
               }),
-          ssl,
-          synchronize,
-          logging,
+          ssl: isProduction ? { rejectUnauthorized: false } : false,
+          synchronize: false,
+          autoLoadEntities: true,
           retryAttempts: 10,
           retryDelay: 3000,
-          entities: [
-            User, Project, ProjectMember,
-            Page, Template, ContentBlock,
-            PublishJob, PublishJobLog,
-            AuditLog,
-            Subscription,
-            OnboardingSession,
-          ],
+          logging: !isProduction,
         };
       },
     }),
+
     ThrottlerModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (cfg: ConfigService): ThrottlerModuleOptions => ({
         throttlers: [{
-          ttl: cfg.get<number>('throttle.ttl') ?? 60,
-          limit: cfg.get<number>('throttle.limit') ?? 10,
+          ttl: cfg.get<number>('THROTTLE_TTL') ?? 60,
+          limit: cfg.get<number>('THROTTLE_LIMIT') ?? 10,
         }],
       }),
     }),
@@ -103,10 +78,12 @@ import { User } from './modules/users/user.entity';
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({
-        whitelist: true, forbidNonWhitelisted: true,
-        transform: true, transformOptions: { enableImplicitConversion: true },
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+        transformOptions: { enableImplicitConversion: true },
       }),
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}
