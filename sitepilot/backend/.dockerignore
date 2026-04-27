@@ -1,0 +1,13 @@
+node_modules
+dist
+*.tsbuildinfo
+.env
+.env.*
+*.log
+coverage
+.git
+.gitignore
+.eslintrc.js
+jest.config.js
+tsconfig.json
+tsconfig.build.json
