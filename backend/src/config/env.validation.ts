@@ -3,8 +3,10 @@
  * Called by ConfigModule.forRoot({ validate }) — throws on missing required vars.
  */
 export function validateEnv(config: Record<string, unknown>): Record<string, unknown> {
+  const isProd = config['NODE_ENV'] === 'production';
   const missing: string[] = [];
 
+  // ── Required in all environments ────────────────────────────────────────────
   if (!config['JWT_SECRET']) {
     missing.push('JWT_SECRET');
   }
@@ -23,14 +25,24 @@ export function validateEnv(config: Record<string, unknown>): Record<string, unk
     );
   }
 
-  if (
-    config['NODE_ENV'] === 'production' &&
-    (config['JWT_SECRET'] === 'change_me_in_production' ||
-      config['JWT_REFRESH_SECRET'] === 'change_refresh_me_in_production')
-  ) {
-    throw new Error(
-      `[Config] JWT_SECRET / JWT_REFRESH_SECRET must not use default values in production.`,
-    );
+  // ── Production-only guards ───────────────────────────────────────────────────
+  if (isProd) {
+    const devJwtDefaults = ['dev_jwt_secret_change_me', 'dev_refresh_secret_change_me'];
+    if (
+      devJwtDefaults.includes(config['JWT_SECRET'] as string) ||
+      devJwtDefaults.includes(config['JWT_REFRESH_SECRET'] as string)
+    ) {
+      throw new Error(
+        `[Config] JWT_SECRET / JWT_REFRESH_SECRET must not use development default values in production.`,
+      );
+    }
+
+    if (config['DB_SYNC'] === 'true') {
+      throw new Error(
+        `[Config] DB_SYNC must not be "true" in production. ` +
+        `Use migrations (npm run migration:run) instead of auto-sync.`,
+      );
+    }
   }
 
   return config;

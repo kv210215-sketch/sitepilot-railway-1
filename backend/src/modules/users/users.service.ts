@@ -25,10 +25,6 @@ export class UsersService {
     const limit = query.limit ?? 20;
     const skip = (page - 1) * limit;
 
-    const where: Record<string, unknown> = {};
-    if (query.status) where['status'] = query.status;
-    if (query.role)   where['role']   = query.role;
-
     const qb = this.userRepo.createQueryBuilder('u');
 
     if (query.search) {

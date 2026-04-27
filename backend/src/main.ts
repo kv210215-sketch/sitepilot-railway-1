@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
+import type { Request, Response } from 'express';
 import { AppModule } from './app.module';
 
 // Load .env before NestJS starts so PORT is available for the pre-start health server.
@@ -51,7 +52,7 @@ async function bootstrap(): Promise<void> {
   app.enableShutdownHooks();
 
   // ── Health endpoint (outside global prefix) ───────────────────────────────
-  app.use('/health', (_req: unknown, res: { status: (c: number) => { json: (b: unknown) => void } }) => {
+  app.use('/health', (_req: Request, res: Response) => {
     res.status(200).json({ status: 'ok', env, ts: new Date().toISOString() });
   });
 

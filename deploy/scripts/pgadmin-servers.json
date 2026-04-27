@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "SitePilot Local",
+      "Group": "Servers",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "sitepilot",
+      "Username": "sitepilot",
+      "SSLMode": "prefer",
+      "PassFile": "/pgpassfile"
+    }
+  }
+}

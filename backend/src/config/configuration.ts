@@ -45,10 +45,12 @@ export const dbConfig = registerAs('db', () => {
   };
 });
 
+// NOTE: fallback values are intentional for local dev only.
+// validateEnv() blocks these defaults from being used in production.
 export const jwtConfig = registerAs('jwt', () => ({
-  secret: process.env.JWT_SECRET || 'change_me_in_production',
-  expiresIn: process.env.JWT_EXPIRES_IN || '15m',
-  refreshSecret: process.env.JWT_REFRESH_SECRET || 'change_refresh_me_in_production',
+  secret:           process.env.JWT_SECRET           || 'dev_jwt_secret_change_me',
+  expiresIn:        process.env.JWT_EXPIRES_IN        || '15m',
+  refreshSecret:    process.env.JWT_REFRESH_SECRET    || 'dev_refresh_secret_change_me',
   refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
 }));
 
