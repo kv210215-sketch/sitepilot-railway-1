@@ -1,0 +1,14 @@
+node_modules
+dist
+*.tsbuildinfo
+.env
+.env.*
+npm-debug.log*
+coverage
+.git
+.vscode
+.gitignore
+.eslintrc.js
+jest.config.js
+tsconfig.json
+tsconfig.build.json
