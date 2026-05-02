@@ -2,49 +2,53 @@
 
 export const dynamic = 'force-dynamic';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { api } from '@/lib/api';
 import {
-  Sun, Building2, Briefcase, Target, Zap, Users,
-  MapPin, Phone, Mail, Sparkles, Rocket, CheckCircle2,
-  ArrowRight, Loader2,
+  ArrowRight,
+  Briefcase,
+  Building2,
+  CheckCircle2,
+  Loader2,
+  Mail,
+  MapPin, Phone,
+  Rocket,
+  Sparkles,
+  Sun,
+  Target,
+  Users,
+  Zap,
 } from 'lucide-react';
-import { cn } from '@/components/ui';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? '';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 type Step = 'welcome' | 'type' | 'goal' | 'data' | 'generate' | 'publish' | 'done';
 
 interface Session { id: string; step: Step; payload?: Record<string, unknown> }
 
 const BUSINESS_TYPES = [
-  { value: 'solar',    label: 'СЕС / Енергетика', icon: Sun,       desc: 'Сонячні панелі, інвертори, монтаж' },
-  { value: 'services', label: 'Послуги',           icon: Briefcase, desc: 'Будь-яка сфера послуг' },
-  { value: 'other',    label: 'Інше',              icon: Building2, desc: 'Інший тип бізнесу' },
+  { value: 'solar', label: 'СЕС / Енергетика', icon: Sun, desc: 'Сонячні панелі, інвертори, монтаж' },
+  { value: 'services', label: 'Послуги', icon: Briefcase, desc: 'Будь-яка сфера послуг' },
+  { value: 'other', label: 'Інше', icon: Building2, desc: 'Інший тип бізнесу' },
 ];
 
 const GOALS = [
-  { value: 'leads',   label: 'Отримати ліди',  icon: Target, desc: 'Збирати заявки від клієнтів' },
-  { value: 'sales',   label: 'Прямі продажі',  icon: Zap,    desc: 'Продавати онлайн напряму' },
-  { value: 'reserve', label: 'Резерв / Довіра', icon: Users,  desc: 'Підкріпити бізнес в мережі' },
+  { value: 'leads', label: 'Отримати ліди', icon: Target, desc: 'Збирати заявки від клієнтів' },
+  { value: 'sales', label: 'Прямі продажі', icon: Zap, desc: 'Продавати онлайн напряму' },
+  { value: 'reserve', label: 'Резерв / Довіра', icon: Users, desc: 'Підкріпити бізнес в мережі' },
 ];
 
 export default function OnboardingPage() {
-  const router   = useRouter();
-  const [step, setStep]       = useState<Step>('welcome');
+  const router = useRouter();
+  const [step, setStep] = useState<Step>('welcome');
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState('');
-  const [form, setForm]       = useState({ name: '', city: '', phone: '', email: '' });
+  const [error, setError] = useState('');
+  const [form, setForm] = useState({ name: '', city: '', phone: '', email: '' });
   const [genPayload, setGenPayload] = useState<Record<string, unknown> | null>(null);
 
   const post = async (path: string, body: object) => {
-    const res = await fetch(`${API_URL}/api/v1${path}`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
+    const { data } = await api.post(path, body);
+    return data;
   };
 
   // ── Step handlers ─────────────────────────────────────────────────────────
@@ -105,7 +109,7 @@ export default function OnboardingPage() {
 
   // ── Progress bar ──────────────────────────────────────────────────────────
 
-  const steps: Step[] = ['welcome','type','goal','data','generate','publish','done'];
+  const steps: Step[] = ['welcome', 'type', 'goal', 'data', 'generate', 'publish', 'done'];
   const progress = Math.round((steps.indexOf(step) / (steps.length - 1)) * 100);
 
   return (
@@ -210,10 +214,10 @@ export default function OnboardingPage() {
           <p className="text-text2 text-[13px] mb-6">AI використає їх для генерації сайту</p>
           <div className="flex flex-col gap-4">
             {[
-              { key: 'name',  label: 'Назва компанії', icon: Building2, placeholder: 'Solomiya Energy', required: true },
-              { key: 'city',  label: 'Місто',          icon: MapPin,    placeholder: 'Київ',             required: true },
-              { key: 'phone', label: 'Телефон',         icon: Phone,     placeholder: '+380 50 123 4567', required: false },
-              { key: 'email', label: 'Email',           icon: Mail,      placeholder: 'info@company.ua',  required: false },
+              { key: 'name', label: 'Назва компанії', icon: Building2, placeholder: 'Solomiya Energy', required: true },
+              { key: 'city', label: 'Місто', icon: MapPin, placeholder: 'Київ', required: true },
+              { key: 'phone', label: 'Телефон', icon: Phone, placeholder: '+380 50 123 4567', required: false },
+              { key: 'email', label: 'Email', icon: Mail, placeholder: 'info@company.ua', required: false },
             ].map(({ key, label, icon: Icon, placeholder, required }) => (
               <div key={key}>
                 <label className="text-[11px] font-semibold uppercase tracking-wider text-text2 mb-1.5 flex items-center gap-1.5">
@@ -293,9 +297,9 @@ export default function OnboardingPage() {
           <p className="text-text2 mb-8">Все підготовлено. Запустіть AI чат або підключіть рекламу.</p>
           <div className="flex flex-col gap-3">
             {[
-              { label: 'Запустити AI чат',    icon: Sun,      href: '/dashboard' },
-              { label: 'Підключити рекламу',  icon: Target,   href: '/analytics' },
-              { label: 'Перейти на дашборд',  icon: Rocket,   href: '/dashboard' },
+              { label: 'Запустити AI чат', icon: Sun, href: '/dashboard' },
+              { label: 'Підключити рекламу', icon: Target, href: '/analytics' },
+              { label: 'Перейти на дашборд', icon: Rocket, href: '/dashboard' },
             ].map(({ label, icon: Icon, href }) => (
               <button
                 key={label}

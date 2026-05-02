@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const isWindows = process.platform === 'win32';
-const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
+const devApiUrl = 'http://localhost:3001';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'development' ? devApiUrl : '');
 
 const nextConfig = {
   reactStrictMode: true,
@@ -12,12 +13,12 @@ const nextConfig = {
   // Local Windows builds in this repo can stall forever during file tracing.
   ...(isWindows
     ? {
-        experimental: {
-          outputFileTracingExcludes: {
-            '/*': ['./node_modules/**/*', './.next/cache/**/*'],
-          },
+      experimental: {
+        outputFileTracingExcludes: {
+          '/*': ['./node_modules/**/*', './.next/cache/**/*'],
         },
-      }
+      },
+    }
     : {}),
 
   // Security headers
@@ -49,6 +50,10 @@ const nextConfig = {
       return [];
     }
 
+    if (!apiUrl) {
+      return [];
+    }
+
     return [
       {
         source: '/api/:path*',
@@ -59,7 +64,7 @@ const nextConfig = {
 
   images: {
     remotePatterns: [
-      { protocol: 'http',  hostname: 'localhost' },
+      { protocol: 'http', hostname: 'localhost' },
       { protocol: 'https', hostname: 'app.solomiya-energy.com' },
       { protocol: 'https', hostname: 'solomiya-energy.com' },
     ],

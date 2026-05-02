@@ -1,26 +1,25 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { MessageCircle, X, Send, Sun, Loader2 } from 'lucide-react';
 import { cn } from '@/components/ui';
+import { api } from '@/lib/api';
+import { Loader2, Send, Sun, X } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface Message {
-  role:         'user' | 'assistant';
-  content:      string;
+  role: 'user' | 'assistant';
+  content: string;
   quickReplies?: string[];
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? '';
-
 export default function AiSalesChat() {
-  const [open, setOpen]         = useState(false);
+  const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput]       = useState('');
-  const [convId, setConvId]     = useState<string | undefined>();
-  const [loading, setLoading]   = useState(false);
-  const [pulsed, setPulsed]     = useState(false);
-  const bottomRef               = useRef<HTMLDivElement>(null);
-  const inputRef                = useRef<HTMLInputElement>(null);
+  const [input, setInput] = useState('');
+  const [convId, setConvId] = useState<string | undefined>();
+  const [loading, setLoading] = useState(false);
+  const [pulsed, setPulsed] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Pulse button after 30s to draw attention
   useEffect(() => {
@@ -44,17 +43,12 @@ export default function AiSalesChat() {
   const sendGreeting = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/v1/ai/sales-chat`, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ message: 'Привіт' }),
-      });
-      const data = await res.json();
+      const { data } = await api.post('/ai/sales-chat', { message: 'Привіт' });
       setConvId(data.conversationId);
       setMessages([{ role: 'assistant', content: data.reply, quickReplies: data.quickReplies }]);
     } catch {
       setMessages([{
-        role:    'assistant',
+        role: 'assistant',
         content: 'Доброго дня! Я консультант Solomiya Energy ☀️\n\nПідберемо СЕС спеціально для вас. Станція для **дому** чи **бізнесу**?',
         quickReplies: ['Для дому 🏠', 'Для бізнесу 🏭'],
       }]);
@@ -70,16 +64,11 @@ export default function AiSalesChat() {
     setLoading(true);
 
     try {
-      const res = await fetch(`${API_URL}/api/v1/ai/sales-chat`, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ message: text, conversationId: convId }),
-      });
-      const data = await res.json();
+      const { data } = await api.post('/ai/sales-chat', { message: text, conversationId: convId });
       setConvId(data.conversationId);
       setMessages(prev => [...prev, {
-        role:        'assistant',
-        content:     data.reply,
+        role: 'assistant',
+        content: data.reply,
         quickReplies: data.quickReplies?.length ? data.quickReplies : undefined,
       }]);
     } catch {

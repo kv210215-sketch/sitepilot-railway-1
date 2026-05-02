@@ -1,8 +1,12 @@
 import axios, {
-  AxiosInstance, AxiosError, InternalAxiosRequestConfig,
+  AxiosError,
+  AxiosInstance,
+  InternalAxiosRequestConfig,
 } from 'axios';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
+const DEV_API_URL = 'http://localhost:3001';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL
+  || (process.env.NODE_ENV === 'development' ? DEV_API_URL : '');
 
 // ── Main API client ───────────────────────────────────────────────────────────
 export const api: AxiosInstance = axios.create({
@@ -33,7 +37,7 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 let isRefreshing = false;
 let failedQueue: Array<{
   resolve: (token: string) => void;
-  reject:  (err: unknown)  => void;
+  reject: (err: unknown) => void;
 }> = [];
 
 function processQueue(err: unknown, token: string | null) {
