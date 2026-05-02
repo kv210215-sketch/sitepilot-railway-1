@@ -44,7 +44,7 @@ jobs:
       - name: Deploy backend to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --service sitepilot-railway --project bce49d08-22a4-4aae-b1ef-30559f106a7a --environment production --detach
+        run: railway up --service sitepilot-railway --detach
 
       - name: Verify backend health
         env:
