@@ -1,5 +1,42 @@
 # SitePilot — Railway Deploy Guide
 
+## Active Deploy Scheme (as of 2026-05-02)
+
+```
+git push origin main
+  → GitHub Actions (.github/workflows/deploy-railway.yml)
+    → railway up --service sitepilot-railway --detach
+      → Railway project: triumphant-purpose
+        → service: sitepilot-railway
+          → environment: production
+```
+
+**Railway GitHub App auto-deploy is DISABLED** for the `sitepilot-railway` service.
+This prevents duplicate deployments — the GitHub App push trigger was disconnected
+so that only the GitHub Actions workflow controls when deploys happen.
+
+### Current Production
+
+| Field | Value |
+|---|---|
+| Project | triumphant-purpose (`bce49d08-22a4-4aae-b1ef-30559f106a7a`) |
+| Service | sitepilot-railway |
+| Environment | production |
+| Backend URL | https://sitepilot-railway-production.up.railway.app |
+| Health endpoint | https://sitepilot-railway-production.up.railway.app/health |
+| RAILWAY_TOKEN type | Railway Project Token (scoped to sitepilot-railway / production) |
+
+### CI/CD Token Setup
+
+The GitHub Secret `RAILWAY_TOKEN` must be a **Railway Project Token**, not an Account API Token.
+
+Create it at: `triumphant-purpose` → Settings → Tokens → New Token → environment: production
+
+Project tokens are embedded with the project and environment scope, so the deploy command
+does not need `--project` or `--environment` flags.
+
+---
+
 ## Quick Deploy (6 clicks)
 
 ### Step 1 — Create project

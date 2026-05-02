@@ -1,5 +1,21 @@
 # SitePilot — First Production Deploy Checklist
 
+## PRODUCTION STATUS — 2026-05-02
+
+| Component | Status |
+|---|---|
+| Backend | READY |
+| GitHub Actions (deploy-railway.yml) | SUCCESS |
+| Railway deployment (triumphant-purpose) | SUCCESS |
+| Health endpoint `/health` | 200 OK |
+| Railway GitHub App auto-deploy | OFF |
+| Deploy channel | GitHub Actions → railway up (single channel) |
+
+**Backend URL:** https://sitepilot-railway-production.up.railway.app
+**Health:** https://sitepilot-railway-production.up.railway.app/health → `{"status":"ok","env":"production"}`
+
+---
+
 ## ✅ КРОК 1 — ЛОКАЛЬНО (запусти скрипт)
 
 ```powershell
