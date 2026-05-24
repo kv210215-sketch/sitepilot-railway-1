@@ -6,13 +6,15 @@ import { PublishService }    from './publish.service';
 import { PublishJob }        from './publish-job.entity';
 import { PublishJobLog }     from './publish-job.entity';
 import { Page }              from '../pages/page.entity';
+import { Project }           from '../projects/project.entity';
 import { AuditModule }       from '../audit/audit.module';
 import { AutomationModule }  from '../automation/automation.module';
+import { PublishCacheInvalidationService } from './publish-cache-invalidation.service';
 
 @Module({
-  imports:     [TypeOrmModule.forFeature([PublishJob, PublishJobLog, Page]), AuditModule, AutomationModule],
+  imports:     [TypeOrmModule.forFeature([PublishJob, PublishJobLog, Page, Project]), AuditModule, AutomationModule],
   controllers: [PublishController],
-  providers:   [PublishService],
+  providers:   [PublishService, PublishCacheInvalidationService],
   exports:     [PublishService],
 })
 export class PublishModule {}

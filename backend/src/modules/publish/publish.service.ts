@@ -7,7 +7,9 @@ import { Repository, In } from 'typeorm';
 import { PublishJob, PublishJobLog, PublishScope, PublishStatus } from './publish-job.entity';
 import { CreatePublishJobDto, ListJobsDto, PublishJobResponseDto, PaginatedJobsDto } from './publish.dto';
 import { Page, PageStatus } from '../pages/page.entity';
+import { Project } from '../projects/project.entity';
 import { AuditService } from '../audit/audit.service';
+import { PublishCacheInvalidationService } from './publish-cache-invalidation.service';
 
 @Injectable()
 export class PublishService {
@@ -20,7 +22,10 @@ export class PublishService {
     private readonly logRepo: Repository<PublishJobLog>,
     @InjectRepository(Page)
     private readonly pageRepo: Repository<Page>,
+    @InjectRepository(Project)
+    private readonly projectRepo: Repository<Project>,
     private readonly audit: AuditService,
+    private readonly cacheInvalidation: PublishCacheInvalidationService,
   ) {}
 
   // ── Створити job ──────────────────────────────────────────────────────────
@@ -113,6 +118,8 @@ export class PublishService {
     let success = 0;
     let failed  = 0;
 
+    const project = await this.projectRepo.findOne({ where: { id: job.projectId } });
+
     // Обробляємо кожну сторінку
     for (const pageId of job.pageIds) {
       const pageStart = Date.now();
@@ -126,6 +133,21 @@ export class PublishService {
           status:      PageStatus.PUBLISHED,
           publishedAt: new Date(),
         });
+
+        const publishedPage = await this.pageRepo.findOne({ where: { id: pageId } });
+        if (publishedPage) {
+          this.cacheInvalidation
+            .invalidateAfterPublish({
+              projectId:  job.projectId,
+              projectSlug:  project?.slug ?? '',
+              paths:        [publishedPage.path ?? '/'],
+              scope:        'page',
+            })
+            .catch(err => {
+              const msg = err instanceof Error ? err.message : String(err);
+              this.logger.warn(`Cache invalidation stub failed for page ${pageId}: ${msg}`);
+            });
+        }
 
         success++;
         const duration = Date.now() - pageStart;

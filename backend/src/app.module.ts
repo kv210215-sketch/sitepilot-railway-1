@@ -5,7 +5,10 @@ import { ThrottlerModule, ThrottlerModuleOptions } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 
-import { appConfig, automationConfig, billingConfig, dbConfig, jwtConfig, throttleConfig } from './config/configuration';
+import {
+  appConfig, automationConfig, billingConfig, dbConfig, jwtConfig,
+  publicConfig, throttleConfig,
+} from './config/configuration';
 import { validateEnv } from './config/env.validation';
 import { JwtAuthGuard } from './modules/auth/guards';
 import { RolesGuard } from './modules/common/guards/roles.guard';
@@ -26,6 +29,7 @@ import { SeoModule } from './modules/seo/seo.module';
 import { TemplatesModule } from './modules/templates/templates.module';
 import { UsersModule } from './modules/users/users.module';
 import { OrganizationsModule } from './modules/organizations/organizations.module';
+import { PublicModule } from './modules/public/public.module';
 
 import { AuditLog } from './modules/audit/audit-log.entity';
 import { Subscription } from './modules/billing/billing.entity';
@@ -44,7 +48,7 @@ import { OrganizationMember } from './modules/organizations/entities/organizatio
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, dbConfig, jwtConfig, throttleConfig, billingConfig, automationConfig],
+      load: [appConfig, dbConfig, jwtConfig, throttleConfig, billingConfig, automationConfig, publicConfig],
       envFilePath: [
         join(__dirname, '..', '.env.local'),
         join(__dirname, '..', '.env'),
@@ -103,6 +107,7 @@ import { OrganizationMember } from './modules/organizations/entities/organizatio
     AuditModule, PublishModule,
     BillingModule, AiModule, AutomationModule, OnboardingModule,
     OrganizationsModule,
+    PublicModule,
   ],
 
   providers: [

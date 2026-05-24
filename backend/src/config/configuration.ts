@@ -71,3 +71,18 @@ export const automationConfig = registerAs('automation', () => ({
   tildaEmail:    process.env.TILDA_EMAIL ?? '',
   tildaPassword: process.env.TILDA_PASSWORD ?? '',
 }));
+
+/** Public read API (marketing-web). Production stays off unless PUBLIC_API_ENABLED=true. */
+export const publicConfig = registerAs('public', () => {
+  const nodeEnv = process.env.NODE_ENV || 'development';
+  const explicit = process.env.PUBLIC_API_ENABLED;
+
+  const enabled =
+    explicit === 'true' ||
+    (explicit !== 'false' && nodeEnv !== 'production');
+
+  return {
+    enabled,
+    defaultProjectSlug: process.env.PUBLIC_DEFAULT_PROJECT_SLUG || 'solomiya-energy',
+  };
+});
