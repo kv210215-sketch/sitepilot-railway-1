@@ -1,5 +1,13 @@
 # SitePilot — Railway Deploy Guide
 
+> **NON-CANONICAL — LEGACY DEPLOY REFERENCE**
+>
+> **Do not treat this file as authoritative operational truth.**
+>
+> **Canonical deployment journal:** [`ops/state/projections/DEPLOYMENT_STATE.md`](ops/state/projections/DEPLOYMENT_STATE.md) (ledger-derived).
+>
+> **Verify-first:** `python -m ops.osctl.core verify` before acting on deploy state.
+
 ## Active Deploy Scheme (as of 2026-05-02)
 
 ```

@@ -25,7 +25,7 @@ OSCTL **records**, **replays**, and **verifies** — it does not deploy, provisi
 ## Quick Start
 
 ```bash
-python -m ops.osctl.core project
+python -m ops.osctl.core replay
 python -m ops.osctl.core verify
 python -m ops.osctl.core append --file path/to/event.json
 python ops/osctl/validation/run_validation.py

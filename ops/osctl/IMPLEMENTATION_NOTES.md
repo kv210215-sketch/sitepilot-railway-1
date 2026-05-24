@@ -1,5 +1,12 @@
 # OSCTL Implementation Notes (Phase 1.5 — Planning Only)
 
+> **SUPERSEDED — pre-implementation planning notes**
+>
+> **Canonical:** [`ARCHITECTURE_FREEZE.md`](./ARCHITECTURE_FREEZE.md) · [`NON_GOALS.md`](./NON_GOALS.md) ·
+> `ops/osctl/core/` implementation. Body below is historical constraint text only.
+>
+> Phase 1.5 core is **implemented and frozen** in `ops/osctl/core/`. Do not treat this file as live policy.
+
 > No code in this phase. These notes constrain Phase 2 implementation.
 
 ## Implementation Boundary

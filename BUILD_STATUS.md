@@ -1,5 +1,13 @@
 # SitePilot V3 — Build & Deployment Status
 
+> **NON-CANONICAL — LEGACY BUILD SUMMARY**
+>
+> **Do not treat this file as authoritative operational truth.**
+>
+> **Canonical operational status:** [`ops/state/projections/CURRENT_STATUS.md`](ops/state/projections/CURRENT_STATUS.md) (ledger-derived).
+>
+> **Verify-first:** `python -m ops.osctl.core verify` before acting on deployment status.
+
 ## Platform Version: V3 (AI + Billing + Playwright)
 
 ---

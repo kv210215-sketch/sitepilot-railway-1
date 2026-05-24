@@ -1,5 +1,13 @@
 # SitePilot — First Production Deploy Checklist
 
+> **NON-CANONICAL — LEGACY DEPLOY CHECKLIST**
+>
+> **Do not treat this file as authoritative operational truth.**
+>
+> **Canonical operational state:** [`ops/state/projections/`](ops/state/projections/) — verify-first via `python -m ops.osctl.core verify`.
+>
+> **Release rituals:** [`ops/rituals/DEPLOY_RITUAL.md`](ops/rituals/DEPLOY_RITUAL.md) · [`ops/state/RELEASE_CHECKLIST.md`](ops/state/RELEASE_CHECKLIST.md)
+
 ## PRODUCTION STATUS — 2026-05-02
 
 | Component | Status |

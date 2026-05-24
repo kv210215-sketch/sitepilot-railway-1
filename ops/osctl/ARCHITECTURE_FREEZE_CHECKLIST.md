@@ -1,5 +1,11 @@
 # OSCTL Architecture Freeze Checklist (Phase 1.5)
 
+> **SUPERSEDED — pre-freeze checklist (`osctl-freeze/0.0`)**
+>
+> **Canonical frozen invariants:** [`FREEZE_v1.md`](./FREEZE_v1.md) §6 · [`ARCHITECTURE_FREEZE.md`](./ARCHITECTURE_FREEZE.md)
+>
+> Retained for historical reference only. Do not use for implementation gates.
+
 Complete this checklist before Phase 2 implementation. All items are planning decisions — no code required to check them off.
 
 ## Purpose

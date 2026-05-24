@@ -1,6 +1,13 @@
 # OSCTL Spec Reference (Draft — Phase 1.5)
 
-> Placeholder spec. Numbers and field names may change until architecture freeze.
+> **SUPERSEDED — draft spec (`osctl-spec/0.1.0-draft`)**
+>
+> **Canonical (do not use this file for implementation or agent authority):**
+> [`EVENT_SCHEMA.md`](./EVENT_SCHEMA.md) · [`STATE_MACHINE.md`](./STATE_MACHINE.md) ·
+> [`SERIALIZATION_RULES.md`](./SERIALIZATION_RULES.md) · [`LEDGER_MODEL.md`](./LEDGER_MODEL.md) ·
+> [`ARCHITECTURE_FREEZE.md`](./ARCHITECTURE_FREEZE.md)
+>
+> Placeholder spec retained for historical reference only.
 
 ## Versioning
 

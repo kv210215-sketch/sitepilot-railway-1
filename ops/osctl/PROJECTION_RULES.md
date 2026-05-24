@@ -25,8 +25,10 @@ events.jsonl → fold_events() → state → render_projections() → {CURRENT_S
 Regenerate:
 
 ```bash
-python -m ops.osctl.core project
+python -m ops.osctl.core replay
 ```
+
+(`project` subcommand aliases `replay` in `core/cli/main.py`.)
 
 ---
 
@@ -34,7 +36,7 @@ python -m ops.osctl.core project
 
 | Action | Why |
 |--------|-----|
-| Manual edit to assert deploy facts | Creates drift; use ledger append + project |
+| Manual edit to assert deploy facts | Creates drift; use ledger append + replay |
 | CI direct MD write | Bypasses replay |
 | Read external files during render | Breaks purity |
 | Clock/time.now in render | Non-deterministic |

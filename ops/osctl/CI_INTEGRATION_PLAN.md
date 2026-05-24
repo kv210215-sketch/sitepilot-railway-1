@@ -1,5 +1,7 @@
 # OSCTL CI Integration Plan (Frozen — Phase 1.5)
 
+> **Freeze ID:** `osctl-freeze/1.5` · **Core spec:** `osctl-core/1.0`
+>
 > Phased path from manual discipline to CI-verified ledger sync. **No workflow changes in Phase 1.5.**
 
 ## Principles (All Phases)

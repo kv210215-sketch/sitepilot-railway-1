@@ -40,7 +40,7 @@ External systems may invoke core — **core does not invoke them**:
 | Candidate | Interface | Human gate retained |
 |-----------|-----------|---------------------|
 | Post-deploy event append | `python -m ops.osctl.core append` | Prod assertions still human-approved initially |
-| Projection regeneration | `python -m ops.osctl.core project` | None — pure replay |
+| Projection regeneration | `python -m ops.osctl.core replay` | None — pure replay (`project` aliases `replay`) |
 | Drift check | `python -m ops.osctl.core verify` | Alert only; no auto-fix |
 | Fingerprint comparison | `projection_fingerprint()` | CI policy decision by human |
 | Event JSON generation | External script → append file | Human reviews prod payloads |
@@ -84,7 +84,7 @@ Agents **draft** event JSON; humans **approve** prod ingests.
 |---------|-----------|
 | Read projections and governance docs | Append ledger without human approval |
 | Draft event JSON from verified facts | Mark production approved |
-| Propose projection fixes via `project` instruction | Execute deploy, Railway CLI, Docker |
+| Propose projection fixes via `replay` instruction | Execute deploy, Railway CLI, Docker |
 | Analyze verify failures | Release rollback posture autonomously |
 
 ---
@@ -94,7 +94,7 @@ Agents **draft** event JSON; humans **approve** prod ingests.
 1. **Execution ≠ truth** — deploy success ≠ ledger truth until ingest
 2. **Verify ≠ heal** — verify detects drift; human reconciles
 3. **Record ≠ act** — `rollback.recorded` ≠ rollback executed
-4. **Project ≠ edit** — manual projection edits are invalid until re-projected or reverted
+4. **Replay ≠ edit** — manual projection edits are invalid until re-replayed or reverted
 
 ---
 

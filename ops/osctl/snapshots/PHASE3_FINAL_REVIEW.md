@@ -1,17 +1,17 @@
-# OSCTL Phase 3 — Final Review
+# OSCTL Snapshot Layer (P1.5-S) — Final Review
 
 **Role:** Snapshot Architecture Agent  
 **Date:** 2026-05-24  
-**Verdict:** Phase 3 design **complete** — read-only verification layer; no authority escalation
+**Verdict:** Snapshot Layer (P1.5-S) design **complete** — read-only verification layer; no authority escalation
 
 ---
 
 ## Architecture Analysis
 
-Phase 3 adds an **immutable snapshot acceleration layer** above the validated trust kernel:
+Snapshot Layer (P1.5-S) adds an **immutable snapshot acceleration layer** above the validated trust kernel:
 
 ```text
-Layer 4 (Phase 3): snapshots/ — format, policy, read-only verify/compare
+Layer 4 (P1.5-S): snapshots/ — format, policy, read-only verify/compare
 Layer 3: validation/   — evidence of determinism
 Layer 2: core/         — ledger, replay, verify
 Layer 1: ledger/       — append-only truth
@@ -107,4 +107,4 @@ Do **not** implement without new governance freeze:
 | No production mutations | yes (docs + read-only scripts only) |
 | No hidden authority paths | yes |
 
-**Phase 3 status:** Ready for human review. Snapshot layer must not ship write/automation paths without explicit Phase 4 governance freeze.
+**Snapshot Layer (P1.5-S) status:** Ready for human review. Snapshot layer must not ship write/automation paths without explicit Phase 4 governance freeze.

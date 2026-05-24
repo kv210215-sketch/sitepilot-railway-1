@@ -147,30 +147,6 @@ git push main
 - Email notifications (SMTP + Redis/Bull — module present, infra/env TBD on Railway)
 - Custom domains (documented for VPS path; optional on Railway)
 
-## OSCTL Snapshot Layer Status
+## OSCTL Snapshot Layer (P1.5-S)
 
-**Purpose:** Deterministic operational state reconstruction layer for OSCTL.
-
-**Core rule:** Ledger remains authoritative. Snapshots are disposable acceleration artifacts only.
-
-**Trust kernel status:** Validated candidate (see `ops/osctl/validation/VALIDATION_SUMMARY.md`).
-
-**Validated assumptions:**
-
-- Deterministic replay required
-- Snapshot rebuild must be reproducible
-- Snapshots must never gain orchestration authority
-- Hidden mutable state is forbidden
-- Replay verification required before trust
-
-**Forbidden:**
-
-- Snapshot-triggered deploys
-- Autonomous recovery
-- Snapshot authority escalation
-- Mutable hidden caches
-- Production orchestration hooks
-
-**Phase 3 artifacts:** `ops/osctl/snapshots/` (architecture, format, security, read-only verify/compare scripts).
-
-**Remaining human responsibility:** External head-hash anchoring.
+Ledger-authoritative operational state; snapshots are disposable acceleration only — see [`ops/osctl/snapshots/`](ops/osctl/snapshots/) and [`ops/osctl/validation/VALIDATION_SUMMARY.md`](ops/osctl/validation/VALIDATION_SUMMARY.md). Run `python -m ops.osctl.core verify` before trusting [`ops/state/projections/`](ops/state/projections/). Canonical governance: [`ops/osctl/README.md`](ops/osctl/README.md).

@@ -1,6 +1,6 @@
 # OSCTL Architecture Decisions (Frozen — Phase 1.5)
 
-> **Freeze ID:** `osctl-freeze/1.0` · **Status:** Architecture frozen · **Implementation:** Phase 2+
+> **Freeze ID:** `osctl-freeze/1.5` · **Status:** Architecture frozen · **Implementation:** Phase 2+
 
 Decisions below are binding for OSCTL implementation. Changes require a new ADR section and freeze version bump.
 
@@ -8,7 +8,7 @@ Decisions below are binding for OSCTL implementation. Changes require a new ADR 
 
 ## ADR-001: Append-Only Ledger as Canonical Store
 
-**Decision:** All operational facts are recorded in an append-only JSONL ledger (`ops/osctl/ledger/`).
+**Decision:** All operational facts are recorded in an append-only JSONL ledger (`ops/state/ledger/events.jsonl`; see `LEDGER_MODEL.md`).
 
 | Property | Rule |
 |----------|------|

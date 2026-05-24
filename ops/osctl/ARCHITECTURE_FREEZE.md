@@ -68,7 +68,7 @@ Evidence: `ops/osctl/validation/`
 | Ledger | `ops/state/ledger/events.jsonl` |
 | Projections | `ops/state/projections/CURRENT_STATUS.md`, `DEPLOYMENT_STATE.md` |
 | Core | `ops/osctl/core/` |
-| CLI | `python -m ops.osctl.core {append,project,verify}` |
+| CLI | `python -m ops.osctl.core {append,replay,verify}` (`project` aliases `replay`) |
 
 ---
 
