@@ -35,3 +35,13 @@ Thumbs.db
 
 # Playwright
 /backend/src/**/playwright-chromium/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OSCTL local artifacts (freeze-safe)
+ops/osctl/ledger/
+ops/osctl/projections/
+ops/osctl/examples/**/projections/
