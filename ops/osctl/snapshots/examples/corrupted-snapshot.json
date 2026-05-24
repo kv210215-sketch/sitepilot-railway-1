@@ -1,0 +1,103 @@
+{
+  "metadata": {
+    "actor": "human:andriy",
+    "created_at": "2026-05-25T15:05:00.000Z",
+    "ledger_event_count": 5,
+    "ledger_lines_hash": "156bdadb9544ea6084d9b413d0d96c9a5b1dba9603c26e5bdb187c28fe67e1ca",
+    "ledger_path": "ops/osctl/ledger/events.jsonl",
+    "ledger_seq": 5,
+    "projection_fingerprint": "90178458ed000496df14a73fc76907094cdacfd27a4c65f75d4f1d3f7b2d6b52",
+    "purpose": "corrupted-example",
+    "snapshot_id": "snap-20260525-corrupted"
+  },
+  "projections": {
+    "CURRENT_STATUS.generated.md": "# CURRENT STATUS \u2014 OSCTL Projection\n\n> **Source:** ledger only \u00b7 **Spec:** `osctl-core/1.0` \u00b7 **As of seq:** `5`\n\n---\n\n## Active Release\n\n| Field | Value |\n|-------|-------|\n| Release ID | `r20260523-51eb8b1` |\n| Git SHA | `51eb8b17947b49ca1ac4ab2d483a432a35adcbbc` |\n| Service | `sitepilot-railway` |\n| Lifecycle state | `reconciled` |\n| Deploy channel | `github-actions \u2192 railway up` |\n\n---\n\n## Environment\n\n| Env | Target | URL | Health |\n|-----|--------|-----|--------|\n| production | Railway `triumphant-purpose` | `https://sitepilot-railway-production.up.railway.app` | `ok` |\n\n---\n\n## Known Blockers\n\n| ID | Blocker | Severity | Owner | Since |\n|----|---------|----------|-------|-------|\n| B1 | auth smoke fail after deploy | SEV2 | operator | seq 2 |\n\n---\n\n## Deployment Baton\n\n| Role | Holder | Action pending |\n|------|--------|----------------|\n| Record state | `osctl replay` | `none` |\n\n---\n\n## Rollback Target\n\n| Field | Value |\n|-------|-------|\n| Rollback active | `no` |\n| Target ledger seq | `1` |\n| Target release ID | `r20260523-51eb8b1` |\n| Target git SHA | `51eb8b17947b49ca1ac4ab2d483a432a35adcbbc` |\n\n---\n\n## Verification Status\n\n| Check | Status |\n|-------|--------|\n| Ledger verification state | `passed` |\n| Active release seq | `1` |\n\n---\n\n## Metadata\n\n| Field | Value |\n|-------|-------|\n| generated_from_seq | `5` |\n| spec | `osctl-core/1.0` |\n\n",
+    "DEPLOYMENT_STATE.generated.md": "# DEPLOYMENT STATE \u2014 OSCTL Journal Projection\n\n> **Source:** ledger only \u00b7 **Spec:** `osctl-core/1.0` \u00b7 **Entries:** `3`\n\n---\n\n## Entry seq `1` \u00b7 `deploy.recorded`\n\n| Field | Value |\n|-------|-------|\n| Release ID | `r20260523-51eb8b1` |\n| Git SHA | `51eb8b17947b49ca1ac4ab2d483a432a35adcbbc` |\n| Actor | `ci:deploy-railway:deploy-backend` |\n| Environment | `production` |\n| Lifecycle state | `production` |\n| Verification state | `passed` |\n| Recorded at (UTC) | `2026-05-23T14:05:00.000Z` |\n| Refs | `git_sha=51eb8b17947b49ca1ac4ab2d483a432a35adcbbc, railway_deployment_id=aa8b5749-25e2-4214-a1b8-043edaa96e5e` |\n\n---\n\n## Entry seq `3` \u00b7 `rollback.recorded`\n\n| Field | Value |\n|-------|-------|\n| Release ID | `r20260525-deadbee` |\n| Git SHA | `n/a` |\n| Actor | `human:andriy` |\n| Environment | `n/a` |\n| Lifecycle state | `rollback` |\n| Verification state | `n/a` |\n| Recorded at (UTC) | `2026-05-25T14:25:00.000Z` |\n| Rollback reference | `seq:1` |\n| Reason | `auth_smoke_fail_after_deploy` |\n\n---\n\n## Entry seq `4` \u00b7 `reconcile.recorded`\n\n| Field | Value |\n|-------|-------|\n| Release ID | `r20260523-51eb8b1` |\n| Git SHA | `n/a` |\n| Actor | `human:andriy` |\n| Environment | `n/a` |\n| Lifecycle state | `reconciled` |\n| Verification state | `n/a` |\n| Recorded at (UTC) | `2026-05-25T15:00:00.000Z` |\n| Summary | `Railway redeploy to seq 1 artifact; prod smoke passed` |\n\n---\n\n## Rollback Pointers\n\n| Field | Value |\n|-------|-------|\n| Rollback active | `no` |\n| Target seq | `1` |\n| Target release | `r20260523-51eb8b1` |\n\n_generated_from_seq: 5_\n"
+  },
+  "snapshot_hash": "2b396c77bc87c2b121fde1069122e88b9a2d3faf92cfbb81e48a596dbb8c2ed0",
+  "spec_version": "osctl-snapshot/1.0",
+  "state": {
+    "active_env": "production",
+    "active_git_sha": "51eb8b17947b49ca1ac4ab2d483a432a35adcbbc",
+    "active_health": "ok",
+    "active_release_id": "r20260523-51eb8b1",
+    "active_seq": 1,
+    "active_service": "sitepilot-railway",
+    "active_url": "https://sitepilot-railway-production.up.railway.app",
+    "env_drift_warnings": [],
+    "journal_entries": [
+      {
+        "actor": "ci:deploy-railway:deploy-backend",
+        "env": "production",
+        "git_sha": "51eb8b17947b49ca1ac4ab2d483a432a35adcbbc",
+        "lifecycle_state": "production",
+        "refs": {
+          "git_sha": "51eb8b17947b49ca1ac4ab2d483a432a35adcbbc",
+          "railway_deployment_id": "aa8b5749-25e2-4214-a1b8-043edaa96e5e"
+        },
+        "release_id": "r20260523-51eb8b1",
+        "seq": 1,
+        "ts": "2026-05-23T14:05:00.000Z",
+        "type": "deploy.recorded",
+        "verification_state": "passed"
+      },
+      {
+        "actor": "human:andriy",
+        "lifecycle_state": "rollback",
+        "reason": "auth_smoke_fail_after_deploy",
+        "release_id": "r20260525-deadbee",
+        "rollback_target_seq": 1,
+        "seq": 3,
+        "ts": "2026-05-25T14:25:00.000Z",
+        "type": "rollback.recorded"
+      },
+      {
+        "actor": "human:andriy",
+        "lifecycle_state": "reconciled",
+        "release_id": "r20260523-51eb8b1",
+        "seq": 4,
+        "summary": "Railway redeploy to seq 1 artifact; prod smoke passed",
+        "ts": "2026-05-25T15:00:00.000Z",
+        "type": "reconcile.recorded"
+      }
+    ],
+    "last_deploy_env_posture": {
+      "db_sync": "false",
+      "keys_missing": [],
+      "keys_present": [
+        "JWT_SECRET",
+        "JWT_REFRESH_SECRET",
+        "DATABASE_URL",
+        "DB_SYNC"
+      ]
+    },
+    "last_seq": 5,
+    "lifecycle_state": "production",
+    "open_incidents": [
+      {
+        "affected_layer": "backend",
+        "incident_id": "inc-20260525-001",
+        "seq": 2,
+        "severity": "SEV2",
+        "status": "open",
+        "title": "auth smoke fail after deploy"
+      }
+    ],
+    "resolved_incidents": [
+      {
+        "affected_layer": "backend",
+        "incident_id": "inc-20260525-001",
+        "seq": 5,
+        "severity": "SEV2",
+        "status": "resolved",
+        "title": "auth smoke fail after deploy"
+      }
+    ],
+    "rollback_active": false,
+    "rollback_target_git_sha": "51eb8b17947b49ca1ac4ab2d483a432a35adcbbc",
+    "rollback_target_release_id": "r20260523-51eb8b1",
+    "rollback_target_seq": 1,
+    "transition_errors": [],
+    "verification_state": "passed"
+  }
+}

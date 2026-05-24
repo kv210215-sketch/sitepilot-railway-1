@@ -1,0 +1,35 @@
+{
+  "spec_version": "osctl-spec/0.1.0-draft",
+  "seq": 18,
+  "ts": "2026-05-23T17:45:00.000Z",
+  "actor": "human:andriy",
+  "type": "note.human",
+  "env": "production",
+  "payload": {
+    "event_kind": "reconcile",
+    "release_id": "r20260502-847cdd9",
+    "lifecycle_state": "reconciled",
+    "verification_state": "passed",
+    "summary": "Railway redeploy to target deployment completed; prod smoke passed",
+    "incident_id": "inc-20260523-001",
+    "rollback_target_seq": 10,
+    "smoke_validation": {
+      "health": "pass",
+      "auth_login": "pass",
+      "critical_path": "pass"
+    },
+    "lock_released": {
+      "lock_name": "rollback",
+      "reason": "reconciled"
+    },
+    "follow_up": "Root cause: CORS_ORIGINS mismatch; ticket PF1 opened"
+  },
+  "refs": {
+    "git_sha": "847cdd95c28d8b513404f2f26780ba5290c10fe0",
+    "railway_deployment_id": "aa8b5740-0000-4214-a1b8-043edaa96e5e",
+    "incident_log": "ops/state/instances/inc-20260523-001/INCIDENT_LOG.md",
+    "supersedes_seq": 15
+  },
+  "prev_hash": null,
+  "hash": null
+}

@@ -1,0 +1,24 @@
+{
+  "ts": "2026-05-21T14:05:00.000Z",
+  "actor": "ci:deploy-railway:deploy-backend",
+  "type": "deploy.recorded",
+  "env": "production",
+  "payload": {
+    "release_id": "r20260521-bbbb002",
+    "git_sha": "2222222222222222222222222222222222222222",
+    "lifecycle_state": "production",
+    "verification_state": "passed",
+    "service": "sitepilot-railway",
+    "status": "success",
+    "url": "https://sitepilot-railway-production.up.railway.app",
+    "health_status": "ok",
+    "env_posture": {
+      "keys_present": ["JWT_SECRET", "JWT_REFRESH_SECRET", "DATABASE_URL", "DB_SYNC"],
+      "keys_missing": [],
+      "db_sync": "false"
+    }
+  },
+  "refs": {
+    "git_sha": "2222222222222222222222222222222222222222"
+  }
+}

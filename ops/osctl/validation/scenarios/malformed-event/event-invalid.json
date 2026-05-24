@@ -1,0 +1,9 @@
+{
+  "spec_version": "osctl-core/1.0",
+  "seq": 1,
+  "ts": "not-a-valid-timestamp",
+  "actor": "",
+  "type": "deploy.observed",
+  "env": "",
+  "payload": {}
+}

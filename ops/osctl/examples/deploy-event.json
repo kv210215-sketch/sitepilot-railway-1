@@ -1,0 +1,30 @@
+{
+  "spec_version": "osctl-spec/0.1.0-draft",
+  "seq": 12,
+  "ts": "2026-05-23T14:05:00.000Z",
+  "actor": "ci:deploy-railway:deploy-backend",
+  "type": "deploy.observed",
+  "env": "production",
+  "payload": {
+    "release_id": "r20260523-51eb8b1",
+    "lifecycle_state": "production",
+    "verification_state": "passed",
+    "service": "sitepilot-railway",
+    "channel": "github-actions",
+    "status": "success",
+    "url": "https://sitepilot-railway-production.up.railway.app",
+    "health": {
+      "endpoint": "/health",
+      "http_status": 200,
+      "body_status": "ok"
+    }
+  },
+  "refs": {
+    "git_sha": "51eb8b17947b49ca1ac4ab2d483a432a35adcbbc",
+    "railway_project_id": "bce49d08-22a4-4aae-b1ef-30559f106a7a",
+    "railway_deployment_id": "aa8b5749-25e2-4214-a1b8-043edaa96e5e",
+    "workflow_run_id": "1234567890"
+  },
+  "prev_hash": null,
+  "hash": null
+}

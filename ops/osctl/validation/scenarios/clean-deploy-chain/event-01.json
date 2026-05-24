@@ -1,0 +1,19 @@
+{
+  "ts": "2026-05-20T10:00:00.000Z",
+  "actor": "ci:deploy-railway:deploy-backend",
+  "type": "deploy.recorded",
+  "env": "staging",
+  "payload": {
+    "release_id": "r20260520-aaaa001",
+    "git_sha": "1111111111111111111111111111111111111111",
+    "lifecycle_state": "staging",
+    "verification_state": "passed",
+    "service": "sitepilot-railway",
+    "status": "success",
+    "url": "https://sitepilot-railway-staging.up.railway.app",
+    "health_status": "ok"
+  },
+  "refs": {
+    "git_sha": "1111111111111111111111111111111111111111"
+  }
+}

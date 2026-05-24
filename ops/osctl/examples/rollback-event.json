@@ -1,0 +1,26 @@
+{
+  "spec_version": "osctl-spec/0.1.0-draft",
+  "seq": 15,
+  "ts": "2026-05-23T16:20:00.000Z",
+  "actor": "human:andriy",
+  "type": "rollback.marked",
+  "env": "production",
+  "payload": {
+    "release_id": "r20260523-51eb8b1",
+    "lifecycle_state": "rollback",
+    "reason": "auth_smoke_fail_after_deploy",
+    "incident_id": "inc-20260523-001",
+    "target_seq": 10,
+    "target_release_id": "r20260502-847cdd9",
+    "lock_name": "rollback",
+    "lock_acquired": true
+  },
+  "refs": {
+    "git_sha": "51eb8b17947b49ca1ac4ab2d483a432a35adcbbc",
+    "target_git_sha": "847cdd95c28d8b513404f2f26780ba5290c10fe0",
+    "target_railway_deployment_id": "aa8b5740-0000-4214-a1b8-043edaa96e5e",
+    "rollback_checklist": "ops/state/ROLLBACK_CHECKLIST.md"
+  },
+  "prev_hash": null,
+  "hash": null
+}
