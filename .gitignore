@@ -45,3 +45,7 @@ __pycache__/
 ops/osctl/ledger/
 ops/osctl/projections/
 ops/osctl/examples/**/projections/
+
+# Parity harness (tools/parity only)
+tools/parity/reports/*.json
+tools/parity/dist/

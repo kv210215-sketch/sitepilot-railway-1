@@ -1,0 +1,17 @@
+{
+  "version": "1",
+  "liveMode": false,
+  "vectors": ["runtime", "seo", "jsonld"],
+  "baseline": {
+    "label": "legacy-static-spec",
+    "origin": null,
+    "docRef": "docs/parity/runtime.md"
+  },
+  "target": {
+    "label": "sitepilot-marketing-spec",
+    "origin": null,
+    "docRef": "docs/parity/seo.md"
+  },
+  "reportDir": "reports",
+  "notes": "P1 harness only. Origins intentionally null — no production URLs in default config."
+}

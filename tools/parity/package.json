@@ -1,0 +1,24 @@
+{
+  "name": "@sitepilot/parity-harness",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-only parity harness (P1): config schema, EV shapes, dry-run CLI. No deploy, no network collectors.",
+  "type": "module",
+  "engines": {
+    "node": ">=20 <21"
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "build": "tsc",
+    "dry-run": "tsx src/cli/dry-run.ts",
+    "dry-run:built": "node dist/cli/dry-run.js"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "tsx": "^4.19.0",
+    "typescript": "^5.4.5"
+  }
+}
