@@ -1,0 +1,104 @@
+{
+  "version": "1",
+  "naming": {
+    "prefix": "parity-fixture-",
+    "extension": ".html"
+  },
+  "fixtures": [
+    {
+      "id": "reference-home",
+      "scenario": "reference-home",
+      "file": "parity-fixture-reference-home.html",
+      "kind": "single",
+      "description": "Canonical reference page with valid SEO, JSON-LD, and lead form."
+    },
+    {
+      "id": "identical-baseline",
+      "scenario": "identical",
+      "role": "baseline",
+      "file": "parity-fixture-identical-baseline.html",
+      "kind": "paired",
+      "pairId": "identical",
+      "description": "Baseline copy for identical parity pair."
+    },
+    {
+      "id": "identical-target",
+      "scenario": "identical",
+      "role": "target",
+      "file": "parity-fixture-identical-target.html",
+      "kind": "paired",
+      "pairId": "identical",
+      "description": "Target copy matching baseline byte-for-byte semantics."
+    },
+    {
+      "id": "warning-drift-baseline",
+      "scenario": "warning-drift",
+      "role": "baseline",
+      "file": "parity-fixture-warning-drift-baseline.html",
+      "kind": "paired",
+      "pairId": "warning-drift",
+      "description": "Baseline for minor meta drift (warning-level)."
+    },
+    {
+      "id": "warning-drift-target",
+      "scenario": "warning-drift",
+      "role": "target",
+      "file": "parity-fixture-warning-drift-target.html",
+      "kind": "paired",
+      "pairId": "warning-drift",
+      "description": "Target with non-blocking meta description drift."
+    },
+    {
+      "id": "fail-drift-baseline",
+      "scenario": "fail-drift",
+      "role": "baseline",
+      "file": "parity-fixture-fail-drift-baseline.html",
+      "kind": "paired",
+      "pairId": "fail-drift",
+      "description": "Baseline for critical runtime/SEO drift (fail-level)."
+    },
+    {
+      "id": "fail-drift-target",
+      "scenario": "fail-drift",
+      "role": "target",
+      "file": "parity-fixture-fail-drift-target.html",
+      "kind": "paired",
+      "pairId": "fail-drift",
+      "description": "Target missing lead form and with divergent title."
+    },
+    {
+      "id": "malformed-jsonld",
+      "scenario": "malformed-jsonld",
+      "file": "parity-fixture-malformed-jsonld.html",
+      "kind": "single",
+      "description": "JSON-LD script block with invalid JSON syntax."
+    },
+    {
+      "id": "missing-canonical",
+      "scenario": "missing-canonical",
+      "file": "parity-fixture-missing-canonical.html",
+      "kind": "single",
+      "description": "Page without link rel=canonical."
+    },
+    {
+      "id": "robots-noindex",
+      "scenario": "robots-noindex",
+      "file": "parity-fixture-robots-noindex.html",
+      "kind": "single",
+      "description": "Page with robots noindex directive."
+    },
+    {
+      "id": "missing-lead-form",
+      "scenario": "missing-lead-form",
+      "file": "parity-fixture-missing-lead-form.html",
+      "kind": "single",
+      "description": "Page without #mainForm lead capture form."
+    }
+  ],
+  "legacyAliases": [
+    {
+      "file": "sample-home.html",
+      "equivalentId": "reference-home"
+    }
+  ]
+}
