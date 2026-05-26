@@ -48,4 +48,8 @@ ops/osctl/examples/**/projections/
 
 # Parity harness (tools/parity only)
 tools/parity/reports/*.json
+tools/parity/reports/dry-run-*.json
+tools/parity/reports/determinism-report.json
+tools/parity/reports/p3/
+tools/parity/reports/snapshots/
 tools/parity/dist/

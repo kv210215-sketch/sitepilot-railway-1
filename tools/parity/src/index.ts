@@ -1,5 +1,17 @@
 export { ParityConfigSchema, type ParityConfig, type ParityVector } from './config/parity-config.schema.js';
 export { loadParityConfig, DEFAULT_CONFIG_PATH, PARITY_ROOT } from './config/load-config.js';
 export * from './ev/index.js';
+export * from './collectors/index.js';
 export { runDryRun, SAFETY_GUARANTEES } from './harness/dry-run.js';
+export { runP3Report } from './harness/p3-report.js';
+export { runSnapshotCapture } from './harness/snapshot-capture.js';
+export { runSnapshotReplay } from './harness/snapshot-replay.js';
+export { runDeterminismVerification, DETERMINISM_FIXED_AT } from './harness/determinism-verify.js';
+export * from './snapshot/index.js';
+export * from './determinism/index.js';
+export { buildP3ReportBundle } from './report/p3-build.js';
+export { canonicalJsonString, canonicalize } from './serialize/canonical-json.js';
+export { contentHashSha256 } from './hash/content-hash.js';
+export * from './seal/index.js';
 export { assertDryRunSafe, SAFETY_GUARANTEES as SAFETY } from './safety/guards.js';
+export * from './fixtures/index.js';

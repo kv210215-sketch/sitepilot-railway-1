@@ -15,6 +15,8 @@ const EndpointRefSchema = z.object({
 export const ParityConfigSchema = z.object({
   version: z.literal('1'),
   liveMode: z.boolean().default(false),
+  /** GET timeout for live collectors (ms). Ignored when liveMode=false. */
+  collectTimeoutMs: z.number().int().positive().max(120_000).default(15_000),
   vectors: z.array(ParityVectorSchema).min(1),
   baseline: EndpointRefSchema,
   target: EndpointRefSchema,

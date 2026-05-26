@@ -2,16 +2,21 @@
   "name": "@sitepilot/parity-harness",
   "version": "0.1.0",
   "private": true,
-  "description": "Local-only parity harness (P1): config schema, EV shapes, dry-run CLI. No deploy, no network collectors.",
+  "description": "Local-only parity harness (P3): collectors, dry-run, deterministic report pipeline.",
   "type": "module",
   "engines": {
     "node": ">=20 <21"
   },
   "scripts": {
     "type-check": "tsc --noEmit",
+    "test": "tsx --test src/**/*.test.ts",
     "build": "tsc",
     "dry-run": "tsx src/cli/dry-run.ts",
-    "dry-run:built": "node dist/cli/dry-run.js"
+    "dry-run:built": "node dist/cli/dry-run.js",
+    "p3-report": "tsx src/cli/p3-report.ts",
+    "p3-report:built": "node dist/cli/p3-report.js",
+    "determinism-verify": "tsx src/cli/determinism-verify.ts",
+    "determinism-verify:built": "node dist/cli/determinism-verify.js"
   },
   "dependencies": {
     "zod": "^3.23.8"

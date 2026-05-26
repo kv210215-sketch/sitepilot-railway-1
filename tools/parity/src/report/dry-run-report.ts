@@ -1,12 +1,18 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { ParityConfig } from '../config/parity-config.schema.js';
+import type { PlannedCollectorAction } from '../collectors/types.js';
+import type {
+  JsonLdCollectResult,
+  RuntimeCollectResult,
+  SeoCollectResult,
+} from '../collectors/types.js';
 import type { EvJsonLdShape, EvRuntimeShape, EvSeoShape } from '../ev/index.js';
 import { PARITY_ROOT } from '../config/load-config.js';
 import type { SafetyCheckResult } from '../safety/guards.js';
 
 export interface DryRunReport {
-  harnessVersion: 'p1';
+  harnessVersion: 'p2';
   mode: 'dry-run';
   timestamp: string;
   branchHint: string;
@@ -17,9 +23,24 @@ export interface DryRunReport {
     seo?: EvSeoShape;
     jsonld?: EvJsonLdShape;
   };
+  collectors: {
+    planned: PlannedCollectorAction[];
+    results?: {
+      runtime?: { baseline: RuntimeCollectResult[]; target: RuntimeCollectResult[] };
+      seo?: { baseline: SeoCollectResult[]; target: SeoCollectResult[] };
+      jsonld?: { baseline: JsonLdCollectResult[]; target: JsonLdCollectResult[] };
+    };
+    networkExecuted: boolean;
+    /** True when liveMode=false — outbound HTTP is physically blocked by policy. */
+    networkBlockedByPolicy: boolean;
+  };
   p2Readiness: {
-    schemaAndShapes: 'GO' | 'NO-GO';
+    readOnlyCollectors: 'GO' | 'NO-GO';
     liveCollectors: 'GO' | 'NO-GO';
+    blockers: string[];
+  };
+  p3Readiness: {
+    diffEngine: 'GO' | 'NO-GO';
     blockers: string[];
   };
   isolation: {

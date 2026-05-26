@@ -15,11 +15,13 @@ function parseArgs(argv: string[]): { configPath?: string } {
     } else if (arg === '--help' || arg === '-h') {
       console.log(`Usage: npm run dry-run [-- --config <path>]
 
-Local P1 parity harness dry-run:
+Local parity harness dry-run (P2):
   - Validates ParityConfig (liveMode defaults false)
-  - Emits EV_RUNTIME / EV_SEO / EV_JSONLD spec templates
+  - Plans read-only GET collectors (runtime / seo / jsonld)
+  - When liveMode=false: no outbound HTTP; prints planned actions
+  - When liveMode=true + origins set: executes GET-only collection
   - Writes JSON report under tools/parity/reports/
-  - No HTTP, no deploy SDKs, no production URLs
+  - No deploy SDKs, no mutation methods
 `);
       process.exit(0);
     } else {
@@ -34,13 +36,17 @@ async function main(): Promise<void> {
   const result = await runDryRun(opts);
 
   console.log('[parity-harness] dry-run complete');
-  console.log(`  mode:        dry-run (read-only collectors)`);
+  console.log(`  harness:     ${result.report.harnessVersion}`);
   console.log(`  liveMode:    ${result.report.config.liveMode}`);
   console.log(`  vectors:     ${result.report.config.vectors.join(', ')}`);
+  console.log(
+    `  network:     ${result.report.collectors.networkExecuted ? 'executed' : 'none'} (blockedByPolicy=${result.report.collectors.networkBlockedByPolicy})`,
+  );
   console.log(`  safety:      ${result.ok ? 'PASS' : 'FAIL'}`);
   console.log(`  report:      ${result.reportPath}`);
-  console.log(`  p2 shapes:   ${result.report.p2Readiness.schemaAndShapes}`);
+  console.log(`  p2 readonly: ${result.report.p2Readiness.readOnlyCollectors}`);
   console.log(`  p2 live:     ${result.report.p2Readiness.liveCollectors}`);
+  console.log(`  p3 diff:     ${result.report.p3Readiness.diffEngine}`);
 
   if (!result.ok) {
     for (const v of result.report.safety.violations) {

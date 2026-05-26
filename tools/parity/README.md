@@ -1,15 +1,16 @@
-# Parity Harness (P1)
+# Parity Harness (P2)
 
 Local-only parity tooling for SitePilot migration. **Isolated under `tools/parity/`** — no runtime, deploy, DNS, or OSCTL mutations.
 
-## Scope (P1)
+## Scope
 
-| Delivered | Not in P1 |
-|-----------|-----------|
-| `ParityConfig` schema (Zod) | HTTP collectors |
-| `EV_RUNTIME` / `EV_SEO` / `EV_JSONLD` shapes | Live URL fetches |
-| Dry-run CLI + JSON reports | Deploy / Cloudflare / Railway SDKs |
-| `liveMode: false` default | Production origins in config |
+| Delivered (P2) | Not in P2 |
+|----------------|-----------|
+| `ParityConfig` schema (Zod) | Diff engine / EV field comparison (P3) |
+| `EV_RUNTIME` / `EV_SEO` / `EV_JSONLD` shapes | Deploy / Cloudflare / Railway SDKs |
+| Read-only GET collectors | POST/PUT/PATCH/DELETE |
+| Dry-run CLI + JSON reports | Production origins in default config |
+| `liveMode: false` default | Backend / marketing-web runtime changes |
 
 ## Commands
 
@@ -17,6 +18,7 @@ Local-only parity tooling for SitePilot migration. **Isolated under `tools/parit
 cd tools/parity
 npm install
 npm run type-check
+npm test
 npm run dry-run
 ```
 
@@ -30,24 +32,29 @@ npm run dry-run -- --config config/default.parity.json
 
 ```
 tools/parity/
-├── config/default.parity.json   # ParityConfig (origins null)
+├── config/default.parity.json
+├── fixtures/manifest.json         # fixture registry (deterministic names)
+├── fixtures/parity-fixture-*.html # synthetic offline HTML fixtures
+├── fixtures/sample-home.html      # legacy alias of reference-home
 ├── src/
-│   ├── config/                  # ParityConfig schema + loader
-│   ├── ev/                      # EV_RUNTIME, EV_SEO, EV_JSONLD
-│   ├── safety/                  # P1 guards (no liveMode, no prod URLs)
-│   ├── harness/                 # dry-run orchestration
-│   ├── report/                  # local JSON report writer
-│   └── cli/dry-run.ts           # CLI entry
-└── reports/                     # dry-run output (gitignored *.json)
+│   ├── config/
+│   ├── ev/
+│   ├── http/get-client.ts         # GET-only; liveMode gate
+│   ├── collectors/                # Runtime / SEO / JSON-LD
+│   ├── safety/
+│   ├── harness/
+│   ├── report/
+│   └── cli/dry-run.ts
+└── reports/                       # gitignored *.json
 ```
 
-## Safety guarantees
+## Collector safety
 
-- **No HTTP writes** — dry-run does not open outbound HTTP.
-- **No deploy SDKs** — `wrangler`, Railway, Cloudflare clients forbidden in `package.json`.
-- **No mutation code** — reports written only under `tools/parity/reports/`.
-- **`liveMode` default `false`** — enabling live mode fails P1 safety check.
-- **No production URLs** in default config (`baseline.origin` / `target.origin` are `null`).
+- **GET only** — `ParityGetClient` rejects non-GET methods and non-http(s) URLs.
+- **liveMode gate** — outbound HTTP only when `liveMode=true`.
+- **Default dry-run** — `liveMode=false` plans actions and returns `source: planned-only` without network.
+- **Forbidden origins** — production host fragments blocked in config (see `safety/guards.ts`).
+- **User-Agent** — `SitePilot-Parity-Harness/0.2 (read-only; GET-only)`.
 
 ## Dual-runtime / OSCTL
 
@@ -60,6 +67,6 @@ This harness does not modify:
 
 Spec references: `docs/parity/runtime.md`, `docs/parity/seo.md`.
 
-## P2 readiness
+## P3 readiness
 
-Dry-run report includes `p2Readiness.go`. P1 ends with **GO for shape/schema work** and **NO-GO for live collectors** until P2 implements fetch/compare behind explicit `liveMode` + staging-only origins.
+Dry-run report includes `p3Readiness` with diff engine blockers. P2 ends with **GO for read-only collectors** and **NO-GO for diff engine** until P3.

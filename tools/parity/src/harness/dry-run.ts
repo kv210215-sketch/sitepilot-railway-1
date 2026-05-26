@@ -3,6 +3,12 @@ import path from 'node:path';
 import { loadParityConfig, PARITY_ROOT } from '../config/load-config.js';
 import type { ParityConfig, ParityVector } from '../config/parity-config.schema.js';
 import {
+  buildCollectorContext,
+  collectForVectors,
+  createCollectorSuite,
+  planForVectors,
+} from '../collectors/registry.js';
+import {
   createEvJsonLdSpecTemplate,
   createEvRuntimeSpecTemplate,
   createEvSeoSpecTemplate,
@@ -12,6 +18,7 @@ import {
   assertNoForbiddenDeps,
   SAFETY_GUARANTEES,
 } from '../safety/guards.js';
+import { isNetworkBlockedByPolicy } from '../http/network-policy.js';
 import { writeDryRunReport, type DryRunReport } from '../report/dry-run-report.js';
 
 export interface DryRunOptions {
@@ -38,16 +45,29 @@ function buildEvaluationVectors(vectors: ParityVector[]): DryRunReport['evaluati
   return out;
 }
 
-function assessP2Readiness(safetyOk: boolean): DryRunReport['p2Readiness'] {
-  const blockers: string[] = ['collectors-not-implemented', 'liveMode-must-stay-false-until-p2-design'];
+function assessP2Readiness(safetyOk: boolean, config: ParityConfig): DryRunReport['p2Readiness'] {
+  const blockers: string[] = [];
   if (!safetyOk) {
     blockers.push('safety-check-failed');
   }
+  const liveReady =
+    config.liveMode &&
+    config.baseline.origin !== null &&
+    config.target.origin !== null &&
+    safetyOk;
   return {
-    schemaAndShapes: safetyOk ? 'GO' : 'NO-GO',
-    liveCollectors: 'NO-GO',
+    readOnlyCollectors: safetyOk ? 'GO' : 'NO-GO',
+    liveCollectors: liveReady ? 'GO' : 'NO-GO',
     blockers,
   };
+}
+
+function printPlannedActions(planned: DryRunReport['collectors']['planned']): void {
+  console.log('[parity-harness] planned collector actions (no network when liveMode=false):');
+  for (const action of planned) {
+    const skip = action.skipReason ? ` — skip: ${action.skipReason}` : '';
+    console.log(`  ${action.vector.padEnd(7)} GET ${action.url}${skip}`);
+  }
 }
 
 export async function runDryRun(options: DryRunOptions = {}): Promise<DryRunResult> {
@@ -70,16 +90,64 @@ export async function runDryRun(options: DryRunOptions = {}): Promise<DryRunResu
     safety.ok = false;
   }
 
+  const suite = createCollectorSuite(config);
+  const baselineCtx = buildCollectorContext(config, 'baseline');
+  const targetCtx = buildCollectorContext(config, 'target');
+  const planned = planForVectors(suite, config.vectors, baselineCtx, targetCtx);
+
+  printPlannedActions(planned);
+
+  const collectorResults = await collectForVectors(
+    suite,
+    config.vectors,
+    baselineCtx,
+    targetCtx,
+  );
+
+  const networkBlockedByPolicy = isNetworkBlockedByPolicy(config.liveMode);
+
+  const networkExecuted =
+    !networkBlockedByPolicy &&
+    Boolean(config.baseline.origin || config.target.origin) &&
+    Object.values(collectorResults).some((bundle) => {
+      if (!bundle) {
+        return false;
+      }
+      const sides = [bundle.baseline, bundle.target].flat();
+      return sides.some((r) => r.source === 'live');
+    });
+
+  if (networkBlockedByPolicy && networkExecuted) {
+    safety.violations.push('network-policy-violation: HTTP executed while liveMode=false');
+    safety.ok = false;
+  }
+
+  if (safety.warnings.length > 0) {
+    for (const w of safety.warnings) {
+      console.log(`[parity-harness] warning: ${w}`);
+    }
+  }
+
   const timestamp = new Date().toISOString();
   const report: DryRunReport = {
-    harnessVersion: 'p1',
+    harnessVersion: 'p2',
     mode: 'dry-run',
     timestamp,
     branchHint: 'feature/parity-harness-p1',
     config,
     safety,
     evaluationVectors: buildEvaluationVectors(config.vectors),
-    p2Readiness: assessP2Readiness(safety.ok),
+    collectors: {
+      planned,
+      results: collectorResults,
+      networkExecuted,
+      networkBlockedByPolicy,
+    },
+    p2Readiness: assessP2Readiness(safety.ok, config),
+    p3Readiness: {
+      diffEngine: 'GO',
+      blockers: ['run-npm-run-p3-report-for-artifacts'],
+    },
     isolation: {
       workspaceRoot: PARITY_ROOT,
       allowedWriteRoots: [path.join(PARITY_ROOT, config.reportDir)],
