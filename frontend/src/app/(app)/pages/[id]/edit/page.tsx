@@ -2,6 +2,7 @@
 
 import { Button, Card, CardBody, CardHeader, Input, Spinner, cn } from '@/components/ui';
 import { usePage } from '@/hooks/usePages';
+import { PageBlock } from '@/services/pages.service';
 import { ExternalLink, Eye, RotateCcw, Save } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
@@ -28,6 +29,8 @@ function EditContent({ params }: { params: { id: string } }) {
   const [tab, setTab] = useState<'blocks' | 'seo'>('blocks');
   const [seoForm, setSeoForm] = useState<Record<string, string>>({});
   const [seoInit, setSeoInit] = useState(false);
+  const [blocks, setBlocks] = useState<PageBlock[] | null>(null);
+  const [blocksInit, setBlocksInit] = useState(false);
 
   if (loading) return <div className="flex justify-center py-16"><Spinner size={24} /></div>;
   if (!page) return <div className="text-center py-16 text-text2">Сторінку не знайдено</div>;
@@ -43,6 +46,23 @@ function EditContent({ params }: { params: { id: string } }) {
     });
     setSeoInit(true);
   }
+
+  // Ініціалізуємо локальний стан блоків (для редагування текстових полів)
+  if (!blocksInit && page) {
+    setBlocks((page.content?.blocks ?? []).slice().sort((a, b) => a.order - b.order));
+    setBlocksInit(true);
+  }
+
+  const editableBlocks = blocks ?? [];
+
+  const updateField = (blockIdx: number, key: string, value: string) =>
+    setBlocks(prev =>
+      (prev ?? []).map((b, i) =>
+        i === blockIdx ? { ...b, data: { ...b.data, [key]: value } } : b
+      )
+    );
+
+  const saveBlocks = () => save({ content: { blocks: editableBlocks } });
 
   const saveSeo = () => save({ seo: seoForm as any });
 
@@ -86,9 +106,7 @@ function EditContent({ params }: { params: { id: string } }) {
       {/* Blocks tab */}
       {tab === 'blocks' && (
         <div className="flex flex-col gap-3">
-          {(page.content?.blocks ?? [])
-            .sort((a, b) => a.order - b.order)
-            .map(block => (
+          {editableBlocks.map((block, blockIdx) => (
               <Card key={block.type + block.order}>
                 <CardHeader title={`${BLOCK_ICONS[block.type] ?? '▪'} ${BLOCK_NAMES[block.type] ?? block.type}`}>
                   <span className="font-mono text-[10px] text-text3">order: {block.order}</span>
@@ -102,9 +120,10 @@ function EditContent({ params }: { params: { id: string } }) {
                             <label className="text-[10px] font-semibold uppercase tracking-[.4px] text-text3 block mb-1">
                               {key}
                             </label>
-                            <div className="text-[13px] text-text bg-surface2 rounded-sm px-3 py-2 min-h-[36px]">
-                              {val || <span className="text-text3 italic">порожньо</span>}
-                            </div>
+                            <Input
+                              value={val}
+                              onChange={e => updateField(blockIdx, key, e.target.value)}
+                            />
                           </div>
                         );
                       }
@@ -127,9 +146,17 @@ function EditContent({ params }: { params: { id: string } }) {
               </Card>
             ))}
 
-          {(page.content?.blocks ?? []).length === 0 && (
+          {editableBlocks.length === 0 && (
             <div className="text-center py-12 text-text2 text-[13px]">
               Блоків немає — сторінка порожня
+            </div>
+          )}
+
+          {editableBlocks.length > 0 && (
+            <div className="flex justify-end mt-2">
+              <Button variant="primary" onClick={saveBlocks} loading={saving}>
+                <Save size={13} /> Зберегти контент
+              </Button>
             </div>
           )}
         </div>
