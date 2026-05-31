@@ -11,6 +11,8 @@ import { useProjects } from '@/hooks/useProjects';
 import { Project, ProjectStatus } from '@/services/projects.service';
 import toast from 'react-hot-toast';
 import { projectsService } from '@/services/projects.service';
+import { api } from '@/lib/api';
+import { useAuthStore } from '@/store/auth.store';
 
 const TYPE_EMOJI: Record<string, string> = {
   landing: '🛬', multi_page: '📄', catalog: '📚',
@@ -103,13 +105,35 @@ function CreateProjectModal({
 }) {
   const [form, setForm] = useState({ name: '', domain: '', projectType: 'service_site', description: '' });
   const [loading, setLoading] = useState(false);
+  const user = useAuthStore((s) => s.user);
+
+  const resolveOrganizationId = async (): Promise<string> => {
+    const orgList = await api.get<{
+      data: Array<{ id: string; name: string }>;
+      total: number;
+      page: number;
+      limit: number;
+      totalPages: number;
+    }>('/organizations', { params: { page: 1, limit: 1 } });
+
+    const existingOrgId = orgList.data.data[0]?.id;
+    if (existingOrgId) return existingOrgId;
+
+    const fallbackOrgName = `${(user?.name ?? 'My').trim()} Workspace`;
+    const createdOrg = await api.post<{ id: string; name: string; slug: string }>('/organizations', {
+      name: fallbackOrgName,
+    });
+    return createdOrg.data.id;
+  };
 
   const handleSubmit = async () => {
     if (!form.name.trim()) { toast.error("Введіть назву проєкту"); return; }
     setLoading(true);
     try {
+      const organizationId = await resolveOrganizationId();
       await projectsService.create({
         name: form.name.trim(),
+        organizationId,
         domain: form.domain.trim() || undefined,
         projectType: form.projectType as Project['projectType'],
         description: form.description.trim() || undefined,
