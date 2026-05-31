@@ -32,9 +32,10 @@ export class PublicPagesService {
     this.assertPublicApiEnabled();
 
     const path = normalizePublicPagePath(rawPath);
-    const projectSlug = this.config.get<string>('public.defaultProjectSlug') ?? 'solomiya-energy';
 
-    const project = await this.projectRepo.findOne({
+    // 1) Configured default project first — preserves the existing marketing site (incl. root `/`).
+    const projectSlug = this.config.get<string>('public.defaultProjectSlug') ?? 'solomiya-energy';
+    const defaultProject = await this.projectRepo.findOne({
       where: {
         slug: projectSlug,
         deletedAt: IsNull(),
@@ -42,13 +43,23 @@ export class PublicPagesService {
       },
     });
 
-    if (!project) {
-      throw new NotFoundException('Project not found');
+    if (defaultProject) {
+      const defaultPage = await this.findPublishedPage(defaultProject.id, path);
+      if (defaultPage) {
+        return this.toDto(defaultPage, defaultProject);
+      }
     }
 
-    const page = await this.findPublishedPage(project.id, path);
-
+    // 2) Fall back to any active project's published page matching this path.
+    const page = await this.findPublishedPageAnyProject(path);
     if (!page) {
+      throw new NotFoundException('Page not found');
+    }
+
+    const project = await this.projectRepo.findOne({
+      where: { id: page.projectId, deletedAt: IsNull(), isActive: true },
+    });
+    if (!project) {
       throw new NotFoundException('Page not found');
     }
 
@@ -113,6 +124,28 @@ export class PublicPagesService {
         status: PageStatus.PUBLISHED,
         deletedAt: IsNull(),
       },
+    });
+  }
+
+  private async findPublishedPageAnyProject(path: string): Promise<Page | null> {
+    if (path === '/') {
+      return this.pageRepo.findOne({
+        where: {
+          status: PageStatus.PUBLISHED,
+          isHomepage: true,
+          deletedAt: IsNull(),
+        },
+        order: { publishedAt: 'DESC' },
+      });
+    }
+
+    return this.pageRepo.findOne({
+      where: {
+        path,
+        status: PageStatus.PUBLISHED,
+        deletedAt: IsNull(),
+      },
+      order: { publishedAt: 'DESC' },
     });
   }
 

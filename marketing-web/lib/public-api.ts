@@ -87,7 +87,7 @@ export function publicPageRequestUrl(path: string): string | null {
   }
   const normalized = normalizePagePath(path);
   if (normalized === '/') {
-    return `${base}/public/v1/pages`;
+    return `${base}/public/v1/pages/`;
   }
   const suffix = normalized.slice(1);
   return `${base}/public/v1/pages/${suffix}`;
