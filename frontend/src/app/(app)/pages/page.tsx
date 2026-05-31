@@ -17,10 +17,10 @@ import toast from 'react-hot-toast';
 // Отримуємо projectId з URL або беремо перший доступний
 const DEFAULT_PROJECT = process.env.NEXT_PUBLIC_DEFAULT_PROJECT ?? '';
 
-// Base host for the public read API (page is served at <host>/public/v1/pages<path>)
-const PUBLIC_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
+// Public site renderer (marketing-web) — serves the styled HTML page at <origin><path>.
+const PUBLIC_SITE_BASE = process.env.NEXT_PUBLIC_PUBLIC_SITE_URL ?? 'http://localhost:3002';
 const publicUrlFor = (page: Page) =>
-  `${PUBLIC_BASE}/public/v1/pages${page.path ?? `/${page.slug}`}`;
+  `${PUBLIC_SITE_BASE}${page.path ?? `/${page.slug}`}`;
 
 const STATUS_VARIANT: Record<PageStatus, 'active' | 'draft' | 'archived' | 'queued' | 'success'> = {
   draft:     'draft',
