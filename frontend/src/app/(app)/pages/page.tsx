@@ -5,16 +5,22 @@ export const dynamic = 'force-dynamic';
 import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Plus, RefreshCw, Archive, Trash2, Eye, Edit3, Zap } from 'lucide-react';
+import { Plus, RefreshCw, Archive, Trash2, Eye, Edit3, Zap, ExternalLink, Copy } from 'lucide-react';
 import {
   Button, Badge, Select, Card, EmptyState, Spinner, Progress, cn,
 } from '@/components/ui';
 import { usePages } from '@/hooks/usePages';
 import { Page, PageStatus } from '@/services/pages.service';
+import { publishService } from '@/services/publish.service';
 import toast from 'react-hot-toast';
 
 // Отримуємо projectId з URL або беремо перший доступний
 const DEFAULT_PROJECT = process.env.NEXT_PUBLIC_DEFAULT_PROJECT ?? '';
+
+// Base host for the public read API (page is served at <host>/public/v1/pages<path>)
+const PUBLIC_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
+const publicUrlFor = (page: Page) =>
+  `${PUBLIC_BASE}/public/v1/pages${page.path ?? `/${page.slug}`}`;
 
 const STATUS_VARIANT: Record<PageStatus, 'active' | 'draft' | 'archived' | 'queued' | 'success'> = {
   draft:     'draft',
@@ -78,9 +84,27 @@ function PagesContent() {
     setSelected(allSelected ? new Set() : new Set(pages.map(p => p.id)));
 
   // Bulk publish selected
-  const bulkPublish = () => {
-    toast.success(`🚀 ${selected.size} сторінок поставлено в чергу публікації`);
-    setSelected(new Set());
+  const bulkPublish = async () => {
+    const ids = Array.from(selected);
+    try {
+      await publishService.create(projectId, { scope: 'selected', pageIds: ids });
+      toast.success(`🚀 ${ids.length} сторінок поставлено в чергу публікації`);
+      setSelected(new Set());
+      refetch();
+    } catch (err: unknown) {
+      const msg =
+        (err as { response?: { data?: { message?: string } } })?.response?.data?.message ?? 'Помилка публікації';
+      toast.error(Array.isArray(msg) ? msg[0] : msg);
+    }
+  };
+
+  const copyUrl = async (url: string) => {
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success('Посилання скопійовано');
+    } catch {
+      toast.error('Не вдалося скопіювати');
+    }
   };
 
   if (loading) return (
@@ -191,7 +215,29 @@ function PagesContent() {
 
                   <td className="px-4 py-3 border-b border-border">
                     <div className="font-semibold text-[13.5px] text-text">{page.title}</div>
-                    <div className="font-mono text-[11px] text-text3 mt-0.5">{page.urlPath ?? `/${page.slug}`}</div>
+                    {page.status === 'published' ? (
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <a
+                          href={publicUrlFor(page)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="Відкрити сторінку"
+                          className="font-mono text-[11px] text-accent hover:underline inline-flex items-center gap-1"
+                        >
+                          {page.path ?? `/${page.slug}`}
+                          <ExternalLink size={11} />
+                        </a>
+                        <button
+                          onClick={() => copyUrl(publicUrlFor(page))}
+                          title="Копіювати посилання"
+                          className="text-text3 hover:text-text transition-colors"
+                        >
+                          <Copy size={11} />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="font-mono text-[11px] text-text3 mt-0.5">{page.path ?? `/${page.slug}`}</div>
+                    )}
                   </td>
 
                   <td className="px-4 py-3 border-b border-border">

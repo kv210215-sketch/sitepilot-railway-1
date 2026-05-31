@@ -52,7 +52,7 @@ function EditContent({ params }: { params: { id: string } }) {
       <div className="flex items-center gap-3 mb-5">
         <div className="flex-1">
           <h1 className="font-display font-bold text-[17px]">{page.title}</h1>
-          <p className="font-mono text-[12px] text-text3 mt-0.5">{page.urlPath ?? `/${page.slug}`}</p>
+          <p className="font-mono text-[12px] text-text3 mt-0.5">{page.path ?? `/${page.slug}`}</p>
         </div>
         <a href={`/api/projects/${projectId}/pages/${page.id}/preview-html`} target="_blank">
           <Button variant="ghost" size="sm">

@@ -26,7 +26,7 @@ export interface Page {
   projectId:      string;
   title:          string;
   slug:           string;
-  urlPath:        string | null;
+  path:           string | null;
   status:         PageStatus;
   templateId:     string | null;
   content:        { blocks: PageBlock[] };
