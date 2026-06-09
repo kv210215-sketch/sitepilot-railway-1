@@ -157,10 +157,14 @@ All migrations have been run successfully.
 ```
 NODE_ENV=production
 NEXT_TELEMETRY_DISABLED=1
-NEXT_PUBLIC_API_URL=https://<BACKEND-URL>/api/v1
+NEXT_PUBLIC_API_URL=https://<BACKEND-URL>
 ```
 
-де `<BACKEND-URL>` — URL бекенд-сервісу з кроку 4.
+де `<BACKEND-URL>` — URL бекенд-сервісу з кроку 4 (БЕЗ суфікса `/api/v1`).
+
+> ⚠️ `NEXT_PUBLIC_API_URL` має бути голим хостом бекенду без `/api/v1`.
+> Клієнт `frontend/src/lib/api-client.ts` сам додає `/api/v1` до базового URL,
+> тож суфікс у змінній призведе до дубльованого `/api/v1/api/v1` і зламає запити.
 
 7. Дочекатись деплою → `Active`
 8. Перевірити: `GET https://<frontend-url>/api/health` → `{"status":"ok"}`

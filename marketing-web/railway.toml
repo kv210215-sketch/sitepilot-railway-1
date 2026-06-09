@@ -1,0 +1,15 @@
+# SitePilot marketing-web — Railway staging deploy (Nixpacks)
+# No production domains or secrets in this file.
+# Railway injects PORT; bind 0.0.0.0 for health checks and routing.
+
+[build]
+builder = "NIXPACKS"
+buildCommand = "npm ci && npm run build"
+
+[deploy]
+# Use Railway PORT (not package.json local dev port 3002)
+startCommand = "npx next start -H 0.0.0.0 -p $PORT"
+healthcheckPath = "/"
+healthcheckTimeout = 60
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
