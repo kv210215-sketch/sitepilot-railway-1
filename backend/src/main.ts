@@ -4,7 +4,7 @@ import { join } from 'path';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { Logger } from '@nestjs/common';
+import { Logger, RequestMethod } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { AppModule } from './app.module';
 
@@ -57,7 +57,9 @@ async function bootstrap(): Promise<void> {
   });
 
   // ── Global API prefix ─────────────────────────────────────────────────────
-  app.setGlobalPrefix(apiPrefix);
+  app.setGlobalPrefix(apiPrefix, {
+    exclude: [{ path: 'public/v1/(.*)', method: RequestMethod.ALL }],
+  });
 
   // ── CORS ──────────────────────────────────────────────────────────────────
   app.enableCors({
