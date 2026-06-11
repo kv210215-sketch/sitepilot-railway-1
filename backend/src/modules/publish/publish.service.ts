@@ -194,8 +194,6 @@ export class PublishService {
     // Симуляція затримки 200-800ms на сторінку
     const delay = 200 + Math.random() * 600;
     await new Promise(r => setTimeout(r, delay));
-    // 5% шанс помилки
-    if (Math.random() < 0.05) throw new Error('Timeout connecting to Tilda');
   }
 
   // ── Retry ─────────────────────────────────────────────────────────────────
@@ -263,7 +261,7 @@ export class PublishService {
     const qb = this.jobRepo.createQueryBuilder('j')
       .leftJoinAndSelect('j.initiator', 'u')
       .where('j.project_id = :projectId', { projectId })
-      .orderBy('j.queued_at', 'DESC');
+      .orderBy('j.queuedAt', 'DESC');
 
     if (status) qb.andWhere('j.status = :status', { status });
 
