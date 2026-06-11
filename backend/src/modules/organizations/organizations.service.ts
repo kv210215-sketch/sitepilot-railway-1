@@ -104,7 +104,7 @@ export class OrganizationsService {
     }
 
     const [orgs, total] = await qb
-      .orderBy('o.created_at', 'DESC')
+      .orderBy('o.createdAt', 'DESC')
       .skip(skip)
       .take(limit)
       .getManyAndCount();
