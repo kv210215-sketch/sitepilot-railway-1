@@ -67,9 +67,9 @@ export class ProjectsService {
 
     const orderCol = {
       name:      'p.name',
-      createdAt: 'p.created_at',
-      updatedAt: 'p.updated_at',
-    }[query.orderBy ?? 'createdAt'] ?? 'p.created_at';
+      createdAt: 'p.createdAt',
+      updatedAt: 'p.updatedAt',
+    }[query.orderBy ?? 'createdAt'] ?? 'p.createdAt';
 
     const [projects, total] = await qb
       .orderBy(orderCol, 'DESC')
