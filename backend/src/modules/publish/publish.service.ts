@@ -59,6 +59,13 @@ export class PublishService {
       }
     }
 
+    // Guard: do not create a "successful" job that publishes nothing.
+    if (!pages.length) {
+      throw new BadRequestException(
+        'No publishable pages found. Mark at least one page as ready or generated before publishing.',
+      );
+    }
+
     const job = this.jobRepo.create({
       projectId,
       initiatedBy:  userId,
