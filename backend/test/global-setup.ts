@@ -11,6 +11,7 @@ function def(key: string, value: string): void {
 
 export default async function globalSetup(): Promise<void> {
   def('NODE_ENV', 'test');
+  // Host stays `localhost` — data-source.ts forces SSL on for non-localhost hosts.
   def('DATABASE_URL', 'postgresql://postgres:postgres@localhost:5432/sitepilot_test');
   def('DB_SSL', 'false');
 

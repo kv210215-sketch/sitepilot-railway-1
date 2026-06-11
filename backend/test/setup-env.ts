@@ -8,6 +8,10 @@ function def(key: string, value: string): void {
 }
 
 def('NODE_ENV', 'test');
+// Host stays `localhost` (not 127.0.0.1): src/database/data-source.ts enables SSL
+// for any non-localhost hostname, which the local test Postgres rejects.
+// The flaky-401 root cause (libuv threadpool starvation from native bcrypt blocking
+// pg's dns.lookup) is handled at launch by test/run-e2e.js raising UV_THREADPOOL_SIZE.
 def('DATABASE_URL', 'postgresql://postgres:postgres@localhost:5432/sitepilot_test');
 def('DB_SSL', 'false');
 def('DB_SYNC', 'false');
