@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger, RequestMethod } from '@nestjs/common';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import type { Request, Response } from 'express';
 import { AppModule } from './app.module';
 
@@ -37,7 +38,7 @@ async function bootstrap(): Promise<void> {
   logger.log(`⚡ Pre-start health server on :${port}`);
 
   // ── NestJS application ────────────────────────────────────────────────────
-  const app = await NestFactory.create(AppModule, {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: isProd ? ['error', 'warn', 'log'] : ['error', 'warn', 'log', 'debug'],
     rawBody: true, // required for Stripe webhook signature verification
   });
@@ -47,6 +48,14 @@ async function bootstrap(): Promise<void> {
   const apiPrefix   = cfg.get<string>('app.apiPrefix') ?? 'api/v1';
   const corsOrigins = cfg.get<string[]>('app.corsOrigins') ?? [];
   const allowAll    = corsOrigins.includes('*');
+
+  // ── Trust proxy ───────────────────────────────────────────────────────────
+  // Exactly one proxy hop (Railway's edge) sits in front of the app. Trusting
+  // it makes req.ip — the ThrottlerGuard tracker — the real client IP from
+  // X-Forwarded-For instead of the proxy's address; without this every client
+  // collapses into a single shared rate-limit bucket. Override with
+  // TRUST_PROXY if the topology changes.
+  app.set('trust proxy', cfg.get<boolean | number | string>('app.trustProxy') ?? 1);
 
   // ── Graceful shutdown ─────────────────────────────────────────────────────
   app.enableShutdownHooks();

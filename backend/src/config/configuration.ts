@@ -1,7 +1,16 @@
 import { registerAs } from '@nestjs/config';
 
+// Express 'trust proxy': hop count ('1' = the single Railway edge proxy),
+// 'true'/'false', or a preset/subnet string passed through (e.g. 'loopback').
+function parseTrustProxy(raw: string): boolean | number | string {
+  if (raw === 'true') return true;
+  if (raw === 'false') return false;
+  return /^\d+$/.test(raw) ? parseInt(raw, 10) : raw;
+}
+
 export const appConfig = registerAs('app', () => ({
   nodeEnv: process.env.NODE_ENV || 'development',
+  trustProxy: parseTrustProxy(process.env.TRUST_PROXY ?? '1'),
   port: parseInt(process.env.PORT || '3001', 10),
   url: process.env.APP_URL || 'http://localhost:3001',
   frontendUrl: process.env.FRONTEND_URL || 'http://localhost:3000',
@@ -54,10 +63,16 @@ export const jwtConfig = registerAs('jwt', () => ({
   refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
 }));
 
-export const throttleConfig = registerAs('throttle', () => ({
-  ttl: parseInt(process.env.THROTTLE_TTL || '60000', 10),
-  limit: parseInt(process.env.THROTTLE_LIMIT || '100', 10),
-}));
+export const throttleConfig = registerAs('throttle', () => {
+  const ttl = parseInt(process.env.THROTTLE_TTL || '60000', 10);
+  const limit = parseInt(process.env.THROTTLE_LIMIT || '100', 10);
+  return {
+    // A NaN limit would make the Throttler comparison `totalHits > limit`
+    // always false — silently disabling rate limiting.
+    ttl: Number.isFinite(ttl) && ttl > 0 ? ttl : 60_000,
+    limit: Number.isFinite(limit) && limit > 0 ? limit : 100,
+  };
+});
 
 export const billingConfig = registerAs('billing', () => ({
   stripeSecretKey:    process.env.STRIPE_SECRET_KEY ?? '',

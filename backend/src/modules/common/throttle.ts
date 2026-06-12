@@ -10,18 +10,22 @@
  *   - e2e (THROTTLE_LIMIT=100000): the same fractions scale up, so test bursts
  *     never hit the limit without per-test special-casing.
  *
- * Read at module-load (decorator evaluation) — env is already populated by the
- * time controllers are imported, both in production boot and in the e2e
- * setup-env bootstrap.
+ * limit/ttl are Resolvable functions evaluated per request — NOT read at
+ * decorator evaluation. Controllers are imported before main.ts runs
+ * dotenv.config() (ES imports are hoisted), so an import-time read would bake
+ * in whatever process.env held at startup and ignore values loaded later from
+ * .env files via ConfigModule.
  */
-const GLOBAL_LIMIT = Number(process.env.THROTTLE_LIMIT ?? 100);
-const TTL = Number(process.env.THROTTLE_TTL ?? 60_000);
+const envInt = (key: string, fallback: number): number => {
+  const n = Number(process.env[key]);
+  return Number.isFinite(n) && n > 0 ? n : fallback;
+};
 
 export function throttle(fractionOfGlobal: number) {
   return {
     default: {
-      limit: Math.max(1, Math.ceil(GLOBAL_LIMIT * fractionOfGlobal)),
-      ttl: TTL,
+      limit: () => Math.max(1, Math.ceil(envInt('THROTTLE_LIMIT', 100) * fractionOfGlobal)),
+      ttl: () => envInt('THROTTLE_TTL', 60_000),
     },
   };
 }

@@ -97,8 +97,8 @@ import { Lead } from './modules/leads/lead.entity';
       inject: [ConfigService],
       useFactory: (cfg: ConfigService): ThrottlerModuleOptions => ({
         throttlers: [{
-          ttl: cfg.get<number>('throttle.ttl') ?? 60,
-          limit: cfg.get<number>('throttle.limit') ?? 10,
+          ttl: cfg.get<number>('throttle.ttl') ?? 60_000,
+          limit: cfg.get<number>('throttle.limit') ?? 100,
         }],
       }),
     }),

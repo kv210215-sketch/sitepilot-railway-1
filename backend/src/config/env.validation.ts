@@ -25,6 +25,15 @@ export function validateEnv(config: Record<string, unknown>): Record<string, unk
     );
   }
 
+  // ── Throttle vars must be positive integers when set ─────────────────────────
+  // Fail fast instead of silently falling back to defaults on a typo'd value.
+  for (const key of ['THROTTLE_TTL', 'THROTTLE_LIMIT']) {
+    const raw = config[key];
+    if (raw !== undefined && raw !== '' && !/^[1-9]\d*$/.test(String(raw))) {
+      throw new Error(`[Config] ${key} must be a positive integer, got "${String(raw)}".`);
+    }
+  }
+
   // ── Production-only guards ───────────────────────────────────────────────────
   if (isProd) {
     const devJwtDefaults = ['dev_jwt_secret_change_me', 'dev_refresh_secret_change_me'];
