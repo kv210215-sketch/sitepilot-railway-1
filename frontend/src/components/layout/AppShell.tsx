@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard, FolderOpen, FileText, Upload,
   Activity, LayoutTemplate, HardDrive, Users,
-  BarChart3, Bell, Plus, ChevronDown, Sparkles,
+  BarChart3, Bell, Plus, ChevronDown, Sparkles, Inbox,
 } from 'lucide-react';
 import { cn } from '@/components/ui';
 import { useAuthStore } from '@/store/auth.store';
@@ -20,6 +20,7 @@ const NAV = [
       { href: '/dashboard',  icon: LayoutDashboard, label: 'Дашборд' },
       { href: '/projects',   icon: FolderOpen,      label: 'Проєкти',  badge: '3', badgeColor: 'green' },
       { href: '/pages',      icon: FileText,         label: 'Сторінки' },
+      { href: '/leads',      icon: Inbox,            label: 'Ліди' },
     ],
   },
   {
