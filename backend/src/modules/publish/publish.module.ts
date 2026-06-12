@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { PublishController } from './publish.controller';
+import { PublishController, GlobalPublishController } from './publish.controller';
 import { PublishService }    from './publish.service';
 import { PublishJob }        from './publish-job.entity';
 import { PublishJobLog }     from './publish-job.entity';
@@ -11,7 +11,7 @@ import { AutomationModule }  from '../automation/automation.module';
 
 @Module({
   imports:     [TypeOrmModule.forFeature([PublishJob, PublishJobLog, Page]), AuditModule, AutomationModule],
-  controllers: [PublishController],
+  controllers: [PublishController, GlobalPublishController],
   providers:   [PublishService],
   exports:     [PublishService],
 })

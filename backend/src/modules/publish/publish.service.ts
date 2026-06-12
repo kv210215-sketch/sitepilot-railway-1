@@ -8,6 +8,8 @@ import { PublishJob, PublishJobLog, PublishScope, PublishStatus } from './publis
 import { CreatePublishJobDto, ListJobsDto, PublishJobResponseDto, PaginatedJobsDto } from './publish.dto';
 import { Page, PageStatus } from '../pages/page.entity';
 import { AuditService } from '../audit/audit.service';
+import { OrganizationMember } from '../organizations/entities/organization-member.entity';
+import { SystemRole } from '../users/user.entity';
 
 @Injectable()
 export class PublishService {
@@ -285,6 +287,38 @@ export class PublishService {
       where: { jobId },
       order: { createdAt: 'ASC' },
     });
+  }
+
+  // ── Глобальна черга (для головного dashboard) ─────────────────────────────
+  // Останні jobs по всіх проєктах організацій користувача (SUPER_ADMIN — всі).
+
+  async globalQueue(userId: string, systemRole: SystemRole, limit = 10) {
+    const qb = this.jobRepo.createQueryBuilder('j')
+      .innerJoinAndSelect('j.project', 'p')
+      .orderBy('j.queuedAt', 'DESC')
+      .take(Math.min(Math.max(limit, 1), 50));
+
+    if (systemRole !== SystemRole.SUPER_ADMIN) {
+      qb.innerJoin(
+        OrganizationMember,
+        'om',
+        'om.organization_id = p.organization_id AND om.user_id = :userId AND om.is_active = true',
+        { userId },
+      );
+    }
+
+    const jobs = await qb.getMany();
+
+    return jobs.map(j => ({
+      id:           j.id,
+      scope:        j.scope,
+      status:       j.status,
+      pagesTotal:   j.pagesTotal,
+      pagesSuccess: j.pagesSuccess,
+      pagesFailed:  j.pagesFailed,
+      durationMs:   j.durationMs,
+      projectName:  j.project?.name ?? '',
+    }));
   }
 
   // ── Dashboard stats ───────────────────────────────────────────────────────
