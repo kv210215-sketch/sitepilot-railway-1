@@ -62,7 +62,12 @@ export class AuditService {
     const qb = this.repo.createQueryBuilder('a')
       .leftJoinAndSelect('a.user', 'u')
       .where('a.project_id = :projectId', { projectId })
-      .orderBy('a.created_at', 'DESC');
+      // Order by the entity PROPERTY (createdAt), not the raw DB column.
+      // With leftJoinAndSelect + skip/take, TypeORM uses its distinct-id
+      // pagination strategy and resolves the order-by against entity metadata;
+      // a raw column name has no matching property and crashes with
+      // "Cannot read properties of undefined (reading 'databaseName')".
+      .orderBy('a.createdAt', 'DESC');
 
     if (action)     qb.andWhere('a.action = :action', { action });
     if (entityType) qb.andWhere('a.entity_type = :entityType', { entityType });
