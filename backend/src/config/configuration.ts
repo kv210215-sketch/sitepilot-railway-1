@@ -72,6 +72,23 @@ export const automationConfig = registerAs('automation', () => ({
   tildaPassword: process.env.TILDA_PASSWORD ?? '',
 }));
 
+/**
+ * Outbound mail (SMTP). Used for lead notifications (Stage 13) and, later,
+ * auth verification / password reset. When SMTP_HOST is unset the MailService
+ * degrades to logging instead of sending — safe for dev / test / unconfigured
+ * staging. `leadsNotifyEmail` is an optional catch-all recipient that always
+ * receives lead notifications in addition to the project owner.
+ */
+export const mailConfig = registerAs('mail', () => ({
+  host:     process.env.SMTP_HOST ?? '',
+  port:     parseInt(process.env.SMTP_PORT || '587', 10),
+  secure:   process.env.SMTP_SECURE === 'true',
+  user:     process.env.SMTP_USER ?? '',
+  pass:     process.env.SMTP_PASS ?? '',
+  from:     process.env.MAIL_FROM || 'SitePilot <no-reply@sitepilot.local>',
+  leadsNotifyEmail: process.env.LEADS_NOTIFY_EMAIL ?? '',
+}));
+
 /** Public read API (marketing-web). Production stays off unless PUBLIC_API_ENABLED=true. */
 export const publicConfig = registerAs('public', () => {
   const nodeEnv = process.env.NODE_ENV || 'development';
