@@ -1,7 +1,7 @@
 import { ClassSerializerInterceptor, Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
-import { ThrottlerModule, ThrottlerModuleOptions } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule, ThrottlerModuleOptions } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 
@@ -97,8 +97,8 @@ import { Lead } from './modules/leads/lead.entity';
       inject: [ConfigService],
       useFactory: (cfg: ConfigService): ThrottlerModuleOptions => ({
         throttlers: [{
-          ttl: cfg.get<number>('throttle.ttl') ?? 60,
-          limit: cfg.get<number>('throttle.limit') ?? 10,
+          ttl: cfg.get<number>('throttle.ttl') ?? 60_000,
+          limit: cfg.get<number>('throttle.limit') ?? 100,
         }],
       }),
     }),
@@ -115,6 +115,10 @@ import { Lead } from './modules/leads/lead.entity';
 
   providers: [
     { provide: APP_FILTER, useClass: GlobalExceptionFilter },
+    // Rate limiting runs first so unauthenticated abuse (login/forgot/leads/AI)
+    // is throttled before hitting auth. Default budget from throttle config
+    // (100 req / 60s); sensitive routes tighten this via @Throttle overrides.
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_GUARD, useClass: RolesGuard },
     { provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor },

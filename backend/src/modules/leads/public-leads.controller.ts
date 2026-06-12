@@ -1,11 +1,12 @@
 import {
-  Controller, Post, Body, Req, HttpCode, HttpStatus, UseGuards,
+  Controller, Post, Body, Req, HttpCode, HttpStatus,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ThrottlerGuard, Throttle } from '@nestjs/throttler';
+import { Throttle } from '@nestjs/throttler';
 import type { Request } from 'express';
 
 import { Public } from '../auth/guards';
+import { throttle } from '../common/throttle';
 import { LeadsService } from './leads.service';
 import { CreateLeadDto, CreateLeadAckDto } from './leads.dto';
 
@@ -18,13 +19,12 @@ import { CreateLeadDto, CreateLeadAckDto } from './leads.dto';
  */
 @ApiTags('public')
 @Public()
-@UseGuards(ThrottlerGuard)
 @Controller('public/v1/leads')
 export class PublicLeadsController {
   constructor(private readonly leads: LeadsService) {}
 
   @Post()
-  @Throttle({ default: { limit: 20, ttl: 60_000 } })
+  @Throttle(throttle(0.2))
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Submit a lead from a published site (public, rate-limited)' })
   @ApiResponse({ status: 201, type: CreateLeadAckDto })

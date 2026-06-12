@@ -7,7 +7,7 @@ import {
   ApiTags, ApiOperation, ApiResponse,
   ApiBearerAuth, ApiBody,
 } from '@nestjs/swagger';
-import { ThrottlerGuard } from '@nestjs/throttler';
+import { Throttle } from '@nestjs/throttler';
 
 import { AuthService } from './auth.service';
 import {
@@ -16,6 +16,7 @@ import {
   ChangePasswordDto, AuthResponseDto, AuthTokensDto,
 } from './auth.dto';
 import { JwtAuthGuard, Public } from './guards';
+import { throttle } from '../common/throttle';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { RequestUser } from './jwt.strategy';
 
@@ -29,7 +30,7 @@ export class AuthController {
 
   @Public()
   @Post('register')
-  @UseGuards(ThrottlerGuard)
+  @Throttle(throttle(0.1))
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Реєстрація нового користувача' })
   @ApiResponse({ status: 201, type: AuthResponseDto })
@@ -40,7 +41,7 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  @UseGuards(ThrottlerGuard)
+  @Throttle(throttle(0.1))
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Вхід у систему' })
   @ApiResponse({ status: 200, type: AuthResponseDto })
@@ -51,6 +52,7 @@ export class AuthController {
 
   @Public()
   @Post('refresh')
+  @Throttle(throttle(0.3))
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Оновлення access token' })
   @ApiResponse({ status: 200, type: AuthTokensDto })
@@ -60,7 +62,7 @@ export class AuthController {
 
   @Public()
   @Post('forgot-password')
-  @UseGuards(ThrottlerGuard)
+  @Throttle(throttle(0.05))
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Запит на скидання пароля' })
   async forgotPassword(@Body() dto: ForgotPasswordDto) {
@@ -69,6 +71,7 @@ export class AuthController {
 
   @Public()
   @Post('reset-password')
+  @Throttle(throttle(0.05))
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Скидання пароля по токену' })
   async resetPassword(@Body() dto: ResetPasswordDto) {
