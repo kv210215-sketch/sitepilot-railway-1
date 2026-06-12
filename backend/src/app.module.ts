@@ -13,6 +13,7 @@ import { GlobalExceptionFilter } from './modules/common/filters/http-exception.f
 
 // ── Modules ───────────────────────────────────────────────────────────────────
 import { AiModule } from './modules/ai/ai.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { AuditModule } from './modules/audit/audit.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AutomationModule } from './modules/automation/automation.module';
@@ -105,7 +106,7 @@ import { Lead } from './modules/leads/lead.entity';
 
     AuthModule, UsersModule, ProjectsModule, PagesModule,
     TemplatesModule, ContentModule, SeoModule,
-    AuditModule, PublishModule,
+    AuditModule, PublishModule, AnalyticsModule,
     BillingModule, AiModule, AutomationModule, OnboardingModule,
     OrganizationsModule,
     PublicModule,

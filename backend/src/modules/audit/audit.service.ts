@@ -29,6 +29,12 @@ export class AuditQueryDto {
   @ApiPropertyOptional() @IsOptional() @Transform(({ value }) => parseInt(value, 10)) limit?: number = 50;
 }
 
+export class GlobalFeedQueryDto {
+  @ApiPropertyOptional({ default: 20 })
+  @IsOptional() @Transform(({ value }) => parseInt(value, 10))
+  limit?: number = 20;
+}
+
 @Injectable()
 export class AuditService {
   constructor(
@@ -97,11 +103,20 @@ export class AuditService {
   // ── Глобальна стрічка (для головного dashboard) ───────────────────────────
 
   async globalFeed(userId: string, limit = 20) {
-    return this.repo.find({
+    const entries = await this.repo.find({
       where: { userId },
-      relations: ['project'],
+      relations: ['project', 'user'],
       order: { createdAt: 'DESC' },
-      take: limit,
+      take: Math.min(Math.max(limit, 1), 50),
     });
+
+    return entries.map(e => ({
+      id:          e.id,
+      action:      e.action,
+      entityName:  e.entityName,
+      userName:    (e.user as any)?.name ?? 'System',
+      projectName: e.project?.name ?? null,
+      createdAt:   e.createdAt,
+    }));
   }
 }

@@ -7,7 +7,7 @@ import { IsArray, IsOptional, IsString, IsBoolean } from 'class-validator';
 
 import { PublishService } from './publish.service';
 import {
-  CreatePublishJobDto, ListJobsDto,
+  CreatePublishJobDto, ListJobsDto, QueueQueryDto,
   PublishJobResponseDto, PaginatedJobsDto,
 } from './publish.dto';
 import { JwtAuthGuard } from '../auth/guards';
@@ -128,5 +128,19 @@ export class PublishController {
       pageIds:   dto.pageIds,
       dryRun:    dto.dryRun,
     });
+  }
+}
+
+@ApiTags('Publish')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+@Controller('publish')
+export class GlobalPublishController {
+  constructor(private readonly svc: PublishService) {}
+
+  @Get('queue')
+  @ApiOperation({ summary: 'Глобальна черга публікацій користувача (dashboard)' })
+  queue(@CurrentUser() user: RequestUser, @Query() query: QueueQueryDto) {
+    return this.svc.globalQueue(user.id, user.role, query.limit);
   }
 }

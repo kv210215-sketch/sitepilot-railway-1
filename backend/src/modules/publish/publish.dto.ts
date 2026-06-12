@@ -34,6 +34,12 @@ export class ListJobsDto {
   limit?: number = 20;
 }
 
+export class QueueQueryDto {
+  @ApiPropertyOptional({ default: 10 })
+  @IsOptional() @Transform(({ value }) => parseInt(value, 10))
+  limit?: number = 10;
+}
+
 export class PublishJobResponseDto {
   @ApiProperty() id:           string;
   @ApiProperty() projectId:    string;

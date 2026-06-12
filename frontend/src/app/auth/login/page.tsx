@@ -62,25 +62,15 @@ function LoginForm() {
               autoComplete="email"
               autoFocus
             />
-            <div>
-              <Input
-                label="Пароль"
-                type="password"
-                placeholder="••••••••"
-                value={form.password}
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-                error={errors.password}
-                autoComplete="current-password"
-              />
-              <div className="flex justify-end mt-1.5">
-                <Link
-                  href="/auth/forgot-password"
-                  className="text-[12px] text-text2 hover:text-accent transition-colors"
-                >
-                  Забули пароль?
-                </Link>
-              </div>
-            </div>
+            <Input
+              label="Пароль"
+              type="password"
+              placeholder="••••••••"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              error={errors.password}
+              autoComplete="current-password"
+            />
 
             <Button
               type="submit"
