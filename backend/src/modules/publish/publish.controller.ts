@@ -14,6 +14,8 @@ import { JwtAuthGuard } from '../auth/guards';
 import { CurrentUser }  from '../common/decorators/current-user.decorator';
 import { RequestUser }  from '../auth/jwt.strategy';
 import { PlaywrightService } from '../automation/playwright.service';
+import { ProjectAccessGuard, ProjectRoles } from '../common/guards/project-access.guard';
+import { OrgRole } from '../organizations/entities/organization-member.entity';
 
 class RunPlaywrightDto {
   @ApiProperty({ description: 'Tilda project ID (numeric string)' })
@@ -33,7 +35,10 @@ class RunPlaywrightDto {
 
 @ApiTags('Publish')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, ProjectAccessGuard)
+@ProjectRoles(OrgRole.MEMBER, OrgRole.ADMIN, OrgRole.OWNER)
+@ApiResponse({ status: 401, description: 'Unauthenticated' })
+@ApiResponse({ status: 403, description: 'Not a member of the project organization' })
 @Controller('projects/:projectId/publish')
 export class PublishController {
   constructor(
