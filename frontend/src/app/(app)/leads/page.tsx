@@ -59,26 +59,24 @@ function LeadsContent() {
 
   // Leads are project-scoped: resolve the project list first, then fetch
   // leads for the selected project.
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await projectsService.list({ limit: 100 });
-        if (cancelled) return;
-        const list = res.data.data;
-        setProjects(list);
-        setProjectId(
-          list.some(p => p.id === urlProjectId) ? urlProjectId : (list[0]?.id ?? ''),
-        );
-        if (list.length === 0) setLoading(false);
-      } catch {
-        if (cancelled) return;
-        setError('Не вдалося завантажити проєкти');
-        setLoading(false);
-      }
-    })();
-    return () => { cancelled = true; };
+  const loadProjects = useCallback(async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const res = await projectsService.list({ limit: 100 });
+      const list = res.data.data;
+      setProjects(list);
+      setProjectId(
+        list.some(p => p.id === urlProjectId) ? urlProjectId : (list[0]?.id ?? ''),
+      );
+      if (list.length === 0) setLoading(false);
+    } catch {
+      setError('Не вдалося завантажити проєкти');
+      setLoading(false);
+    }
   }, [urlProjectId]);
+
+  useEffect(() => { loadProjects(); }, [loadProjects]);
 
   const load = useCallback(async () => {
     if (!projectId) return;
@@ -140,7 +138,7 @@ function LeadsContent() {
           description={error}
           action={
             <button
-              onClick={load}
+              onClick={projectId ? load : loadProjects}
               className="text-[13px] font-semibold text-accent hover:underline"
             >
               Спробувати ще раз
