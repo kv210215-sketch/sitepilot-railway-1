@@ -11,6 +11,7 @@ import {
   PublishJobResponseDto, PaginatedJobsDto,
 } from './publish.dto';
 import { JwtAuthGuard } from '../auth/guards';
+import { ProjectAccessGuard, ProjectRoles } from '../common/guards/project-access.guard';
 import { CurrentUser }  from '../common/decorators/current-user.decorator';
 import { RequestUser }  from '../auth/jwt.strategy';
 import { PlaywrightService } from '../automation/playwright.service';
@@ -31,9 +32,15 @@ class RunPlaywrightDto {
   dryRun?: boolean;
 }
 
+// Project-scoped publish routes (list/get/create/retry/cancel/run) are
+// IDOR-sensitive: without membership enforcement any authenticated user could
+// read or trigger publishes on another tenant's project. ProjectAccessGuard
+// resolves :projectId → org membership; @ProjectRoles() = any active member.
 @ApiTags('Publish')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, ProjectAccessGuard)
+@ProjectRoles()
+@ApiResponse({ status: 403, description: 'Not a member of the project organization' })
 @Controller('projects/:projectId/publish')
 export class PublishController {
   constructor(
