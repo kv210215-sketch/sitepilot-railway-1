@@ -3,6 +3,7 @@ import {
   CreateDateColumn, UpdateDateColumn, DeleteDateColumn,
   ManyToOne, JoinColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 import { Project } from '../projects/project.entity';
 
 export enum LeadStatus {
@@ -79,6 +80,9 @@ export class Lead {
   @Column({ type: 'enum', enum: LeadStatus, default: LeadStatus.NEW })
   status: LeadStatus;
 
+  // Collected for anti-spam / abuse tracing only — never serialized to API
+  // responses (see LeadResponseDto).
+  @Exclude()
   @Column({ name: 'ip_address', type: 'inet', nullable: true })
   ipAddress: string | null;
 
@@ -90,6 +94,7 @@ export class Lead {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt: Date;
 
+  @Exclude()
   @DeleteDateColumn({ name: 'deleted_at', type: 'timestamptz', nullable: true })
   deletedAt: Date | null;
 }

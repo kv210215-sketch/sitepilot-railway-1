@@ -84,6 +84,10 @@ describe('Lead capture (e2e)', () => {
       }),
     );
 
+    // ipAddress is PII collected for anti-spam — must not reach org members.
+    expect(list.body.data[0]).not.toHaveProperty('ipAddress');
+    expect(list.body.data[0]).not.toHaveProperty('deletedAt');
+
     // Detail endpoint
     const leadId = list.body.data[0].id;
     const detail = await request(app.getHttpServer())
@@ -91,6 +95,8 @@ describe('Lead capture (e2e)', () => {
       .set('Authorization', `Bearer ${owner.token}`)
       .expect(200);
     expect(detail.body.id).toBe(leadId);
+    expect(detail.body).not.toHaveProperty('ipAddress');
+    expect(detail.body).not.toHaveProperty('deletedAt');
   });
 
   it('owner receives a notification (MailService called with owner email)', async () => {
