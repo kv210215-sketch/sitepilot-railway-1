@@ -89,8 +89,9 @@ function ProjectCard({
         ))}
       </div>
 
-      {/* Actions */}
-      <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+      {/* Actions — stop both click and keydown so activating a button (incl. via
+          Enter on a focused button) doesn't bubble to the card's navigation handler */}
+      <div className="flex gap-2" onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()}>
         <Button
           variant="ghost" size="sm" className="flex-1"
           onClick={() => router.push(projectHref)}

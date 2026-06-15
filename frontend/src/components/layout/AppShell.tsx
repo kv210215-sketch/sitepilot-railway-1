@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, ReactNode } from 'react';
+import { useState, Suspense, ReactNode } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import {
   LayoutDashboard, FolderOpen, FileText, Upload,
   Activity, LayoutTemplate, HardDrive, Users,
@@ -97,15 +97,38 @@ function NavItem({
   );
 }
 
-export default function AppShell({ children }: { children: ReactNode }) {
-  const user            = useAuthStore((s) => s.user);
-  const { logout }      = useAuth();
-  const { projectId }   = useActiveProject();
-  const [userOpen, setUserOpen] = useState(false);
+// Sidebar nav. Reads the projectId from the current URL (so navigating within a
+// non-first project keeps that project in context) and falls back to the first
+// available project. useSearchParams requires a Suspense boundary (see AppShell).
+function SidebarNav() {
+  const searchParams  = useSearchParams();
+  const urlProjectId  = searchParams.get('projectId') ?? undefined;
+  const { projectId } = useActiveProject(urlProjectId);
 
   // Append the active projectId to project-scoped links so they always have context.
   const navHref = (href: string) =>
     projectId && PROJECT_SCOPED.has(href) ? `${href}?projectId=${projectId}` : href;
+
+  return (
+    <nav className="flex-1 p-3">
+      {NAV.map((section) => (
+        <div key={section.label} className="mb-1">
+          <p className="text-[10px] font-semibold uppercase tracking-[1px] text-text3 px-2 pt-3 pb-1.5">
+            {section.label}
+          </p>
+          {section.items.map((item) => (
+            <NavItem key={item.href} {...item} href={navHref(item.href)} />
+          ))}
+        </div>
+      ))}
+    </nav>
+  );
+}
+
+export default function AppShell({ children }: { children: ReactNode }) {
+  const user            = useAuthStore((s) => s.user);
+  const { logout }      = useAuth();
+  const [userOpen, setUserOpen] = useState(false);
 
   const initials = user?.name
     .split(' ')
@@ -130,19 +153,10 @@ export default function AppShell({ children }: { children: ReactNode }) {
           </span>
         </div>
 
-        {/* Nav */}
-        <nav className="flex-1 p-3">
-          {NAV.map((section) => (
-            <div key={section.label} className="mb-1">
-              <p className="text-[10px] font-semibold uppercase tracking-[1px] text-text3 px-2 pt-3 pb-1.5">
-                {section.label}
-              </p>
-              {section.items.map((item) => (
-                <NavItem key={item.href} {...item} href={navHref(item.href)} />
-              ))}
-            </div>
-          ))}
-        </nav>
+        {/* Nav — wrapped in Suspense because SidebarNav reads useSearchParams */}
+        <Suspense fallback={<nav className="flex-1 p-3" />}>
+          <SidebarNav />
+        </Suspense>
 
         {/* User */}
         <div className="p-3 border-t border-border">
