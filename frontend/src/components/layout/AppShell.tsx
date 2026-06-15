@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, ReactNode } from 'react';
+import { useState, Suspense, ReactNode } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import {
   LayoutDashboard, FolderOpen, FileText, Upload,
   Activity, LayoutTemplate, HardDrive, Users,
@@ -11,7 +11,12 @@ import {
 import { cn } from '@/components/ui';
 import { useAuthStore } from '@/store/auth.store';
 import { useAuth } from '@/hooks/useAuth';
+import { useActiveProject } from '@/hooks/useActiveProject';
 import AiSalesChat from '@/components/AiSalesChat';
+
+// Screens that need a project in context — nav links carry the active projectId
+// so users never land on them without context (which used to spin forever).
+const PROJECT_SCOPED = new Set(['/pages', '/publish', '/activity']);
 
 const NAV = [
   {
@@ -59,7 +64,9 @@ function NavItem({
   badge?: string; badgeColor?: string;
 }) {
   const pathname = usePathname();
-  const active   = pathname === href || (href !== '/dashboard' && pathname.startsWith(href));
+  // href may carry a query string (e.g. /pages?projectId=…) — match on the base path.
+  const base     = href.split('?')[0];
+  const active   = pathname === base || (base !== '/dashboard' && pathname.startsWith(base));
 
   return (
     <Link
@@ -87,6 +94,34 @@ function NavItem({
         </span>
       )}
     </Link>
+  );
+}
+
+// Sidebar nav. Reads the projectId from the current URL (so navigating within a
+// non-first project keeps that project in context) and falls back to the first
+// available project. useSearchParams requires a Suspense boundary (see AppShell).
+function SidebarNav() {
+  const searchParams  = useSearchParams();
+  const urlProjectId  = searchParams.get('projectId') ?? undefined;
+  const { projectId } = useActiveProject(urlProjectId);
+
+  // Append the active projectId to project-scoped links so they always have context.
+  const navHref = (href: string) =>
+    projectId && PROJECT_SCOPED.has(href) ? `${href}?projectId=${projectId}` : href;
+
+  return (
+    <nav className="flex-1 p-3">
+      {NAV.map((section) => (
+        <div key={section.label} className="mb-1">
+          <p className="text-[10px] font-semibold uppercase tracking-[1px] text-text3 px-2 pt-3 pb-1.5">
+            {section.label}
+          </p>
+          {section.items.map((item) => (
+            <NavItem key={item.href} {...item} href={navHref(item.href)} />
+          ))}
+        </div>
+      ))}
+    </nav>
   );
 }
 
@@ -118,19 +153,10 @@ export default function AppShell({ children }: { children: ReactNode }) {
           </span>
         </div>
 
-        {/* Nav */}
-        <nav className="flex-1 p-3">
-          {NAV.map((section) => (
-            <div key={section.label} className="mb-1">
-              <p className="text-[10px] font-semibold uppercase tracking-[1px] text-text3 px-2 pt-3 pb-1.5">
-                {section.label}
-              </p>
-              {section.items.map((item) => (
-                <NavItem key={item.href} {...item} />
-              ))}
-            </div>
-          ))}
-        </nav>
+        {/* Nav — wrapped in Suspense because SidebarNav reads useSearchParams */}
+        <Suspense fallback={<nav className="flex-1 p-3" />}>
+          <SidebarNav />
+        </Suspense>
 
         {/* User */}
         <div className="p-3 border-t border-border">

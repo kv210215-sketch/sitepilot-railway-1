@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic';
 
 import { Select, Spinner, cn } from '@/components/ui';
 import { ActivityItem, activityService } from '@/services/publish.service';
+import { useActiveProject } from '@/hooks/useActiveProject';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -78,7 +79,9 @@ function timeAgo(iso: string): string {
 
 function ActivityContent() {
   const searchParams = useSearchParams();
-  const projectId = searchParams.get('projectId') ?? DEFAULT_PROJECT;
+  const explicitId = searchParams.get('projectId') ?? DEFAULT_PROJECT;
+  // Fall back to the first available project when no projectId is provided.
+  const { projectId, projectsLoading } = useActiveProject(explicitId);
 
   const [items, setItems] = useState<ActivityItem[]>([]);
   const [total, setTotal] = useState(0);
@@ -87,7 +90,7 @@ function ActivityContent() {
   const [filter, setFilter] = useState('');
 
   const load = useCallback(async () => {
-    if (!projectId) return;
+    if (!projectId) { setLoading(false); return; }
     setLoading(true);
     try {
       const params: Record<string, unknown> = { page, limit: 50 };
@@ -135,7 +138,7 @@ function ActivityContent() {
       </div>
 
       {/* Feed */}
-      {loading ? (
+      {loading || projectsLoading ? (
         <div className="flex justify-center py-16"><Spinner size={24} /></div>
       ) : items.length === 0 ? (
         <div className="text-center py-16 text-text3 text-[13px]">
