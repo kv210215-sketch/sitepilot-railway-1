@@ -76,7 +76,6 @@ jobs:
 
   deploy-frontend:
     name: Deploy Frontend
-    if: false  # TODO: enable when sitepilot-frontend service is added to triumphant-purpose project
     runs-on: ubuntu-latest
     needs: deploy-backend
     defaults:
