@@ -10,6 +10,7 @@ import {
   Button, Badge, Select, Card, EmptyState, Spinner, Progress, cn,
 } from '@/components/ui';
 import { usePages } from '@/hooks/usePages';
+import { useActiveProject } from '@/hooks/useActiveProject';
 import { Page, PageStatus } from '@/services/pages.service';
 import toast from 'react-hot-toast';
 
@@ -53,7 +54,10 @@ function SeoScore({ page }: { page: Page }) {
 
 function PagesContent() {
   const searchParams = useSearchParams();
-  const projectId    = searchParams.get('projectId') ?? DEFAULT_PROJECT;
+  const explicitId   = searchParams.get('projectId') ?? DEFAULT_PROJECT;
+  // Fall back to the first available project when no projectId is provided,
+  // so the screen always has context instead of spinning forever.
+  const { projectId, projectsLoading } = useActiveProject(explicitId);
 
   const [statusFilter, setStatusFilter] = useState('');
   const [search,       setSearch]       = useState('');
@@ -83,7 +87,7 @@ function PagesContent() {
     setSelected(new Set());
   };
 
-  if (loading) return (
+  if (loading || projectsLoading) return (
     <div className="flex items-center justify-center h-64"><Spinner size={24} /></div>
   );
 

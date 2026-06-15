@@ -13,7 +13,9 @@ export function usePages(projectId: string, params?: Record<string, unknown>) {
   const [error,   setError]   = useState<string | null>(null);
 
   const fetch = useCallback(async () => {
-    if (!projectId) return;
+    // No project context yet → clear loading so the screen renders instead of
+    // spinning forever. Re-runs automatically once a projectId is resolved.
+    if (!projectId) { setLoading(false); return; }
     setLoading(true);
     try {
       const res = await pagesService.list(projectId, params);

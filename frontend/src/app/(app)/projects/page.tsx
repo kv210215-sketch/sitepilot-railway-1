@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Plus, Globe, Archive, Trash2, Rocket } from 'lucide-react';
 import {
   Button, Badge, Modal, Input, Select,
@@ -28,9 +29,14 @@ function ProjectCard({
   project: Project; onRefetch: () => void;
 }) {
   const [publishing, setPublishing] = useState(false);
+  const router = useRouter();
+
+  // Project detail route does not exist yet — send the user to that project's
+  // Pages screen (the fastest useful destination).
+  const projectHref = `/pages?projectId=${project.id}`;
 
   const handlePublish = async (e: React.MouseEvent) => {
-    e.preventDefault();
+    e.stopPropagation();
     setPublishing(true);
     try {
       await publishService.create(project.id, { scope: 'project' });
@@ -45,7 +51,11 @@ function ProjectCard({
 
   return (
     <div
-      className="block bg-surface border border-border rounded-[10px] p-[18px] hover:border-border2 hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(0,0,0,.3)] transition-all group"
+      onClick={() => router.push(projectHref)}
+      role="link"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter') router.push(projectHref); }}
+      className="block bg-surface border border-border rounded-[10px] p-[18px] hover:border-border2 hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(0,0,0,.3)] transition-all group cursor-pointer"
     >
       {/* Header */}
       <div className="flex items-start gap-3 mb-3.5">
@@ -80,8 +90,11 @@ function ProjectCard({
       </div>
 
       {/* Actions */}
-      <div className="flex gap-2" onClick={(e) => e.preventDefault()}>
-        <Button variant="ghost" size="sm" className="flex-1">
+      <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+        <Button
+          variant="ghost" size="sm" className="flex-1"
+          onClick={() => router.push(projectHref)}
+        >
           Редагувати
         </Button>
         <Button

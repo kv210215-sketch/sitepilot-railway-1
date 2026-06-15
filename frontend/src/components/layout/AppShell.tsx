@@ -11,7 +11,12 @@ import {
 import { cn } from '@/components/ui';
 import { useAuthStore } from '@/store/auth.store';
 import { useAuth } from '@/hooks/useAuth';
+import { useActiveProject } from '@/hooks/useActiveProject';
 import AiSalesChat from '@/components/AiSalesChat';
+
+// Screens that need a project in context — nav links carry the active projectId
+// so users never land on them without context (which used to spin forever).
+const PROJECT_SCOPED = new Set(['/pages', '/publish', '/activity']);
 
 const NAV = [
   {
@@ -59,7 +64,9 @@ function NavItem({
   badge?: string; badgeColor?: string;
 }) {
   const pathname = usePathname();
-  const active   = pathname === href || (href !== '/dashboard' && pathname.startsWith(href));
+  // href may carry a query string (e.g. /pages?projectId=…) — match on the base path.
+  const base     = href.split('?')[0];
+  const active   = pathname === base || (base !== '/dashboard' && pathname.startsWith(base));
 
   return (
     <Link
@@ -93,7 +100,12 @@ function NavItem({
 export default function AppShell({ children }: { children: ReactNode }) {
   const user            = useAuthStore((s) => s.user);
   const { logout }      = useAuth();
+  const { projectId }   = useActiveProject();
   const [userOpen, setUserOpen] = useState(false);
+
+  // Append the active projectId to project-scoped links so they always have context.
+  const navHref = (href: string) =>
+    projectId && PROJECT_SCOPED.has(href) ? `${href}?projectId=${projectId}` : href;
 
   const initials = user?.name
     .split(' ')
@@ -126,7 +138,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
                 {section.label}
               </p>
               {section.items.map((item) => (
-                <NavItem key={item.href} {...item} />
+                <NavItem key={item.href} {...item} href={navHref(item.href)} />
               ))}
             </div>
           ))}

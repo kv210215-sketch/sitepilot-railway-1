@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { Zap, RefreshCw, StopCircle, RotateCcw, FileText } from 'lucide-react';
 import { Button, Badge, Progress, Card, CardHeader, CardBody, Modal, Spinner, cn } from '@/components/ui';
 import { publishService, PublishJob, PublishStatus, PublishScope, PublishStats } from '@/services/publish.service';
+import { useActiveProject } from '@/hooks/useActiveProject';
 import toast from 'react-hot-toast';
 
 const DEFAULT_PROJECT = process.env.NEXT_PUBLIC_DEFAULT_PROJECT ?? '';
@@ -67,7 +68,9 @@ function StatCard({ label, value, sub, color }: {
 
 function PublishContent() {
   const searchParams = useSearchParams();
-  const projectId    = searchParams.get('projectId') ?? DEFAULT_PROJECT;
+  const explicitId   = searchParams.get('projectId') ?? DEFAULT_PROJECT;
+  // Fall back to the first available project when no projectId is provided.
+  const { projectId, projectsLoading } = useActiveProject(explicitId);
 
   const [jobs,    setJobs]    = useState<PublishJob[]>([]);
   const [stats,   setStats]   = useState<PublishStats | null>(null);
@@ -77,7 +80,7 @@ function PublishContent() {
   const [publishing, setPublishing] = useState(false);
 
   const load = useCallback(async () => {
-    if (!projectId) return;
+    if (!projectId) { setLoading(false); return; }
     try {
       const [jobsRes, statsRes] = await Promise.all([
         publishService.list(projectId, { limit: 30 }),
@@ -138,7 +141,7 @@ function PublishContent() {
     setLogs(res.data);
   };
 
-  if (loading) return <div className="flex justify-center py-16"><Spinner size={24} /></div>;
+  if (loading || projectsLoading) return <div className="flex justify-center py-16"><Spinner size={24} /></div>;
 
   return (
     <div>
