@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { Plus, Globe, Archive, Trash2, Rocket } from 'lucide-react';
 import {
   Button, Badge, Modal, Input, Select,
@@ -11,6 +10,8 @@ import { useProjects } from '@/hooks/useProjects';
 import { Project, ProjectStatus } from '@/services/projects.service';
 import toast from 'react-hot-toast';
 import { projectsService } from '@/services/projects.service';
+import { publishService } from '@/services/publish.service';
+import { organizationsService, Organization } from '@/services/organizations.service';
 
 const TYPE_EMOJI: Record<string, string> = {
   landing: '🛬', multi_page: '📄', catalog: '📚',
@@ -32,18 +33,18 @@ function ProjectCard({
     e.preventDefault();
     setPublishing(true);
     try {
-      await projectsService.update(project.id, {});   // placeholder — буде publish endpoint
+      await publishService.create(project.id, { scope: 'project' });
       toast.success('🚀 Публікацію запущено!');
-    } catch {
-      toast.error('Помилка запуску публікації');
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      toast.error(Array.isArray(msg) ? msg[0] : (msg ?? 'Помилка запуску публікації'));
     } finally {
       setPublishing(false);
     }
   };
 
   return (
-    <Link
-      href={`/projects/${project.id}`}
+    <div
       className="block bg-surface border border-border rounded-[10px] p-[18px] hover:border-border2 hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(0,0,0,.3)] transition-all group"
     >
       {/* Header */}
@@ -92,7 +93,7 @@ function ProjectCard({
           Publish
         </Button>
       </div>
-    </Link>
+    </div>
   );
 }
 
@@ -103,13 +104,33 @@ function CreateProjectModal({
 }) {
   const [form, setForm] = useState({ name: '', domain: '', projectType: 'service_site', description: '' });
   const [loading, setLoading] = useState(false);
+  const [orgs, setOrgs] = useState<Organization[]>([]);
+  const [orgId, setOrgId] = useState('');
+  const [orgsLoading, setOrgsLoading] = useState(false);
+
+  // Resolve the user's organizations when the modal opens — the backend
+  // requires organizationId on create, so we must attach one.
+  useEffect(() => {
+    if (!open) return;
+    setOrgsLoading(true);
+    organizationsService.list({ limit: 100 })
+      .then((res) => {
+        const list = res.data.data;
+        setOrgs(list);
+        setOrgId((prev) => prev || list[0]?.id || '');
+      })
+      .catch(() => toast.error('Не вдалося завантажити організації'))
+      .finally(() => setOrgsLoading(false));
+  }, [open]);
 
   const handleSubmit = async () => {
     if (!form.name.trim()) { toast.error("Введіть назву проєкту"); return; }
+    if (!orgId) { toast.error('Спочатку створіть організацію'); return; }
     setLoading(true);
     try {
       await projectsService.create({
         name: form.name.trim(),
+        organizationId: orgId,
         domain: form.domain.trim() || undefined,
         projectType: form.projectType as Project['projectType'],
         description: form.description.trim() || undefined,
@@ -135,12 +156,23 @@ function CreateProjectModal({
       footer={
         <>
           <Button variant="ghost" onClick={onClose}>Скасувати</Button>
-          <Button variant="primary" onClick={handleSubmit} loading={loading}>
+          <Button variant="primary" onClick={handleSubmit} loading={loading || orgsLoading}>
             Створити проєкт
           </Button>
         </>
       }
     >
+      {orgs.length > 1 && (
+        <Select
+          label="Організація"
+          value={orgId}
+          onChange={(e) => setOrgId(e.target.value)}
+        >
+          {orgs.map((org) => (
+            <option key={org.id} value={org.id}>{org.name}</option>
+          ))}
+        </Select>
+      )}
       <Input
         label="Назва проєкту"
         placeholder="Solomiya Energy"

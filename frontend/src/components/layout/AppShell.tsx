@@ -187,7 +187,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
           </div>
 
           <Link
-            href="/projects/new"
+            href="/projects"
             className="inline-flex items-center gap-1.5 px-3.5 py-[7px] bg-accent text-black text-[13px] font-semibold rounded-sm hover:bg-[#ffc04a] transition-colors"
           >
             <Plus size={13} strokeWidth={2.5} />
