@@ -23,7 +23,7 @@ export interface ProjectMember {
 }
 
 export interface CreateProjectDto {
-  name: string; slug?: string; domain?: string;
+  name: string; organizationId: string; slug?: string; domain?: string;
   projectType?: ProjectType; description?: string;
 }
 
