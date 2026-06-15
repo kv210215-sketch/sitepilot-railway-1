@@ -3,10 +3,11 @@
 export const dynamic = 'force-dynamic';
 
 import { useState, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ChevronRight, ChevronLeft, Zap } from 'lucide-react';
 import { Button, Card, CardHeader, CardBody, Input, Select, Spinner, cn } from '@/components/ui';
 import { useTemplates } from '@/hooks/usePages';
+import { useActiveProject } from '@/hooks/useActiveProject';
 import { pagesService, Template } from '@/services/pages.service';
 import toast from 'react-hot-toast';
 
@@ -28,9 +29,8 @@ const UA_CITIES = [
 type Step = 'template' | 'params' | 'preview';
 
 function NewPageContent() {
-  const router       = useRouter();
-  const searchParams = useSearchParams();
-  const projectId    = searchParams.get('projectId') ?? '';
+  const router    = useRouter();
+  const { projectId } = useActiveProject();
 
   const { byCategory, loading: tplLoading } = useTemplates(projectId);
   const [step,     setStep]     = useState<Step>('template');
@@ -162,6 +162,7 @@ function NewPageContent() {
   // ── Generate ──────────────────────────────────────────────────────────────
 
   const handleGenerate = async () => {
+    if (!projectId) { toast.error('Спершу створіть проєкт у розділі «Проєкти»'); return; }
     if (!form.title.trim()) { toast.error('Введіть назву сторінки'); return; }
     if (requiredVars.includes('city') && !form.city) { toast.error('Оберіть місто'); return; }
     if (!selected) return;

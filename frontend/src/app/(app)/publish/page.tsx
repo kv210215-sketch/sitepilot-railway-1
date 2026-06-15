@@ -3,13 +3,11 @@
 export const dynamic = 'force-dynamic';
 
 import { useState, useEffect, useCallback, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { Zap, RefreshCw, StopCircle, RotateCcw, FileText } from 'lucide-react';
 import { Button, Badge, Progress, Card, CardHeader, CardBody, Modal, Spinner, cn } from '@/components/ui';
 import { publishService, PublishJob, PublishStatus, PublishScope, PublishStats } from '@/services/publish.service';
+import { useActiveProject } from '@/hooks/useActiveProject';
 import toast from 'react-hot-toast';
-
-const DEFAULT_PROJECT = process.env.NEXT_PUBLIC_DEFAULT_PROJECT ?? '';
 
 const STATUS_LABEL: Record<PublishStatus, string> = {
   pending:    'Очікування',
@@ -66,8 +64,7 @@ function StatCard({ label, value, sub, color }: {
 }
 
 function PublishContent() {
-  const searchParams = useSearchParams();
-  const projectId    = searchParams.get('projectId') ?? DEFAULT_PROJECT;
+  const { projectId } = useActiveProject();
 
   const [jobs,    setJobs]    = useState<PublishJob[]>([]);
   const [stats,   setStats]   = useState<PublishStats | null>(null);
@@ -105,6 +102,7 @@ function PublishContent() {
   }, [jobs, load]);
 
   const publishAll = async () => {
+    if (!projectId) { toast.error('Спершу створіть проєкт у розділі «Проєкти»'); return; }
     setPublishing(true);
     try {
       await publishService.create(projectId, { scope: 'project' });

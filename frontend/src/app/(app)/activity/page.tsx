@@ -4,11 +4,9 @@ export const dynamic = 'force-dynamic';
 
 import { Select, Spinner, cn } from '@/components/ui';
 import { ActivityItem, activityService } from '@/services/publish.service';
-import { useSearchParams } from 'next/navigation';
+import { useActiveProject } from '@/hooks/useActiveProject';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-
-const DEFAULT_PROJECT = process.env.NEXT_PUBLIC_DEFAULT_PROJECT ?? '';
 
 const ACTION_ICON: Record<string, string> = {
   publish_success: '🚀',
@@ -77,8 +75,7 @@ function timeAgo(iso: string): string {
 }
 
 function ActivityContent() {
-  const searchParams = useSearchParams();
-  const projectId = searchParams.get('projectId') ?? DEFAULT_PROJECT;
+  const { projectId } = useActiveProject();
 
   const [items, setItems] = useState<ActivityItem[]>([]);
   const [total, setTotal] = useState(0);
