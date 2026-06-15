@@ -4,17 +4,14 @@ export const dynamic = 'force-dynamic';
 
 import { useState, Suspense } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { Plus, RefreshCw, Archive, Trash2, Eye, Edit3, Zap } from 'lucide-react';
 import {
   Button, Badge, Select, Card, EmptyState, Spinner, Progress, cn,
 } from '@/components/ui';
 import { usePages } from '@/hooks/usePages';
+import { useActiveProject } from '@/hooks/useActiveProject';
 import { Page, PageStatus } from '@/services/pages.service';
 import toast from 'react-hot-toast';
-
-// Отримуємо projectId з URL або беремо перший доступний
-const DEFAULT_PROJECT = process.env.NEXT_PUBLIC_DEFAULT_PROJECT ?? '';
 
 const STATUS_VARIANT: Record<PageStatus, 'active' | 'draft' | 'archived' | 'queued' | 'success'> = {
   draft:     'draft',
@@ -52,8 +49,7 @@ function SeoScore({ page }: { page: Page }) {
 }
 
 function PagesContent() {
-  const searchParams = useSearchParams();
-  const projectId    = searchParams.get('projectId') ?? DEFAULT_PROJECT;
+  const { projectId } = useActiveProject();
 
   const [statusFilter, setStatusFilter] = useState('');
   const [search,       setSearch]       = useState('');
