@@ -1,0 +1,22 @@
+import pw from '../../backend/node_modules/playwright/index.js';
+const { chromium } = pw;
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+const HERE = fileURLToPath(new URL('.', import.meta.url));
+const state = JSON.parse(readFileSync(HERE + 'artifacts/demo-state.json','utf8'));
+const FRONT='https://sitepilot-frontend-staging.up.railway.app', API=state.api;
+const email = process.env.DEMO_EMAIL, password = process.env.DEMO_PASSWORD; // not stored in repo — see .env.example
+if (!email || !password) { console.error('Set DEMO_EMAIL / DEMO_PASSWORD (see demo/solomiya/.env.example)'); process.exit(1); }
+const b = await chromium.launch();
+const ctx = await b.newContext({ viewport:{width:1440,height:900}, deviceScaleFactor:2, locale:'uk-UA' });
+const auth = await fetch(`${API}/api/v1/auth/login`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email,password})}).then(r=>r.json());
+await ctx.addCookies([{name:'sitepilot-token',value:auth.tokens.accessToken,url:FRONT}]);
+await ctx.addInitScript((a)=>localStorage.setItem('sitepilot-auth',JSON.stringify({state:{user:a.user,tokens:a.tokens,isAuthenticated:true},version:0})),auth);
+const p = await ctx.newPage();
+await p.goto(`${FRONT}/leads?projectId=${state.steps.project.id}`,{waitUntil:'networkidle'});
+await p.waitForTimeout(3000);
+console.log('leads url:', p.url());
+const txt = await p.evaluate(()=>document.body.innerText.slice(0,400));
+console.log('TEXT:', txt.replace(/\n+/g,' | '));
+await p.screenshot({path:HERE+'artifacts/shots/11-leads.png',fullPage:true});
+await b.close();
