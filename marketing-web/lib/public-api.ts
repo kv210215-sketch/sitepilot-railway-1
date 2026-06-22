@@ -22,7 +22,7 @@ export interface PublicPageDto {
   path: string;
   title: string;
   metaDescription: string | null;
-  canonicalUrl: string;
+  canonicalUrl: string | null;
   robotsIndex: boolean;
   robotsFollow: boolean;
   seoKeywords?: string | null;

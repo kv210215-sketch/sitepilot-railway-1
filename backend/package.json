@@ -6,6 +6,7 @@
     "node": ">=20 <21"
   },
   "scripts": {
+    "local:start": "npm run build && npm run start",
     "clean": "rimraf dist *.tsbuildinfo",
     "build": "nest build",
     "rebuild": "npm run clean && npm run build",
@@ -18,7 +19,17 @@
     "migration:run": "npx typeorm-ts-node-commonjs migration:run -d src/database/data-source.ts",
     "migration:revert": "npx typeorm-ts-node-commonjs migration:revert -d src/database/data-source.ts",
     "migration:generate": "npx typeorm-ts-node-commonjs migration:generate src/database/migrations/$npm_config_name -d src/database/data-source.ts",
-    "migration:create": "npx typeorm-ts-node-commonjs migration:create src/database/migrations/$npm_config_name"
+    "migration:create": "npx typeorm-ts-node-commonjs migration:create src/database/migrations/$npm_config_name",
+    "seed:local-staging-public": "npx ts-node scripts/seed-local-staging-public.ts"
+  },
+  "jest": {
+    "moduleFileExtensions": ["js", "json", "ts"],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "testEnvironment": "node"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.0",
@@ -50,9 +61,9 @@
   },
   "devDependencies": {
     "@nestjs/cli": "^10.3.2",
-    "rimraf": "^3.0.2",
     "@nestjs/testing": "^10.3.0",
     "@types/bcrypt": "^5.0.2",
+    "@types/jest": "^29.5.14",
     "@types/node": "^20.11.5",
     "@types/passport-jwt": "^4.0.1",
     "@types/passport-local": "^1.0.38",
@@ -60,6 +71,10 @@
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^29.4.11",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
 }

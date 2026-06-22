@@ -83,6 +83,12 @@ export const publicConfig = registerAs('public', () => {
 
   return {
     enabled,
+    // Globally-unique selector for the default public project (preferred).
+    defaultProjectId: process.env.PUBLIC_DEFAULT_PROJECT_ID || null,
+    // Org scope used to disambiguate the slug (project slugs are unique only per org).
+    defaultOrganizationId: process.env.PUBLIC_DEFAULT_ORG_ID || null,
     defaultProjectSlug: process.env.PUBLIC_DEFAULT_PROJECT_SLUG || 'solomiya-energy',
+    // Origin used for canonical/OG URLs when a project has no domain configured.
+    marketingOrigin: (process.env.PUBLIC_MARKETING_ORIGIN || '').replace(/\/$/, '') || null,
   };
 });
