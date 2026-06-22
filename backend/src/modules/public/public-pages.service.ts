@@ -1,9 +1,9 @@
 import {
-  Injectable, NotFoundException, ServiceUnavailableException,
+  Injectable, Logger, NotFoundException, ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IsNull, Repository } from 'typeorm';
+import { FindOptionsWhere, IsNull, Repository } from 'typeorm';
 
 import { Page, PageStatus } from '../pages/page.entity';
 import { Project } from '../projects/project.entity';
@@ -13,6 +13,8 @@ import { normalizePublicPagePath } from './public-path.util';
 
 @Injectable()
 export class PublicPagesService {
+  private readonly logger = new Logger(PublicPagesService.name);
+
   constructor(
     @InjectRepository(Page)
     private readonly pageRepo: Repository<Page>,
@@ -34,14 +36,7 @@ export class PublicPagesService {
     const path = normalizePublicPagePath(rawPath);
 
     // 1) Configured default project first — preserves the existing marketing site (incl. root `/`).
-    const projectSlug = this.config.get<string>('public.defaultProjectSlug') ?? 'solomiya-energy';
-    const defaultProject = await this.projectRepo.findOne({
-      where: {
-        slug: projectSlug,
-        deletedAt: IsNull(),
-        isActive: true,
-      },
-    });
+    const defaultProject = await this.resolveDefaultProject();
 
     if (defaultProject) {
       const defaultPage = await this.findPublishedPage(defaultProject.id, path);
@@ -50,7 +45,7 @@ export class PublicPagesService {
       }
     }
 
-    // 2) Fall back to any active project's published page matching this path.
+    // 2) Fall back to any *active, non-deleted* project's published page matching this path.
     const page = await this.findPublishedPageAnyProject(path);
     if (!page) {
       throw new NotFoundException('Page not found');
@@ -69,14 +64,7 @@ export class PublicPagesService {
   async listPublishedSitemapEntries(): Promise<PublicSitemapEntryDto[]> {
     this.assertPublicApiEnabled();
 
-    const projectSlug = this.config.get<string>('public.defaultProjectSlug') ?? 'solomiya-energy';
-    const project = await this.projectRepo.findOne({
-      where: {
-        slug: projectSlug,
-        deletedAt: IsNull(),
-        isActive: true,
-      },
-    });
+    const project = await this.resolveDefaultProject();
 
     if (!project) {
       return [];
@@ -105,6 +93,53 @@ export class PublicPagesService {
       });
   }
 
+  /**
+   * Resolves the configured default public project.
+   *
+   * Project slugs are unique only within an organization, so selecting by slug
+   * alone can match an arbitrary tenant when two orgs share a slug. We therefore
+   * prefer a globally-unique id, then a slug scoped to a configured org, and only
+   * fall back to a bare slug for single-tenant installs — logging a warning (and
+   * choosing deterministically) if that bare slug is ambiguous.
+   */
+  private async resolveDefaultProject(): Promise<Project | null> {
+    const projectId = this.config.get<string>('public.defaultProjectId');
+    if (projectId) {
+      return this.projectRepo.findOne({
+        where: { id: projectId, deletedAt: IsNull(), isActive: true },
+      });
+    }
+
+    const slug = this.config.get<string>('public.defaultProjectSlug') ?? 'solomiya-energy';
+    const organizationId = this.config.get<string>('public.defaultOrganizationId') ?? null;
+
+    const where: FindOptionsWhere<Project> = {
+      slug,
+      deletedAt: IsNull(),
+      isActive: true,
+    };
+    if (organizationId) {
+      where.organizationId = organizationId;
+    }
+
+    const matches = await this.projectRepo.find({
+      where,
+      // Deterministic tie-break so the same project is served on every request.
+      order: { createdAt: 'ASC' },
+      take: 2,
+    });
+
+    if (matches.length > 1) {
+      this.logger.warn(
+        `Public default project slug "${slug}" matched multiple active projects across `
+        + 'organizations. Set PUBLIC_DEFAULT_PROJECT_ID or PUBLIC_DEFAULT_ORG_ID to '
+        + 'disambiguate. Serving the oldest match.',
+      );
+    }
+
+    return matches[0] ?? null;
+  }
+
   private async findPublishedPage(projectId: string, path: string): Promise<Page | null> {
     if (path === '/') {
       return this.pageRepo.findOne({
@@ -128,12 +163,21 @@ export class PublicPagesService {
   }
 
   private async findPublishedPageAnyProject(path: string): Promise<Page | null> {
+    // Only consider pages whose owning project is active and not soft-deleted, so
+    // an inactive/deleted project's newer page cannot shadow valid content on an
+    // active project (which previously surfaced as a 404).
+    const projectScope: FindOptionsWhere<Project> = {
+      isActive: true,
+      deletedAt: IsNull(),
+    };
+
     if (path === '/') {
       return this.pageRepo.findOne({
         where: {
           status: PageStatus.PUBLISHED,
           isHomepage: true,
           deletedAt: IsNull(),
+          project: projectScope,
         },
         order: { publishedAt: 'DESC' },
       });
@@ -144,6 +188,7 @@ export class PublicPagesService {
         path,
         status: PageStatus.PUBLISHED,
         deletedAt: IsNull(),
+        project: projectScope,
       },
       order: { publishedAt: 'DESC' },
     });
@@ -172,15 +217,40 @@ export class PublicPagesService {
     return dto;
   }
 
-  private resolveCanonicalUrl(page: Page, project: Project): string {
+  /**
+   * Resolves the canonical URL for a page.
+   *
+   * Returns null when there is no explicit page canonical, no project domain, and
+   * no configured marketing origin — rather than inventing `https://localhost`,
+   * which would emit localhost canonical/OG URLs in staging/production. When the
+   * canonical is null, marketing-web derives it from the request/marketing origin.
+   */
+  private resolveCanonicalUrl(page: Page, project: Project): string | null {
     if (page.canonicalUrl) {
       return page.canonicalUrl;
     }
 
-    const domain = (project.domain ?? '').replace(/\/$/, '');
-    const base = domain.startsWith('http') ? domain : `https://${domain || 'localhost'}`;
-    const pagePath = page.path ?? '/';
+    const base = this.resolveCanonicalBase(project);
+    if (!base) {
+      return null;
+    }
 
+    const pagePath = page.path ?? '/';
     return pagePath === '/' ? `${base}/` : `${base}${pagePath}`;
+  }
+
+  /** Origin (no trailing slash) for canonical URLs: project domain, else configured marketing origin. */
+  private resolveCanonicalBase(project: Project): string | null {
+    const domain = (project.domain ?? '').trim().replace(/\/$/, '');
+    if (domain) {
+      return domain.startsWith('http') ? domain : `https://${domain}`;
+    }
+
+    const marketingOrigin = this.config.get<string>('public.marketingOrigin');
+    if (marketingOrigin) {
+      return marketingOrigin.replace(/\/$/, '');
+    }
+
+    return null;
   }
 }

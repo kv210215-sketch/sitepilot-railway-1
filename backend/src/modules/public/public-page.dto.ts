@@ -15,8 +15,14 @@ export class PublicPageDto {
   @ApiPropertyOptional({ example: 'Професійні сонячні електростанції…' })
   metaDescription: string | null;
 
-  @ApiProperty({ example: 'https://www.solomiya-energy.com/lviv/ses-10-kvt' })
-  canonicalUrl: string;
+  @ApiPropertyOptional({
+    example: 'https://www.solomiya-energy.com/lviv/ses-10-kvt',
+    description:
+      'Absolute canonical URL. Null when the project has no domain/marketing origin '
+      + 'configured; marketing-web then derives canonical from the request origin.',
+    nullable: true,
+  })
+  canonicalUrl: string | null;
 
   @ApiProperty({ example: true })
   robotsIndex: boolean;
