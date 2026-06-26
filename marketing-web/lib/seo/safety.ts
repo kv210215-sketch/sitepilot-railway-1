@@ -29,6 +29,11 @@ export function safeCanonical(
   page: PublicPageDto,
   siteOrigin: string | null,
 ): string | null {
+  if (siteOrigin) {
+    const path = page.path === '/' ? '/' : page.path;
+    const base = siteOrigin.replace(/\/$/, '');
+    return path === '/' ? `${base}/` : `${base}${path.startsWith('/') ? path : `/${path}`}`;
+  }
   const fromPage = page.canonicalUrl?.trim();
   if (fromPage) {
     try {
@@ -37,10 +42,7 @@ export function safeCanonical(
       /* fall through */
     }
   }
-  if (!siteOrigin) return null;
-  const path = page.path === '/' ? '/' : page.path;
-  const base = siteOrigin.replace(/\/$/, '');
-  return path === '/' ? `${base}/` : `${base}${path.startsWith('/') ? path : `/${path}`}`;
+  return null;
 }
 
 export function safeOgImage(

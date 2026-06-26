@@ -30,7 +30,9 @@ const CALCULATOR_BLOCK = {
 };
 
 async function main() {
-  const client = new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: false });
+  const url = process.env.DATABASE_URL;
+  const ssl = url && !/localhost|127\.0\.0\.1/.test(url) ? { rejectUnauthorized: false } : false;
+  const client = new pg.Client({ connectionString: url, ssl });
   await client.connect();
 
   const proj = await client.query(
@@ -45,8 +47,8 @@ async function main() {
 
   const pageRes = await client.query(
     `SELECT id, path, content FROM pages
-     WHERE project_id = $1 AND status = 'published' AND deleted_at IS NULL
-     ORDER BY is_homepage DESC, sort_order ASC LIMIT 1`,
+     WHERE project_id = $1 AND status = 'published' AND deleted_at IS NULL AND is_homepage = true
+     ORDER BY sort_order ASC LIMIT 1`,
     [projectId],
   );
   if (pageRes.rowCount === 0) {

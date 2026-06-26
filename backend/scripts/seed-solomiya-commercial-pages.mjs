@@ -225,7 +225,9 @@ async function addCommercialLinksToHomepage(client, projectId) {
 }
 
 async function main() {
-  const client = new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: false });
+  const url = process.env.DATABASE_URL;
+  const ssl = url && !/localhost|127\.0\.0\.1/.test(url) ? { rejectUnauthorized: false } : false;
+  const client = new pg.Client({ connectionString: url, ssl });
   await client.connect();
 
   const proj = await client.query(
