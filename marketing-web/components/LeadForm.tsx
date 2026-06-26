@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useRef, useState, type CSSProperties } from 'react';
 import { submitLead, leadErrorMessage } from '@/lib/leads';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
@@ -53,11 +53,6 @@ export default function LeadForm({
   const [error, setError] = useState<string | null>(null);
   // Honeypot — bots fill hidden fields; humans don't.
   const honeypot = useRef<HTMLInputElement>(null);
-  const startedAt = useRef<number>(0);
-
-  useEffect(() => {
-    startedAt.current = Date.now();
-  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -77,8 +72,9 @@ export default function LeadForm({
       setError('Вкажіть телефон або email');
       return;
     }
-    // Honeypot + too-fast submit → silently treat as success (drop the bot).
-    if (honeypot.current?.value || Date.now() - startedAt.current < 1200) {
+    // Honeypot only: bots fill the hidden field; show success but never submit.
+    // No timing heuristic — a fast/autofilled legitimate submit must NOT be dropped.
+    if (honeypot.current?.value) {
       setStatus('success');
       return;
     }
