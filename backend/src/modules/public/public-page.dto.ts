@@ -6,6 +6,14 @@ import { PageBlock } from '../pages/page.entity';
  * @see PUBLIC_RUNTIME_ARCHITECTURE.md
  */
 export class PublicPageDto {
+  // Additive (non-breaking): lets marketing-web supply the required projectId
+  // (and optional pageId) when submitting a lead to POST /public/v1/leads.
+  @ApiProperty({ format: 'uuid', description: 'Owning project id (for lead attribution)' })
+  projectId: string;
+
+  @ApiProperty({ format: 'uuid', description: 'This page id (for lead attribution)' })
+  pageId: string;
+
   @ApiProperty({ example: '/lviv/ses-10-kvt' })
   path: string;
 
