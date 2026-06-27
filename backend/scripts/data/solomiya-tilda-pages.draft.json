@@ -201,11 +201,17 @@
           "order": 11
         },
         {
-          "type": "custom",
+          "type": "contact_info",
+          "order": 12,
           "data": {
-            "html": "<p>Телефон: <a href=\"tel:+380675554000\">+38 067 555 4000</a></p>"
-          },
-          "order": 12
+            "title": "Контакти",
+            "phone": "+38 (067) 555-40-00",
+            "email": "andriy555solar@gmail.com",
+            "address": "",
+            "hours": "",
+            "messengers": [],
+            "mapEmbed": ""
+          }
         }
       ]
     },
@@ -218,7 +224,7 @@
     "internalLinks": [
       "/contacts"
     ],
-    "seoNotes": "URL збережено 1:1; canonical=self",
+    "seoNotes": "URL збережено 1:1; canonical=self; category-A resolved (phone+email injected via contact_info)",
     "migrationSource": "Tilda /",
     "migrationQuality": "high",
     "manualReviewRequired": true,
@@ -237,6 +243,20 @@
       "faq",
       "lead_form",
       "custom"
+    ],
+    "categoryAResolved": true,
+    "contact": {
+      "phone": "+38 (067) 555-40-00",
+      "tel": "tel:+380675554000",
+      "email": "andriy555solar@gmail.com",
+      "responsible": "Андрій / команда Solomiya Energy",
+      "leadsRouting": "SitePilot Leads Inbox + email andriy555solar@gmail.com"
+    },
+    "remainingBeforePublish": [
+      "guarantees 25/10/2 + 24/7 (підтвердити)",
+      "окупність/% економії (ROI)",
+      "реальні кейси (зараз вигадані −80%/~4 роки)",
+      "згода на обробку ПД + реквізити/політика конфіденційності"
     ]
   },
   {
@@ -643,6 +663,19 @@
             ]
           },
           "order": 7
+        },
+        {
+          "type": "contact_info",
+          "order": 8,
+          "data": {
+            "title": "Контакти",
+            "phone": "+38 (067) 555-40-00",
+            "email": "andriy555solar@gmail.com",
+            "address": "",
+            "hours": "",
+            "messengers": [],
+            "mapEmbed": ""
+          }
         }
       ]
     },
@@ -664,7 +697,7 @@
       "/",
       "/contacts"
     ],
-    "seoNotes": "URL збережено 1:1; canonical=self",
+    "seoNotes": "URL збережено 1:1; canonical=self; category-A resolved (phone+email injected via contact_info)",
     "migrationSource": "Tilda /ses",
     "migrationQuality": "high",
     "manualReviewRequired": true,
@@ -678,6 +711,19 @@
       "faq",
       "lead_form",
       "seo_text"
+    ],
+    "categoryAResolved": true,
+    "contact": {
+      "phone": "+38 (067) 555-40-00",
+      "tel": "tel:+380675554000",
+      "email": "andriy555solar@gmail.com",
+      "responsible": "Андрій / команда Solomiya Energy",
+      "leadsRouting": "SitePilot Leads Inbox + email andriy555solar@gmail.com"
+    },
+    "remainingBeforePublish": [
+      "guarantees 25/10/2 + 24/7 (підтвердити)",
+      "SEO-текст хабу (плейсхолдер)",
+      "згода на обробку ПД + реквізити/політика конфіденційності"
     ]
   },
   {
@@ -1382,6 +1428,19 @@
             "source": "installation"
           },
           "order": 6
+        },
+        {
+          "type": "contact_info",
+          "order": 7,
+          "data": {
+            "title": "Контакти",
+            "phone": "+38 (067) 555-40-00",
+            "email": "andriy555solar@gmail.com",
+            "address": "",
+            "hours": "",
+            "messengers": [],
+            "mapEmbed": ""
+          }
         }
       ]
     },
@@ -1395,7 +1454,7 @@
       "/",
       "/contacts"
     ],
-    "seoNotes": "URL збережено 1:1; canonical=self",
+    "seoNotes": "URL збережено 1:1; canonical=self; category-A resolved (phone+email injected via contact_info)",
     "migrationSource": "Tilda /installation",
     "migrationQuality": "high",
     "manualReviewRequired": true,
@@ -1408,6 +1467,19 @@
       "guarantees",
       "faq",
       "lead_form"
+    ],
+    "categoryAResolved": true,
+    "contact": {
+      "phone": "+38 (067) 555-40-00",
+      "tel": "tel:+380675554000",
+      "email": "andriy555solar@gmail.com",
+      "responsible": "Андрій / команда Solomiya Energy",
+      "leadsRouting": "SitePilot Leads Inbox + email andriy555solar@gmail.com"
+    },
+    "remainingBeforePublish": [
+      "guarantees 25/10/2 + 24/7 (підтвердити)",
+      "що входить у монтаж під ключ",
+      "згода на обробку ПД + реквізити/політика конфіденційності"
     ]
   },
   {
@@ -3487,6 +3559,19 @@
             "source": "ses_business"
           },
           "order": 7
+        },
+        {
+          "type": "contact_info",
+          "order": 8,
+          "data": {
+            "title": "Контакти",
+            "phone": "+38 (067) 555-40-00",
+            "email": "andriy555solar@gmail.com",
+            "address": "",
+            "hours": "",
+            "messengers": [],
+            "mapEmbed": ""
+          }
         }
       ]
     },
@@ -3501,7 +3586,7 @@
       "/",
       "/contacts"
     ],
-    "seoNotes": "URL збережено 1:1; canonical=self",
+    "seoNotes": "URL збережено 1:1; canonical=self; category-A resolved (phone+email injected via contact_info)",
     "migrationSource": "Tilda /ses/business",
     "migrationQuality": "high",
     "manualReviewRequired": true,
@@ -3515,6 +3600,19 @@
       "guarantees",
       "faq",
       "lead_form"
+    ],
+    "categoryAResolved": true,
+    "contact": {
+      "phone": "+38 (067) 555-40-00",
+      "tel": "tel:+380675554000",
+      "email": "andriy555solar@gmail.com",
+      "responsible": "Андрій / команда Solomiya Energy",
+      "leadsRouting": "SitePilot Leads Inbox + email andriy555solar@gmail.com"
+    },
+    "remainingBeforePublish": [
+      "guarantees 25/10/2 + 24/7 (підтвердити)",
+      "окупність/% економії (ROI)",
+      "згода на обробку ПД + реквізити/політика конфіденційності"
     ]
   },
   {
@@ -3636,6 +3734,19 @@
             "source": "ses_dom"
           },
           "order": 7
+        },
+        {
+          "type": "contact_info",
+          "order": 8,
+          "data": {
+            "title": "Контакти",
+            "phone": "+38 (067) 555-40-00",
+            "email": "andriy555solar@gmail.com",
+            "address": "",
+            "hours": "",
+            "messengers": [],
+            "mapEmbed": ""
+          }
         }
       ]
     },
@@ -3650,7 +3761,7 @@
       "/",
       "/contacts"
     ],
-    "seoNotes": "URL збережено 1:1; canonical=self",
+    "seoNotes": "URL збережено 1:1; canonical=self; category-A resolved (phone+email injected via contact_info)",
     "migrationSource": "Tilda /ses/dom",
     "migrationQuality": "high",
     "manualReviewRequired": true,
@@ -3664,6 +3775,19 @@
       "guarantees",
       "faq",
       "lead_form"
+    ],
+    "categoryAResolved": true,
+    "contact": {
+      "phone": "+38 (067) 555-40-00",
+      "tel": "tel:+380675554000",
+      "email": "andriy555solar@gmail.com",
+      "responsible": "Андрій / команда Solomiya Energy",
+      "leadsRouting": "SitePilot Leads Inbox + email andriy555solar@gmail.com"
+    },
+    "remainingBeforePublish": [
+      "guarantees 25/10/2 + 24/7 (підтвердити)",
+      "окупність/% економії (ROI)",
+      "згода на обробку ПД + реквізити/політика конфіденційності"
     ]
   },
   {

@@ -55,3 +55,10 @@ node scripts/import-solomiya-tilda-pages.mjs --apply --confirm-apply
 
 ## What this branch does NOT do
 No DB writes (default), no publish, no deploy, no DNS/env/Cloudflare/Tilda changes, no push to main. Pure code prep + dry-run.
+
+## First batch — Category A resolved (2026-06-27)
+Owner-confirmed contact data applied to the **5 first-wave pages** (`/`, `/ses`, `/ses/dom`, `/ses/business`, `/installation`) inside `solomiya-tilda-pages.draft.json`:
+- structured **`contact_info`** block injected: phone **`+38 (067) 555-40-00`** (`tel:+380675554000`), email **`andriy555solar@gmail.com`**; homepage's temporary raw-HTML `custom` phone block replaced by it;
+- page-level `contact` (responsible: «Андрій / команда Solomiya Energy», leads → SitePilot Leads Inbox + email) and `categoryAResolved: true` set **only on these 5**; the other 26 pages are unchanged.
+
+**Still draft-only.** All 5 remain `status:"draft"` + `needsOwnerVerification:true`. **Publish is still blocked by Category B** (per `first_batch_remaining_questions.md`): guarantees figures, ROI/savings %, real cases (currently placeholder `−80%`/`~4 yr`), `/ses` SEO-hub text, `/installation` turnkey scope. **Legal: consent-to-process + Privacy Policy (and company legal requisites) are still required before any publish.**
