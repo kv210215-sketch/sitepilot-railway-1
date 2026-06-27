@@ -281,6 +281,10 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
       const phone = asString(d.phone);
       const telHref = phone ? `tel:${phone.replace(/[^+\d]/g, '')}` : '';
       const email = asString(d.email);
+      // Empty-guard: with no contact fields at all there is nothing to render.
+      const hasAny =
+        !!phone || !!email || !!d.address || !!d.hours || messengers.length > 0 || !!d.mapEmbed;
+      if (!hasAny) return <UnknownBlock type={block.type} />;
       return (
         <section className="block block-contact-info">
           {d.title ? <h2>{asString(d.title)}</h2> : null}
@@ -299,7 +303,9 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
               </li>
             ) : null}
           </ul>
-          {/* mapEmbed is admin-authored (CMS), same trust level as the custom block. */}
+          {/* mapEmbed is trusted admin-only (CMS), same trust level as the `custom` block.
+              TODO(security): in future, restrict to an allowlisted <iframe src> (e.g. Google
+              Maps embed) instead of accepting arbitrary HTML. */}
           {d.mapEmbed ? (
             <div className="contact-map" dangerouslySetInnerHTML={{ __html: asString(d.mapEmbed) }} />
           ) : null}

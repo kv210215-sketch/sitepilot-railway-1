@@ -39,6 +39,34 @@ const UPDATE_EXISTING = has('--update-existing');
 const FILE = valOf('--file') || join(__dirname, 'data', 'solomiya-tilda-pages.draft.json');
 const PROJECT_SLUG = process.env.PUBLIC_DEFAULT_PROJECT_SLUG || 'solomiya-energy';
 
+// ── --help / -h : print usage and exit. Never connects to a DB. ──
+if (has('--help') || has('-h')) {
+  console.log(`import-solomiya-tilda-pages.mjs — import Solomiya/Tilda pages into SitePilot.
+
+DEFAULT: dry-run. Validates + prints a plan. Writes NOTHING and does NOT connect to any DB.
+
+Usage:
+  node scripts/import-solomiya-tilda-pages.mjs [flags]
+
+Flags:
+  (none) | --dry-run     Structural validation + plan. No DB connection. (default)
+  --check-existing       Dry-run + READ-ONLY lookup of existing paths (needs DATABASE_URL).
+                         Still writes nothing.
+  --apply --confirm-apply  Insert MISSING pages as status='draft' (never published).
+                         BOTH flags required; --apply alone aborts before any DB connection.
+                         Needs DATABASE_URL.
+  --include-homepage     Allow creating/touching '/' (skipped by default).
+  --update-existing      With --apply, update pages whose path already exists
+                         (default: skip existing, never overwrite).
+  --file=<path>          Override the draft JSON path.
+  --help, -h             Show this help and exit (no DB).
+
+Safety: default is dry-run; --apply requires --confirm-apply; homepage is guarded;
+existing paths are not overwritten without --update-existing; all pages are draft;
+nothing is ever published; no DNS/env/Cloudflare/Tilda/deploy actions.`);
+  process.exit(0);
+}
+
 // ── known block types (must match marketing-web BlockRenderer.tsx switch) ──
 const SUPPORTED = new Set([
   'hero','pain','steps','numbers','audience','guarantees','offers','trust','trust_badges',
