@@ -276,6 +276,51 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
       );
     }
 
+    case 'contact_info': {
+      const messengers = asArray<{ label?: string; href?: string }>(d.messengers);
+      const phone = asString(d.phone);
+      const telHref = phone ? `tel:${phone.replace(/[^+\d]/g, '')}` : '';
+      const email = asString(d.email);
+      return (
+        <section className="block block-contact-info">
+          {d.title ? <h2>{asString(d.title)}</h2> : null}
+          <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: 8 }}>
+            {phone ? <li>Телефон: <a href={telHref}>{phone}</a></li> : null}
+            {email ? <li>Email: <a href={`mailto:${email}`}>{email}</a></li> : null}
+            {d.address ? <li>Адреса: {asString(d.address)}</li> : null}
+            {d.hours ? <li>Графік: {asString(d.hours)}</li> : null}
+            {messengers.length ? (
+              <li>
+                {messengers.map((m, i) => (
+                  <a key={i} href={asString(m.href)} style={{ marginRight: 12, color: '#0a8f4e' }}>
+                    {asString(m.label)}
+                  </a>
+                ))}
+              </li>
+            ) : null}
+          </ul>
+          {/* mapEmbed is admin-authored (CMS), same trust level as the custom block. */}
+          {d.mapEmbed ? (
+            <div className="contact-map" dangerouslySetInnerHTML={{ __html: asString(d.mapEmbed) }} />
+          ) : null}
+        </section>
+      );
+    }
+
+    case 'seo_text': {
+      // Structured rich text — safe alternative to `custom` (no dangerouslySetInnerHTML).
+      const paragraphs = asArray<string>(d.paragraphs);
+      if (paragraphs.length === 0) return <UnknownBlock type={block.type} />;
+      return (
+        <section className="block block-seo-text">
+          {d.title ? <h2>{asString(d.title)}</h2> : null}
+          {paragraphs.map((p, i) => (
+            <p key={i}>{asString(p)}</p>
+          ))}
+        </section>
+      );
+    }
+
     case 'custom':
       return (
         <section className="block block-custom">

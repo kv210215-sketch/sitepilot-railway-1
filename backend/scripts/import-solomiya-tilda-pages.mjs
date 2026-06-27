@@ -1,0 +1,231 @@
+#!/usr/bin/env node
+/**
+ * Import Solomiya Tilda → SitePilot draft pages.  DRY-RUN BY DEFAULT.
+ *
+ * Reads scripts/data/solomiya-tilda-pages.draft.json (31 pages) and, by default,
+ * ONLY validates + prints a plan. It writes NOTHING unless you pass --apply.
+ * Even with --apply it creates pages as status='draft' (never published) and
+ * skips the homepage '/' unless --include-homepage is given.
+ *
+ * Modes:
+ *   (no flags) | --dry-run        Structural validation + plan. NO DB connection.
+ *   --check-existing              Dry-run + READ-ONLY DB lookup of existing paths
+ *                                 (needs DATABASE_URL). Still writes nothing.
+ *   --apply --confirm-apply       ACTUALLY insert missing pages as draft.
+ *                                 Refuses without BOTH flags and DATABASE_URL.
+ *
+ * Extra flags:
+ *   --include-homepage            Allow creating/touching '/' (off by default).
+ *   --update-existing             With --apply, update pages whose path already
+ *                                 exists (default: skip existing, never overwrite).
+ *   --file=<path>                 Override draft JSON path.
+ *
+ * NEVER: publishes, changes DNS/env/Cloudflare/Tilda, deploys, or deletes pages.
+ */
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const argv = process.argv.slice(2);
+const has = (f) => argv.includes(f);
+const valOf = (k) => { const a = argv.find((x) => x.startsWith(k + '=')); return a ? a.split('=').slice(1).join('=') : null; };
+
+const APPLY = has('--apply');
+const CONFIRM = has('--confirm-apply');
+const CHECK_EXISTING = has('--check-existing');
+const INCLUDE_HOMEPAGE = has('--include-homepage');
+const UPDATE_EXISTING = has('--update-existing');
+const FILE = valOf('--file') || join(__dirname, 'data', 'solomiya-tilda-pages.draft.json');
+const PROJECT_SLUG = process.env.PUBLIC_DEFAULT_PROJECT_SLUG || 'solomiya-energy';
+
+// ── known block types (must match marketing-web BlockRenderer.tsx switch) ──
+const SUPPORTED = new Set([
+  'hero','pain','steps','numbers','audience','guarantees','offers','trust','trust_badges',
+  'testimonials','cases','customer_cases','links','city_links','cta','roi_calculator',
+  'calculator','roi','lead_form','form','contact','faq','custom',
+]);
+const NEWLY_SUPPORTED = new Set(['contact_info','seo_text']); // added on this branch
+const isRenderable = (t) => SUPPORTED.has(t) || NEWLY_SUPPORTED.has(t);
+
+// page_type enum (backend page.entity.ts: page/landing/service/category/article)
+const PAGE_TYPE_MAP = {
+  homepage:'page', category_hub:'category', subcategory_page:'category',
+  power_page:'landing', segment_landing:'landing', vendor_page:'landing',
+  product_page:'landing', service_landing:'service', portfolio:'page', contact:'page',
+};
+const slugFromPath = (p) => (p === '/' ? 'home' : p.replace(/^\//, '').replace(/\//g, '-'));
+
+function loadDrafts() {
+  const raw = readFileSync(FILE, 'utf-8');
+  const arr = JSON.parse(raw);
+  if (!Array.isArray(arr)) throw new Error('Draft file is not a JSON array');
+  return arr;
+}
+
+// ── structural validation (no DB) ──
+function validate(pages) {
+  const errors = [], warnings = [], seen = new Map();
+  for (const p of pages) {
+    const id = p.path ?? '(no path)';
+    if (!p.path || !p.path.startsWith('/')) errors.push(`${id}: invalid/absent path`);
+    if (p.status !== 'draft') errors.push(`${id}: status must be "draft" (got ${p.status})`);
+    if (!p.title) errors.push(`${id}: missing title`);
+    if (!p.metaDescription) warnings.push(`${id}: empty metaDescription`);
+    if (!PAGE_TYPE_MAP[p.pageType]) warnings.push(`${id}: unknown pageType "${p.pageType}" → will map to 'page'`);
+    const blocks = p?.content?.blocks;
+    if (!Array.isArray(blocks) || blocks.length === 0) errors.push(`${id}: no content.blocks`);
+    else {
+      for (const b of blocks) {
+        if (!b.type) errors.push(`${id}: block without type`);
+        else if (!isRenderable(b.type)) errors.push(`${id}: UNSUPPORTED block type "${b.type}"`);
+      }
+    }
+    if (seen.has(p.path)) errors.push(`${id}: DUPLICATE path in file (also at index ${seen.get(p.path)})`);
+    else seen.set(p.path, true);
+  }
+  return { errors, warnings };
+}
+
+// ── optional READ-ONLY existing-path lookup ──
+async function readEnvDatabaseUrl() {
+  if (process.env.DATABASE_URL) return process.env.DATABASE_URL;
+  // minimal .env reader (no dotenv dep) — read-only
+  for (const f of ['.env.local', '.env']) {
+    try {
+      const txt = readFileSync(join(__dirname, '..', f), 'utf-8');
+      const m = txt.match(/^DATABASE_URL\s*=\s*(.+)$/m);
+      if (m) return m[1].trim().replace(/^["']|["']$/g, '');
+    } catch { /* ignore */ }
+  }
+  return null;
+}
+
+async function fetchExisting() {
+  const url = await readEnvDatabaseUrl();
+  if (!url) throw new Error('DATABASE_URL not set (needed for --check-existing/--apply)');
+  const { default: pg } = await import('pg'); // dynamic — only when DB is needed
+  const ssl = !/localhost|127\.0\.0\.1/.test(url) ? { rejectUnauthorized: false } : false;
+  const client = new pg.Client({ connectionString: url, ssl });
+  await client.connect();
+  const proj = await client.query(
+    'SELECT id, name FROM projects WHERE slug=$1 AND deleted_at IS NULL ORDER BY created_at ASC LIMIT 1',
+    [PROJECT_SLUG]);
+  if (proj.rowCount === 0) { await client.end(); throw new Error(`Project "${PROJECT_SLUG}" not found`); }
+  const projectId = proj.rows[0].id;
+  const rows = await client.query(
+    'SELECT path FROM pages WHERE project_id=$1 AND deleted_at IS NULL', [projectId]);
+  const existing = new Set(rows.rows.map((r) => r.path));
+  return { client, projectId, projectName: proj.rows[0].name, existing };
+}
+
+// ── plan classification ──
+function classify(pages, existing) {
+  const create = [], skipExisting = [], skipHomepage = [];
+  for (const p of pages) {
+    if (p.path === '/' && !INCLUDE_HOMEPAGE) { skipHomepage.push(p); continue; }
+    if (existing && existing.has(p.path)) { skipExisting.push(p); continue; }
+    create.push(p);
+  }
+  return { create, skipExisting, skipHomepage };
+}
+
+function printPlan(title, pages, projectName) {
+  console.log(`\n=== ${title} ${projectName ? `(project: ${projectName})` : '(no DB — structural only)'} ===`);
+  const f = (p) => `  ${String(p.migrationQuality||'?').padEnd(6)} ${p.pageType.padEnd(16)} ${p.path}`;
+  return pages.map(f);
+}
+
+// ── apply (guarded) ──
+async function apply(ctx, create) {
+  const { client, projectId } = ctx;
+  let created = 0, updated = 0;
+  for (const p of create) {
+    const pageType = PAGE_TYPE_MAP[p.pageType] || 'page';
+    const isHome = p.path === '/';
+    const content = JSON.stringify(p.content);
+    const existing = await client.query(
+      'SELECT id FROM pages WHERE project_id=$1 AND path=$2 AND deleted_at IS NULL', [projectId, p.path]);
+    if (existing.rowCount > 0) {
+      if (!UPDATE_EXISTING) continue;
+      await client.query(
+        `UPDATE pages SET content=$1, title=$2, meta_title=$3, meta_description=$4,
+           page_type=$5, status='draft', robots_index=true, robots_follow=true, updated_at=now()
+         WHERE id=$6`,
+        [content, p.title, p.metaTitle || p.title, p.metaDescription, pageType, existing.rows[0].id]);
+      updated++;
+    } else {
+      await client.query(
+        `INSERT INTO pages
+           (project_id, name, title, slug, path, page_type, status, is_homepage,
+            content, meta_title, meta_description, robots_index, robots_follow, published_at)
+         VALUES ($1,$2,$3,$4,$5,$6,'draft',$7,$8,$9,$10,true,true, NULL)`, // published_at NULL → NOT published
+        [projectId, p.metaTitle || p.title, p.title, slugFromPath(p.path), p.path, pageType,
+         isHome, content, p.metaTitle || p.title, p.metaDescription]);
+      created++;
+    }
+  }
+  return { created, updated };
+}
+
+// ── main ──
+async function main() {
+  console.log('SitePilot ← Solomiya Tilda draft import');
+  console.log(`file: ${FILE}`);
+  console.log(`mode: ${APPLY ? 'APPLY' : CHECK_EXISTING ? 'DRY-RUN + check-existing' : 'DRY-RUN (default)'}`);
+
+  const pages = loadDrafts();
+  console.log(`loaded: ${pages.length} pages`);
+
+  const { errors, warnings } = validate(pages);
+  if (warnings.length) { console.log(`\n⚠ warnings (${warnings.length}):`); warnings.forEach((w) => console.log('  - ' + w)); }
+  if (errors.length) {
+    console.log(`\n✗ ERRORS (${errors.length}) — refusing to proceed:`);
+    errors.forEach((e) => console.log('  - ' + e));
+    process.exit(1);
+  }
+  console.log('\n✓ structural validation passed (paths, status=draft, block types renderable)');
+
+  // Guard BEFORE any DB connection: --apply must be paired with --confirm-apply.
+  if (APPLY && !CONFIRM) {
+    console.log('\n✗ --apply requires explicit --confirm-apply. Aborting (no DB touched, nothing written).');
+    process.exit(2);
+  }
+
+  let ctx = null, existing = null, projectName = null;
+  if (CHECK_EXISTING || APPLY) {
+    ctx = await fetchExisting();
+    existing = ctx.existing; projectName = ctx.projectName;
+    console.log(`\nDB read-only: project "${projectName}" has ${existing.size} existing page(s).`);
+  }
+
+  const plan = classify(pages, existing);
+  console.log(printPlan(`WOULD CREATE (${plan.create.length})`, plan.create, projectName).join('\n'));
+  console.log(printPlan(`WOULD SKIP — already exists (${plan.skipExisting.length})`, plan.skipExisting, projectName).join('\n') || '  (none / DB not queried)');
+  console.log(printPlan(`WOULD SKIP — homepage guard (${plan.skipHomepage.length})`, plan.skipHomepage, projectName).join('\n') || '  (none)');
+
+  // quality rollup
+  const byQ = pages.reduce((a, p) => ((a[p.migrationQuality] = (a[p.migrationQuality]||0)+1), a), {});
+  const ownerVerify = pages.filter((p) => p.needsOwnerVerification).length;
+  console.log(`\nquality: ${JSON.stringify(byQ)} | needsOwnerVerification: ${ownerVerify} | with-forms: ${pages.filter((p)=>p.leadForm?.present).length}`);
+
+  if (!APPLY) {
+    console.log('\nDRY-RUN complete. Nothing was written. Use --apply --confirm-apply to insert as draft.');
+    if (ctx) await ctx.client.end();
+    return;
+  }
+
+  // ── apply guard rails ──
+  if (!CONFIRM) {
+    console.log('\n✗ --apply requires explicit --confirm-apply. Aborting (nothing written).');
+    if (ctx) await ctx.client.end();
+    process.exit(2);
+  }
+  console.log('\n● APPLY mode: inserting missing pages as status=draft (never published)…');
+  const res = await apply(ctx, plan.create);
+  console.log(`✓ created ${res.created}, updated ${res.updated}, skipped-existing ${plan.skipExisting.length}, homepage-guard ${plan.skipHomepage.length}`);
+  console.log('NOTE: all pages are DRAFT. Nothing published, no DNS/env/deploy changes.');
+  await ctx.client.end();
+}
+
+main().catch((err) => { console.error('✗ import failed:', err.message); process.exit(1); });
