@@ -1,5 +1,5 @@
 import type { PublicPageBlock } from '@/lib/public-api';
-import LeadForm from './LeadForm';
+import LeadForm, { type LeadFormField } from './LeadForm';
 import RoiCalculator from './RoiCalculator';
 
 function asString(value: unknown, fallback = ''): string {
@@ -257,6 +257,8 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
             source={asString(d.source) || 'website_form'}
             projectId={projectId}
             pageId={pageId}
+            fields={Array.isArray(d.fields) ? (d.fields as unknown as LeadFormField[]) : undefined}
+            consentText={asString(d.consent) || undefined}
           />
         </section>
       );
