@@ -151,6 +151,8 @@ export class PublicPagesService {
 
   private toDto(page: Page, project: Project): PublicPageDto {
     const dto = new PublicPageDto();
+    dto.projectId = project.id;
+    dto.pageId = page.id;
     dto.path = page.path ?? '/';
     dto.title = page.metaTitle ?? page.seoTitle ?? page.title;
     dto.metaDescription = page.metaDescription ?? page.seoDescription ?? null;
