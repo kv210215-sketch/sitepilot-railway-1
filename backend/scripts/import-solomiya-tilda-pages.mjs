@@ -80,7 +80,7 @@ const SUPPORTED = new Set([
   'testimonials','cases','customer_cases','links','city_links','cta','roi_calculator',
   'calculator','roi','lead_form','form','contact','faq','custom',
 ]);
-const NEWLY_SUPPORTED = new Set(['contact_info','seo_text']); // added on this branch
+const NEWLY_SUPPORTED = new Set(['contact_info','seo_text','benefits','process']); // added on this branch
 const isRenderable = (t) => SUPPORTED.has(t) || NEWLY_SUPPORTED.has(t);
 
 // page_type enum (backend page.entity.ts: page/landing/service/category/article)

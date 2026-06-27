@@ -2,6 +2,8 @@ export type PublicPageBlockType =
   | 'hero'
   | 'pain'
   | 'steps'
+  | 'benefits'
+  | 'process'
   | 'numbers'
   | 'audience'
   | 'guarantees'

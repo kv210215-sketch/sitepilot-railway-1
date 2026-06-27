@@ -76,6 +76,44 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
       );
     }
 
+    case 'benefits': {
+      // Value-proposition cards ({ title, text }). Same card style as cases/testimonials.
+      const items = asArray<{ title?: string; text?: string }>(d.items);
+      if (items.length === 0) return <UnknownBlock type={block.type} />;
+      return (
+        <section className="block block-benefits">
+          {d.title ? <h2>{asString(d.title)}</h2> : null}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+            {items.map((b, i) => (
+              <article key={i} style={{ background: '#f7faf8', border: '1px solid #e0e8e3', borderRadius: 10, padding: 18 }}>
+                {b.title ? <h3 style={{ margin: '0 0 6px' }}>{asString(b.title)}</h3> : null}
+                {b.text ? <p style={{ margin: 0, color: '#334' }}>{asString(b.text)}</p> : null}
+              </article>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    case 'process': {
+      // Ordered workflow steps ({ step, title, text }). Mirrors the `steps` block.
+      const steps = asArray<{ step?: number; title?: string; text?: string }>(d.steps);
+      if (steps.length === 0) return <UnknownBlock type={block.type} />;
+      return (
+        <section className="block block-process">
+          <h2>{asString(d.title, 'Як ми працюємо')}</h2>
+          <ol>
+            {steps.map((s, i) => (
+              <li key={i}>
+                <h3>{asString(s.title)}</h3>
+                <p>{asString(s.text)}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      );
+    }
+
     case 'numbers': {
       const items = asArray<{ value?: string; label?: string }>(d.items);
       return (
