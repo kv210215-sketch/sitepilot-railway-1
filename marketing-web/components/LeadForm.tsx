@@ -133,11 +133,11 @@ export default function LeadForm({
         <p style={{ margin: 0, textAlign: 'center', color: '#555' }}>{subtitle}</p>
       ) : null}
 
-      <input style={field} name="name" placeholder="Ваше імʼя *" autoComplete="name" required />
-      <input style={field} name="phone" type="tel" placeholder="Телефон" autoComplete="tel" inputMode="tel" />
-      <input style={field} name="email" type="email" placeholder="Email" autoComplete="email" inputMode="email" />
-      <input style={field} name="city" placeholder="Місто" autoComplete="address-level2" />
-      <textarea style={{ ...field, minHeight: 90, resize: 'vertical' }} name="message" placeholder="Коментар (необовʼязково)" />
+      <input style={field} name="name" placeholder="Ваше імʼя *" aria-label="Ваше імʼя" autoComplete="name" required />
+      <input style={field} name="phone" type="tel" placeholder="Телефон" aria-label="Телефон" autoComplete="tel" inputMode="tel" />
+      <input style={field} name="email" type="email" placeholder="Email" aria-label="Email" autoComplete="email" inputMode="email" />
+      <input style={field} name="city" placeholder="Місто" aria-label="Місто" autoComplete="address-level2" />
+      <textarea style={{ ...field, minHeight: 90, resize: 'vertical' }} name="message" placeholder="Коментар (необовʼязково)" aria-label="Коментар" />
 
       {/* Honeypot: visually hidden, off-screen, not announced to AT */}
       <input
