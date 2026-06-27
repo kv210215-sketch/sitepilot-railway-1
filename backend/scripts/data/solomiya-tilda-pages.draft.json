@@ -1,0 +1,4535 @@
+[
+  {
+    "path": "/",
+    "status": "draft",
+    "isHomepage": true,
+    "pageType": "homepage",
+    "template": "Homepage",
+    "title": "Сонячна електростанція під ключ Львів — ціна, монтаж, розрахунок",
+    "metaTitle": "Сонячна електростанція під ключ Львів — ціна, монтаж, розрахунок",
+    "metaDescription": "Сонячні електростанції під ключ у Львові та області. Проєктування, монтаж, підбір обладнання для дому і бізнесу. Розрахунок за 1 день. Гарантія та сервіс.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Сонячна електростанція під ключ Львів — ціна, монтаж, розрахунок",
+    "canonical": "https://solomiya-energy.com/",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Сонячні електростанції під ключ у Львові",
+            "subtitle": "Проєктування, монтаж і підключення СЕС для дому та бізнесу. Економія на світлі та автономність під час відключень.",
+            "cta": "Отримати безкоштовний розрахунок"
+          },
+          "order": 1
+        },
+        {
+          "type": "audience",
+          "data": {
+            "home": "Для дому: економія на рахунках і світло під час блекаутів.",
+            "business": "Для бізнесу: зниження витрат на електроенергію та незалежність виробництва."
+          },
+          "order": 2
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Готові рішення за потужністю",
+              "items": [
+                "СЕС 5 кВт — для дому",
+                "СЕС 10 кВт — дім/мала комерція",
+                "СЕС 20 кВт — комерція",
+                "СЕС 30 кВт — бізнес",
+                "СЕС 50 кВт — виробництво"
+              ],
+              "cta": "Підібрати потужність"
+            }
+          },
+          "order": 3
+        },
+        {
+          "type": "links",
+          "data": {
+            "title": "Обладнання",
+            "items": [
+              {
+                "label": "Сонячні панелі",
+                "href": "/solar-panels"
+              },
+              {
+                "label": "Інвертори",
+                "href": "/inverters"
+              },
+              {
+                "label": "Акумулятори",
+                "href": "/batteries"
+              },
+              {
+                "label": "Кріплення",
+                "href": "/kriplennia"
+              }
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "roi_calculator",
+          "data": {
+            "title": "Розрахуйте економію та окупність",
+            "businessType": "home"
+          },
+          "order": 5
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і технічна підтримка 24/7"
+            ]
+          },
+          "order": 6
+        },
+        {
+          "type": "cases",
+          "data": {
+            "title": "Реалізовані проєкти",
+            "items": [
+              {
+                "title": "СЕС для приватного будинку",
+                "location": "Львів",
+                "power": "10 кВт",
+                "result": "Рахунок за світло −80%"
+              },
+              {
+                "title": "Комерційна СЕС",
+                "location": "Львівська обл.",
+                "power": "30 кВт",
+                "result": "Окупність ~4 роки"
+              },
+              {
+                "title": "Гібридна станція з АКБ",
+                "location": "Львів",
+                "power": "15 кВт",
+                "result": "Світло під час відключень"
+              }
+            ]
+          },
+          "order": 7
+        },
+        {
+          "type": "steps",
+          "data": {
+            "title": "Як ми працюємо",
+            "items": [
+              {
+                "title": "Заявка і безкоштовна консультація",
+                "description": "Залишаєте контакти — визначаємо потужність, економію та орієнтовну окупність."
+              },
+              {
+                "title": "Виїзд і проєктування",
+                "description": "Виїзд на об'єкт, технічний огляд, підбір обладнання та проєкт під ваш дах і бюджет."
+              },
+              {
+                "title": "Монтаж і підключення",
+                "description": "Встановлення, монтаж та пусконалагодження станції під ключ."
+              },
+              {
+                "title": "Реєстрація і запуск",
+                "description": "Офіційне оформлення, підключення до мережі та запуск генерації."
+              },
+              {
+                "title": "Сервіс і гарантія",
+                "description": "Технічна підтримка та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 8
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому обирають Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 9
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки коштує сонячна станція під ключ?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором — точну ціну підготуємо після консультації."
+              },
+              {
+                "question": "Чи працює станція під час відключень?",
+                "answer": "Так, станція з акумулятором живить дім або об'єкт під час блекаутів."
+              },
+              {
+                "question": "Яка окупність?",
+                "answer": "Орієнтовно показує калькулятор; залежить від споживання, тарифу та потужності."
+              }
+            ]
+          },
+          "order": 10
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "website_form"
+          },
+          "order": 11
+        },
+        {
+          "type": "contact_info",
+          "order": 12,
+          "data": {
+            "title": "Контакти",
+            "phone": "+38 (067) 555-40-00",
+            "email": "andriy555solar@gmail.com",
+            "address": "",
+            "hours": "",
+            "messengers": [],
+            "mapEmbed": ""
+          }
+        }
+      ]
+    },
+    "cta": "Отримати безкоштовний розрахунок",
+    "leadForm": {
+      "present": true,
+      "source": "home",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/contacts"
+    ],
+    "seoNotes": "URL збережено 1:1; canonical=self; category-A resolved (phone+email injected via contact_info)",
+    "migrationSource": "Tilda /",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "audience",
+      "offers",
+      "links",
+      "roi_calculator",
+      "guarantees",
+      "cases",
+      "steps",
+      "trust",
+      "faq",
+      "lead_form",
+      "custom"
+    ],
+    "categoryAResolved": true,
+    "contact": {
+      "phone": "+38 (067) 555-40-00",
+      "tel": "tel:+380675554000",
+      "email": "andriy555solar@gmail.com",
+      "responsible": "Андрій / команда Solomiya Energy",
+      "leadsRouting": "SitePilot Leads Inbox + email andriy555solar@gmail.com"
+    },
+    "remainingBeforePublish": [
+      "guarantees 25/10/2 + 24/7 (підтвердити)",
+      "окупність/% економії (ROI)",
+      "реальні кейси (зараз вигадані −80%/~4 роки)",
+      "згода на обробку ПД + реквізити/політика конфіденційності"
+    ]
+  },
+  {
+    "path": "/batteries",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "category_hub",
+    "template": "C — Category Hub",
+    "title": "Акумулятори для сонячних електростанцій: LiFePO4 батареї для резервного живлення, дому, бізнесу та гібридних систем. Підбір, консультація, гарантія, монтаж.",
+    "metaTitle": "Акумулятори для сонячних електростанцій: LiFePO4 батареї для резервного живлення, дому, бізнесу та гібридних систем. Підбір, консультація, гарантія, монтаж.",
+    "metaDescription": "Акумулятори для СЕС у Львові. Deye, Dyness, Pytes. Рішення для дому та бізнесу. Монтаж під ключ, гарантія, консультація.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Акумулятори для сонячних електростанцій",
+    "canonical": "https://solomiya-energy.com/batteries",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Акумулятори для сонячних електростанцій: LiFePO4 батареї для резервного живлення, дому, бізнесу та гібридних систем. Підбір, консультація, гарантія, монтаж.",
+            "subtitle": "Оберіть рішення під ваші задачі.",
+            "cta": "Підібрати"
+          },
+          "order": 1
+        },
+        {
+          "type": "links",
+          "data": {
+            "title": "Оберіть варіант",
+            "items": [
+              {
+                "label": "Низьковольтні АКБ",
+                "href": "/batteries/lv"
+              },
+              {
+                "label": "Високовольтні АКБ",
+                "href": "/batteries/hv"
+              },
+              {
+                "label": "Акумулятори Dyness",
+                "href": "/batteries/dyness"
+              },
+              {
+                "label": "Акумулятори Pytes",
+                "href": "/batteries/pytes"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "audience",
+          "data": {
+            "home": "Для дому: економія та резервне живлення.",
+            "business": "Для бізнесу: зниження витрат на енергію."
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Підібрати під ваш об'єкт",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "batteries_hub"
+          },
+          "order": 6
+        },
+        {
+          "type": "seo_text",
+          "data": {
+            "title": "Акумулятори для сонячних електростанцій: LiFePO4 батареї для резервного живлення, дому, бізнесу та гібридних систем. Підбір, консультація, гарантія, монтаж.",
+            "paragraphs": [
+              "[SEO-текст з Tilda — нормалізувати з raw HTML]"
+            ]
+          },
+          "order": 7
+        }
+      ]
+    },
+    "cta": "Підібрати",
+    "leadForm": {
+      "present": true,
+      "source": "batteries",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/batteries/lv",
+      "/batteries/hv",
+      "/batteries/dyness",
+      "/batteries/pytes",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /batteries",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "links",
+      "audience",
+      "guarantees",
+      "faq",
+      "lead_form",
+      "seo_text"
+    ]
+  },
+  {
+    "path": "/inverters",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "category_hub",
+    "template": "C — Category Hub",
+    "title": "Гібридні та мережеві інвертори для СЕС – ціни, підбір | Solomiya Energy",
+    "metaTitle": "Гібридні та мережеві інвертори для СЕС – ціни, підбір | Solomiya Energy",
+    "metaDescription": "Купити інвертор для сонячної електростанції в Україні. Гібридні, мережеві, автономні. Бренди Deye, Huawei, Solis. Гарантія, монтаж, доставка.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Гібридні та мережеві інвертори для СЕС – ціни, підбір",
+    "canonical": "https://solomiya-energy.com/inverters",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Гібридні та мережеві інвертори для СЕС – ціни, підбір",
+            "subtitle": "Оберіть рішення під ваші задачі.",
+            "cta": "Підібрати"
+          },
+          "order": 1
+        },
+        {
+          "type": "links",
+          "data": {
+            "title": "Оберіть варіант",
+            "items": [
+              {
+                "label": "Гібридні інвертори",
+                "href": "/inverters/hybrid"
+              },
+              {
+                "label": "Мережеві інвертори",
+                "href": "/inverters/grid"
+              },
+              {
+                "label": "Автономні інвертори",
+                "href": "/inverters/offgrid"
+              },
+              {
+                "label": "Інвертори для резерву",
+                "href": "/inverters/backup"
+              },
+              {
+                "label": "Інвертори Deye",
+                "href": "/inverters/deye"
+              },
+              {
+                "label": "Інвертори Huawei",
+                "href": "/inverters/huawei"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "audience",
+          "data": {
+            "home": "Для дому: економія та резервне живлення.",
+            "business": "Для бізнесу: зниження витрат на енергію."
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Підібрати під ваш об'єкт",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "inverters_hub"
+          },
+          "order": 6
+        },
+        {
+          "type": "seo_text",
+          "data": {
+            "title": "Гібридні та мережеві інвертори для СЕС – ціни, підбір",
+            "paragraphs": [
+              "[SEO-текст з Tilda — нормалізувати з raw HTML]"
+            ]
+          },
+          "order": 7
+        }
+      ]
+    },
+    "cta": "Підібрати",
+    "leadForm": {
+      "present": true,
+      "source": "inverters",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/inverters/hybrid",
+      "/inverters/grid",
+      "/inverters/offgrid",
+      "/inverters/backup",
+      "/inverters/deye",
+      "/inverters/huawei",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /inverters",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "links",
+      "audience",
+      "guarantees",
+      "faq",
+      "lead_form",
+      "seo_text"
+    ]
+  },
+  {
+    "path": "/ses",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "category_hub",
+    "template": "C — Category Hub",
+    "title": "Види сонячних електростанцій для дому та бізнесу | Solomiya Energy",
+    "metaTitle": "Види сонячних електростанцій для дому та бізнесу | Solomiya Energy",
+    "metaDescription": "Види сонячних електростанцій: для дому, бізнесу, наземні, гібридні. Порівняння, ціни та підбір під ваші задачі у Львові та області.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Види сонячних електростанцій для дому та бізнесу",
+    "canonical": "https://solomiya-energy.com/ses",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Види сонячних електростанцій для дому та бізнесу",
+            "subtitle": "Оберіть рішення під ваші задачі.",
+            "cta": "Підібрати"
+          },
+          "order": 1
+        },
+        {
+          "type": "links",
+          "data": {
+            "title": "Оберіть варіант",
+            "items": [
+              {
+                "label": "СЕС для дому",
+                "href": "/ses/dom"
+              },
+              {
+                "label": "СЕС для бізнесу",
+                "href": "/ses/business"
+              },
+              {
+                "label": "СЕС 5 кВт",
+                "href": "/ses/5kw"
+              },
+              {
+                "label": "СЕС 10 кВт",
+                "href": "/ses/10kw"
+              },
+              {
+                "label": "СЕС 20 кВт",
+                "href": "/ses/20kw"
+              },
+              {
+                "label": "СЕС 30 кВт",
+                "href": "/ses/30kw"
+              },
+              {
+                "label": "СЕС 50 кВт",
+                "href": "/ses/50kw"
+              },
+              {
+                "label": "Наземні СЕС",
+                "href": "/ses/ground"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "audience",
+          "data": {
+            "home": "Для дому: економія та резервне живлення.",
+            "business": "Для бізнесу: зниження витрат на енергію."
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "Гарантія на сонячні панелі — згідно з умовами виробника та паспортом конкретної моделі.",
+              "Гарантія на інвертор — згідно з умовами виробника та постачальника.",
+              "Гарантія на акумуляторні батареї — згідно з умовами виробника та обраною моделлю АКБ.",
+              "Гарантія на монтажні роботи — за умовами договору.",
+              "Після запуску надаємо консультації з експлуатації та підтримку щодо роботи системи."
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Підібрати під ваш об'єкт",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "ses_hub",
+            "fields": [
+              {
+                "name": "name",
+                "label": "Ім'я",
+                "type": "text",
+                "required": true
+              },
+              {
+                "name": "phone",
+                "label": "Телефон",
+                "type": "tel",
+                "required": true
+              },
+              {
+                "name": "city",
+                "label": "Місто / населений пункт",
+                "type": "text",
+                "required": false
+              },
+              {
+                "name": "objectType",
+                "label": "Тип об'єкта",
+                "type": "select",
+                "options": [
+                  "Будинок",
+                  "Бізнес",
+                  "Інше"
+                ],
+                "required": false
+              },
+              {
+                "name": "comment",
+                "label": "Коментар",
+                "type": "textarea",
+                "required": false
+              }
+            ],
+            "consent": "Даю згоду на обробку моїх персональних даних для зв'язку щодо консультації, підготовки пропозиції та опрацювання мого звернення.",
+            "consentRequired": true
+          },
+          "order": 6
+        },
+        {
+          "type": "seo_text",
+          "data": {
+            "title": "Види сонячних електростанцій для дому та бізнесу",
+            "paragraphs": [
+              "Сонячна електростанція — це рішення для зменшення витрат на електроенергію, підвищення автономності та захисту від перебоїв у мережі. Solomiya Energy підбирає обладнання під конкретний об'єкт: приватний будинок, бізнес, виробництво або комерційну нерухомість.",
+              "Ми аналізуємо споживання, дах або земельну ділянку, доступну потужність, потребу в акумуляторах та резервному живленні. Після аудиту клієнт отримує технічне рішення, кошторис і прогноз економії.",
+              "Працюємо з мережевими, гібридними та автономними рішеннями. Підбираємо сонячні панелі, інвертори, акумуляторні батареї, захист, кабельну продукцію та монтажну систему відповідно до задач об'єкта."
+            ]
+          },
+          "order": 7
+        },
+        {
+          "type": "seo_text",
+          "order": 8,
+          "data": {
+            "title": "Обробка персональних даних",
+            "paragraphs": [
+              "Оператор персональних даних: ТОВ «СОЛОМІЯ ЕНЕРГОЗБЕРЕЖЕННЯ», ЄДРПОУ 40446535, юридична адреса: вул. Степанська, 115, м. Костопіль, 35000, Україна. Контактний телефон: +380 67 555 4000. Електронна пошта: andriy555solar@gmail.com."
+            ]
+          }
+        },
+        {
+          "type": "contact_info",
+          "order": 9,
+          "data": {
+            "title": "Контакти",
+            "phone": "+380 67 555 4000",
+            "email": "andriy555solar@gmail.com",
+            "address": "вул. Стрийська, 45, м. Львів, 79000, Україна",
+            "hours": "",
+            "messengers": [],
+            "mapEmbed": ""
+          }
+        }
+      ]
+    },
+    "cta": "Підібрати",
+    "leadForm": {
+      "present": true,
+      "source": "ses",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/ses/dom",
+      "/ses/business",
+      "/ses/5kw",
+      "/ses/10kw",
+      "/ses/20kw",
+      "/ses/30kw",
+      "/ses/50kw",
+      "/ses/ground",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "URL збережено 1:1; canonical=self; category-A resolved (phone+email injected via contact_info)",
+    "migrationSource": "Tilda /ses",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": false,
+    "hasTodoPlaceholders": false,
+    "blockTypes": [
+      "hero",
+      "links",
+      "audience",
+      "guarantees",
+      "faq",
+      "lead_form",
+      "seo_text"
+    ],
+    "categoryAResolved": true,
+    "contact": {
+      "phone": "+38 (067) 555-40-00",
+      "tel": "tel:+380675554000",
+      "email": "andriy555solar@gmail.com",
+      "responsible": "Андрій / команда Solomiya Energy",
+      "leadsRouting": "SitePilot Leads Inbox + email andriy555solar@gmail.com"
+    },
+    "remainingBeforePublish": [
+      "guarantees 25/10/2 + 24/7 (підтвердити)",
+      "SEO-текст хабу (плейсхолдер)",
+      "згода на обробку ПД + реквізити/політика конфіденційності"
+    ],
+    "categoryBResolved": true
+  },
+  {
+    "path": "/batteries/dyness",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "vendor_page",
+    "template": "D — Equipment/Vendor",
+    "title": "Акумулятори Dyness",
+    "metaTitle": "Акумулятори Dyness",
+    "metaDescription": "Акумулятори Dyness — Solomiya Energy. Проєктування, монтаж і підключення під ключ у Львові та області. Безкоштовний розрахунок, гарантія та сервіс.",
+    "metaDescriptionSource": "rewritten",
+    "h1": "Акумулятори Dyness",
+    "canonical": "https://solomiya-energy.com/batteries/dyness",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Акумулятори Dyness",
+            "subtitle": "Підбір, консультація, гарантія, монтаж.",
+            "cta": "Дізнатись ціну"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Доступні моделі",
+              "items": [
+                "[модель 1 — характеристики*]",
+                "[модель 2 — характеристики*]",
+                "[модель 3 — характеристики*]"
+              ],
+              "cta": "Отримати ціну та наявність"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "batteries_dyness"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Дізнатись ціну",
+    "leadForm": {
+      "present": true,
+      "source": "batteries_dyness",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/batteries",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "metaDescription rewritten (Tilda порожній/слабкий); моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /batteries/dyness",
+    "migrationQuality": "low",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "trust",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/batteries/hv",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "subcategory_page",
+    "template": "C — Category Hub",
+    "title": "Високовольтні акумулятори для СЕС | Купити HV батареї в Україні | Solomiya Energy",
+    "metaTitle": "Високовольтні акумулятори для СЕС | Купити HV батареї в Україні | Solomiya Energy",
+    "metaDescription": "Високовольтні акумулятори для сонячних електростанцій: HV батареї для бізнесу, комерційних та промислових об’єктів. Підбір, консультація, гарантія, монтаж по Україні.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Високовольтні акумулятори для СЕС | Купити HV батареї в Україні",
+    "canonical": "https://solomiya-energy.com/batteries/hv",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Високовольтні акумулятори для СЕС | Купити HV батареї в Україні",
+            "subtitle": "Підбір, консультація, гарантія, монтаж.",
+            "cta": "Дізнатись ціну"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Доступні моделі",
+              "items": [
+                "[модель 1 — характеристики*]",
+                "[модель 2 — характеристики*]",
+                "[модель 3 — характеристики*]"
+              ],
+              "cta": "Отримати ціну та наявність"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "batteries_hv"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Дізнатись ціну",
+    "leadForm": {
+      "present": true,
+      "source": "batteries_hv",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/batteries",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /batteries/hv",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "trust",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/batteries/lv",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "subcategory_page",
+    "template": "C — Category Hub",
+    "title": "Низьковольтні акумулятори для СЕС | Купити HV батареї в Україні | Solomiya Energy",
+    "metaTitle": "Низьковольтні акумулятори для СЕС | Купити HV батареї в Україні | Solomiya Energy",
+    "metaDescription": "Низьковольтні акумулятори для сонячних електростанцій: LV батареї для бізнесу, комерційних та промислових об’єктів. Підбір, консультація, гарантія, монтаж по Україні.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Низьковольтні акумулятори для СЕС | Купити HV батареї в Україні",
+    "canonical": "https://solomiya-energy.com/batteries/lv",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Низьковольтні акумулятори для СЕС | Купити HV батареї в Україні",
+            "subtitle": "Підбір, консультація, гарантія, монтаж.",
+            "cta": "Дізнатись ціну"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Доступні моделі",
+              "items": [
+                "[модель 1 — характеристики*]",
+                "[модель 2 — характеристики*]",
+                "[модель 3 — характеристики*]"
+              ],
+              "cta": "Отримати ціну та наявність"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "batteries_lv"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Дізнатись ціну",
+    "leadForm": {
+      "present": true,
+      "source": "batteries_lv",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/batteries",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /batteries/lv",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "trust",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/batteries/pytes",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "vendor_page",
+    "template": "D — Equipment/Vendor",
+    "title": "Акумулятори Pytes",
+    "metaTitle": "Акумулятори Pytes",
+    "metaDescription": "Акумулятори Pytes — Solomiya Energy. Проєктування, монтаж і підключення під ключ у Львові та області. Безкоштовний розрахунок, гарантія та сервіс.",
+    "metaDescriptionSource": "rewritten",
+    "h1": "Акумулятори Pytes",
+    "canonical": "https://solomiya-energy.com/batteries/pytes",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Акумулятори Pytes",
+            "subtitle": "Підбір, консультація, гарантія, монтаж.",
+            "cta": "Дізнатись ціну"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Доступні моделі",
+              "items": [
+                "[модель 1 — характеристики*]",
+                "[модель 2 — характеристики*]",
+                "[модель 3 — характеристики*]"
+              ],
+              "cta": "Отримати ціну та наявність"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "batteries_pytes"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Дізнатись ціну",
+    "leadForm": {
+      "present": true,
+      "source": "batteries_pytes",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/batteries",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "metaDescription rewritten (Tilda порожній/слабкий); моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /batteries/pytes",
+    "migrationQuality": "low",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "trust",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/contacts",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "contact",
+    "template": "E — Contact/Portfolio",
+    "title": "Контакти",
+    "metaTitle": "Контакти",
+    "metaDescription": "Контакти — Solomiya Energy. Проєктування, монтаж і підключення під ключ у Львові та області. Безкоштовний розрахунок, гарантія та сервіс.",
+    "metaDescriptionSource": "rewritten",
+    "h1": "Контакти",
+    "canonical": "https://solomiya-energy.com/contacts",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Контакти",
+            "subtitle": "Зв'яжіться — проконсультуємо та підготуємо розрахунок."
+          },
+          "order": 1
+        },
+        {
+          "type": "contact_info",
+          "data": {
+            "phone": "+38 067 555 4000",
+            "email": "",
+            "address": "Львів та область",
+            "hours": "Пн–Сб 9:00–19:00",
+            "messengers": [],
+            "mapEmbed": ""
+          },
+          "order": 2
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Залишити заявку",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "contacts"
+          },
+          "order": 4
+        }
+      ]
+    },
+    "cta": "Залишити заявку",
+    "leadForm": {
+      "present": true,
+      "source": "contacts",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "metaDescription rewritten (Tilda порожній/слабкий); Tilda canonical вказував на apex root → виправлено на self; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /contacts",
+    "migrationQuality": "low",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "contact_info",
+      "trust",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/installation",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "service_landing",
+    "template": "A — Service Landing",
+    "title": "Монтаж сонячних електростанцій",
+    "metaTitle": "Монтаж сонячних електростанцій",
+    "metaDescription": "Професійний монтаж сонячних електростанцій для дому та бізнесу у Львові та області. Проєктування, встановлення, підключення, гарантія та сервіс.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Монтаж сонячних електростанцій",
+    "canonical": "https://solomiya-energy.com/installation",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Монтаж сонячних електростанцій",
+            "subtitle": "Професійно, з гарантією та офіційним оформленням.",
+            "cta": "Замовити"
+          },
+          "order": 1
+        },
+        {
+          "type": "pain",
+          "data": {
+            "title": "Що вирішуємо",
+            "items": [
+              {
+                "problem": "Ризик помилок монтажу/обслуговування",
+                "solution": "Сертифіковані фахівці та технологія"
+              },
+              {
+                "problem": "Проблеми з документами/підключенням",
+                "solution": "Офіційне оформлення"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "steps",
+          "data": {
+            "title": "Як ми працюємо",
+            "items": [
+              {
+                "title": "Заявка і консультація",
+                "description": "Визначаємо потужність, економію та орієнтовну окупність."
+              },
+              {
+                "title": "Виїзд і проєктування",
+                "description": "Огляд об'єкта, підбір обладнання та проєкт під ваш дах."
+              },
+              {
+                "title": "Монтаж і підключення",
+                "description": "Встановлення та пусконалагодження станції під ключ."
+              },
+              {
+                "title": "Реєстрація і запуск",
+                "description": "Офіційне оформлення та запуск генерації."
+              },
+              {
+                "title": "Сервіс і гарантія",
+                "description": "Технічна підтримка після запуску."
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "seo_text",
+          "order": 4,
+          "data": {
+            "title": "Монтаж під ключ — що входить",
+            "paragraphs": [
+              "Монтаж сонячної електростанції під ключ може включати:",
+              "виїзд або дистанційний технічний аудит; аналіз споживання та задач об'єкта; підбір сонячних панелей, інвертора, акумуляторів і захисту; підготовку технічного рішення або схеми підключення; постачання обладнання; монтаж конструкції, панелей, інвертора та щитового обладнання; DC/AC кабельні роботи; налаштування інвертора та моніторингу; тестовий запуск системи; інструктаж клієнта після запуску.",
+              "За потреби супроводжуємо клієнта у технічних питаннях підключення та взаємодії з оператором системи розподілу."
+            ]
+          }
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "Гарантія на сонячні панелі — згідно з умовами виробника та паспортом конкретної моделі.",
+              "Гарантія на інвертор — згідно з умовами виробника та постачальника.",
+              "Гарантія на акумуляторні батареї — згідно з умовами виробника та обраною моделлю АКБ.",
+              "Гарантія на монтажні роботи — за умовами договору.",
+              "Після запуску надаємо консультації з експлуатації та підтримку щодо роботи системи."
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 6
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "installation",
+            "fields": [
+              {
+                "name": "name",
+                "label": "Ім'я",
+                "type": "text",
+                "required": true
+              },
+              {
+                "name": "phone",
+                "label": "Телефон",
+                "type": "tel",
+                "required": true
+              },
+              {
+                "name": "city",
+                "label": "Місто / населений пункт",
+                "type": "text",
+                "required": false
+              },
+              {
+                "name": "objectType",
+                "label": "Тип об'єкта",
+                "type": "select",
+                "options": [
+                  "Будинок",
+                  "Бізнес",
+                  "Інше"
+                ],
+                "required": false
+              },
+              {
+                "name": "comment",
+                "label": "Коментар",
+                "type": "textarea",
+                "required": false
+              }
+            ],
+            "consent": "Даю згоду на обробку моїх персональних даних для зв'язку щодо консультації, підготовки пропозиції та опрацювання мого звернення.",
+            "consentRequired": true
+          },
+          "order": 7
+        },
+        {
+          "type": "seo_text",
+          "order": 8,
+          "data": {
+            "title": "Обробка персональних даних",
+            "paragraphs": [
+              "Оператор персональних даних: ТОВ «СОЛОМІЯ ЕНЕРГОЗБЕРЕЖЕННЯ», ЄДРПОУ 40446535, юридична адреса: вул. Степанська, 115, м. Костопіль, 35000, Україна. Контактний телефон: +380 67 555 4000. Електронна пошта: andriy555solar@gmail.com."
+            ]
+          }
+        },
+        {
+          "type": "contact_info",
+          "order": 9,
+          "data": {
+            "title": "Контакти",
+            "phone": "+380 67 555 4000",
+            "email": "andriy555solar@gmail.com",
+            "address": "вул. Стрийська, 45, м. Львів, 79000, Україна",
+            "hours": "",
+            "messengers": [],
+            "mapEmbed": ""
+          }
+        }
+      ]
+    },
+    "cta": "Замовити",
+    "leadForm": {
+      "present": true,
+      "source": "installation",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "URL збережено 1:1; canonical=self; category-A resolved (phone+email injected via contact_info)",
+    "migrationSource": "Tilda /installation",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": false,
+    "hasTodoPlaceholders": false,
+    "blockTypes": [
+      "hero",
+      "pain",
+      "steps",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ],
+    "categoryAResolved": true,
+    "contact": {
+      "phone": "+38 (067) 555-40-00",
+      "tel": "tel:+380675554000",
+      "email": "andriy555solar@gmail.com",
+      "responsible": "Андрій / команда Solomiya Energy",
+      "leadsRouting": "SitePilot Leads Inbox + email andriy555solar@gmail.com"
+    },
+    "remainingBeforePublish": [
+      "guarantees 25/10/2 + 24/7 (підтвердити)",
+      "що входить у монтаж під ключ",
+      "згода на обробку ПД + реквізити/політика конфіденційності"
+    ],
+    "categoryBResolved": true
+  },
+  {
+    "path": "/inverters/backup",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "subcategory_page",
+    "template": "C — Category Hub",
+    "title": "Інвертори для резервного живлення у Львові — ціни, монтаж | Solomiya Energy",
+    "metaTitle": "Інвертори для резервного живлення у Львові — ціни, монтаж | Solomiya Energy",
+    "metaDescription": "Інвертори для резервного живлення у Львові — ціни, монтаж | Solomiya Energy",
+    "metaDescriptionSource": "tilda",
+    "h1": "Інвертори для резервного живлення у Львові — ціни, монтаж",
+    "canonical": "https://solomiya-energy.com/inverters/backup",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Інвертори для резервного живлення у Львові — ціни, монтаж",
+            "subtitle": "Підбір, консультація, гарантія, монтаж.",
+            "cta": "Дізнатись ціну"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Доступні моделі",
+              "items": [
+                "[модель 1 — характеристики*]",
+                "[модель 2 — характеристики*]",
+                "[модель 3 — характеристики*]"
+              ],
+              "cta": "Отримати ціну та наявність"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "inverters_backup"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Дізнатись ціну",
+    "leadForm": {
+      "present": true,
+      "source": "inverters_backup",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/inverters",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /inverters/backup",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "trust",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/inverters/deye",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "vendor_page",
+    "template": "D — Equipment/Vendor",
+    "title": "Інвертори Deye",
+    "metaTitle": "Інвертори Deye",
+    "metaDescription": "Інвертори Deye — Solomiya Energy. Проєктування, монтаж і підключення під ключ у Львові та області. Безкоштовний розрахунок, гарантія та сервіс.",
+    "metaDescriptionSource": "rewritten",
+    "h1": "Інвертори Deye",
+    "canonical": "https://solomiya-energy.com/inverters/deye",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Інвертори Deye",
+            "subtitle": "Підбір, консультація, гарантія, монтаж.",
+            "cta": "Дізнатись ціну"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Доступні моделі",
+              "items": [
+                "[модель 1 — характеристики*]",
+                "[модель 2 — характеристики*]",
+                "[модель 3 — характеристики*]"
+              ],
+              "cta": "Отримати ціну та наявність"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "inverters_deye"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Дізнатись ціну",
+    "leadForm": {
+      "present": true,
+      "source": "inverters_deye",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/inverters",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "metaDescription rewritten (Tilda порожній/слабкий); моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /inverters/deye",
+    "migrationQuality": "low",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "trust",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/inverters/grid",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "subcategory_page",
+    "template": "C — Category Hub",
+    "title": "Мережеві інвертори для сонячних електростанцій",
+    "metaTitle": "Мережеві інвертори для сонячних електростанцій",
+    "metaDescription": "Мережеві інвертори для СЕС | Купити інвертор в Україні — Solomiya Energy",
+    "metaDescriptionSource": "tilda",
+    "h1": "Мережеві інвертори для сонячних електростанцій",
+    "canonical": "https://solomiya-energy.com/inverters/grid",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Мережеві інвертори для сонячних електростанцій",
+            "subtitle": "Підбір, консультація, гарантія, монтаж.",
+            "cta": "Дізнатись ціну"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Доступні моделі",
+              "items": [
+                "[модель 1 — характеристики*]",
+                "[модель 2 — характеристики*]",
+                "[модель 3 — характеристики*]"
+              ],
+              "cta": "Отримати ціну та наявність"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "inverters_grid"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Дізнатись ціну",
+    "leadForm": {
+      "present": true,
+      "source": "inverters_grid",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/inverters",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /inverters/grid",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "trust",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/inverters/huawei",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "vendor_page",
+    "template": "D — Equipment/Vendor",
+    "title": "Інвертори Huawei",
+    "metaTitle": "Інвертори Huawei",
+    "metaDescription": "Інвертори Huawei — Solomiya Energy. Проєктування, монтаж і підключення під ключ у Львові та області. Безкоштовний розрахунок, гарантія та сервіс.",
+    "metaDescriptionSource": "rewritten",
+    "h1": "Інвертори Huawei",
+    "canonical": "https://solomiya-energy.com/inverters/huawei",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Інвертори Huawei",
+            "subtitle": "Підбір, консультація, гарантія, монтаж.",
+            "cta": "Дізнатись ціну"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Доступні моделі",
+              "items": [
+                "[модель 1 — характеристики*]",
+                "[модель 2 — характеристики*]",
+                "[модель 3 — характеристики*]"
+              ],
+              "cta": "Отримати ціну та наявність"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "inverters_huawei"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Дізнатись ціну",
+    "leadForm": {
+      "present": true,
+      "source": "inverters_huawei",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/inverters",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "metaDescription rewritten (Tilda порожній/слабкий); моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /inverters/huawei",
+    "migrationQuality": "low",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "trust",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/inverters/hybrid",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "subcategory_page",
+    "template": "C — Category Hub",
+    "title": "Гібридні інвертори",
+    "metaTitle": "Гібридні інвертори",
+    "metaDescription": "Гібридні інвертори для сонячних електростанцій у Львові. Deye, Huawei, FoxESS. Підбір, продаж і монтаж СЕС під ключ від Solomiya Energy.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Гібридні інвертори",
+    "canonical": "https://solomiya-energy.com/inverters/hybrid",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Гібридні інвертори",
+            "subtitle": "Підбір, консультація, гарантія, монтаж.",
+            "cta": "Дізнатись ціну"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Доступні моделі",
+              "items": [
+                "[модель 1 — характеристики*]",
+                "[модель 2 — характеристики*]",
+                "[модель 3 — характеристики*]"
+              ],
+              "cta": "Отримати ціну та наявність"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "inverters_hybrid"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Дізнатись ціну",
+    "leadForm": {
+      "present": true,
+      "source": "inverters_hybrid",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/inverters",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /inverters/hybrid",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "trust",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/inverters/offgrid",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "subcategory_page",
+    "template": "C — Category Hub",
+    "title": "Інвертори автономні",
+    "metaTitle": "Інвертори автономні",
+    "metaDescription": "Інвертори автономні — Solomiya Energy. Проєктування, монтаж і підключення під ключ у Львові та області. Безкоштовний розрахунок, гарантія та сервіс.",
+    "metaDescriptionSource": "rewritten",
+    "h1": "Інвертори автономні",
+    "canonical": "https://solomiya-energy.com/inverters/offgrid",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Інвертори автономні",
+            "subtitle": "Підбір, консультація, гарантія, монтаж.",
+            "cta": "Дізнатись ціну"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Доступні моделі",
+              "items": [
+                "[модель 1 — характеристики*]",
+                "[модель 2 — характеристики*]",
+                "[модель 3 — характеристики*]"
+              ],
+              "cta": "Отримати ціну та наявність"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "inverters_offgrid"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Дізнатись ціну",
+    "leadForm": {
+      "present": true,
+      "source": "inverters_offgrid",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/inverters",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "metaDescription rewritten (Tilda порожній/слабкий); моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /inverters/offgrid",
+    "migrationQuality": "medium",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "trust",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/komplekty-rezervnoho-zhyvlennia",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "product_page",
+    "template": "D — Equipment/Vendor",
+    "title": "Комплекти резервного живлення",
+    "metaTitle": "Комплекти резервного живлення",
+    "metaDescription": "Комплекти резервного живлення — Solomiya Energy. Проєктування, монтаж і підключення під ключ у Львові та області. Безкоштовний розрахунок, гарантія та сервіс.",
+    "metaDescriptionSource": "rewritten",
+    "h1": "Комплекти резервного живлення",
+    "canonical": "https://solomiya-energy.com/komplekty-rezervnoho-zhyvlennia",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Комплекти резервного живлення",
+            "subtitle": "Якісне обладнання для сонячних станцій.",
+            "cta": "Отримати консультацію"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Що пропонуємо",
+              "items": [
+                "[позиція 1*]",
+                "[позиція 2*]",
+                "[позиція 3*]"
+              ],
+              "cta": "Отримати ціну"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "seo_text",
+          "data": {
+            "title": "Комплекти резервного живлення",
+            "paragraphs": [
+              "[SEO-текст з Tilda — нормалізувати]"
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "komplekty-rezervnoho-zhyvlennia"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Отримати консультацію",
+    "leadForm": {
+      "present": true,
+      "source": "komplekty-rezervnoho-zhyvlennia",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "metaDescription rewritten (Tilda порожній/слабкий); моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /komplekty-rezervnoho-zhyvlennia",
+    "migrationQuality": "low",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "seo_text",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/kriplennia",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "product_page",
+    "template": "D — Equipment/Vendor",
+    "title": "Кріплення до панелей",
+    "metaTitle": "Кріплення до панелей",
+    "metaDescription": "Кріплення до панелей — Solomiya Energy. Проєктування, монтаж і підключення під ключ у Львові та області. Безкоштовний розрахунок, гарантія та сервіс.",
+    "metaDescriptionSource": "rewritten",
+    "h1": "Кріплення до панелей",
+    "canonical": "https://solomiya-energy.com/kriplennia",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Кріплення до панелей",
+            "subtitle": "Якісне обладнання для сонячних станцій.",
+            "cta": "Отримати консультацію"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Що пропонуємо",
+              "items": [
+                "[позиція 1*]",
+                "[позиція 2*]",
+                "[позиція 3*]"
+              ],
+              "cta": "Отримати ціну"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "seo_text",
+          "data": {
+            "title": "Кріплення до панелей",
+            "paragraphs": [
+              "[SEO-текст з Tilda — нормалізувати]"
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "kriplennia"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Отримати консультацію",
+    "leadForm": {
+      "present": true,
+      "source": "kriplennia",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "metaDescription rewritten (Tilda порожній/слабкий); моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /kriplennia",
+    "migrationQuality": "low",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "seo_text",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/realizovani-proekty",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "portfolio",
+    "template": "E — Contact/Portfolio",
+    "title": "Реалізовані проекти СЕС у Львові та Україні | Приклади сонячних станцій",
+    "metaTitle": "Реалізовані проекти СЕС у Львові та Україні | Приклади сонячних станцій",
+    "metaDescription": "Дивіться реалізовані проекти сонячних електростанцій: СЕС для дому та бізнесу у Львові та області. Фото, потужності, обладнання, ціни та реальні кейси Solomiya Energy.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Реалізовані проекти СЕС у Львові та Україні | Приклади сонячних ста…",
+    "canonical": "https://solomiya-energy.com/realizovani-proekty",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Реалізовані проекти СЕС у Львові та Україні | Приклади сонячних станцій",
+            "subtitle": "Приклади реалізованих сонячних станцій.",
+            "cta": "Замовити подібне"
+          },
+          "order": 1
+        },
+        {
+          "type": "cases",
+          "data": {
+            "title": "Наші роботи",
+            "items": [
+              {
+                "title": "[об'єкт*]",
+                "location": "[місто*]",
+                "power": "[кВт*]",
+                "result": "[результат*]"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "cta",
+          "data": {
+            "title": "Хочете таку ж станцію?",
+            "text": "Залиште заявку — підготуємо розрахунок.",
+            "button": "Отримати розрахунок",
+            "source": "realizovani-proekty"
+          },
+          "order": 3
+        }
+      ]
+    },
+    "cta": "Замовити подібне",
+    "leadForm": {
+      "present": true,
+      "source": "realizovani-proekty",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "кейси* — реальні дані від власника; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /realizovani-proekty",
+    "migrationQuality": "medium",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "cases",
+      "cta"
+    ]
+  },
+  {
+    "path": "/service-warranty",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "service_landing",
+    "template": "A — Service Landing",
+    "title": "Гарантійне обслуговування інверторів та акумуляторів",
+    "metaTitle": "Гарантійне обслуговування інверторів та акумуляторів",
+    "metaDescription": "Гарантійне обслуговування СЕС | Ремонт інверторів та АКБ",
+    "metaDescriptionSource": "tilda",
+    "h1": "Гарантійне обслуговування інверторів та акумуляторів",
+    "canonical": "https://solomiya-energy.com/service-warranty",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Гарантійне обслуговування інверторів та акумуляторів",
+            "subtitle": "Професійно, з гарантією та офіційним оформленням.",
+            "cta": "Замовити"
+          },
+          "order": 1
+        },
+        {
+          "type": "pain",
+          "data": {
+            "title": "Що вирішуємо",
+            "items": [
+              {
+                "problem": "Ризик помилок монтажу/обслуговування",
+                "solution": "Сертифіковані фахівці та технологія"
+              },
+              {
+                "problem": "Проблеми з документами/підключенням",
+                "solution": "Офіційне оформлення"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "steps",
+          "data": {
+            "title": "Як ми працюємо",
+            "items": [
+              {
+                "title": "Заявка і консультація",
+                "description": "Визначаємо потужність, економію та орієнтовну окупність."
+              },
+              {
+                "title": "Виїзд і проєктування",
+                "description": "Огляд об'єкта, підбір обладнання та проєкт під ваш дах."
+              },
+              {
+                "title": "Монтаж і підключення",
+                "description": "Встановлення та пусконалагодження станції під ключ."
+              },
+              {
+                "title": "Реєстрація і запуск",
+                "description": "Офіційне оформлення та запуск генерації."
+              },
+              {
+                "title": "Сервіс і гарантія",
+                "description": "Технічна підтримка після запуску."
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "service-warranty"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Замовити",
+    "leadForm": {
+      "present": true,
+      "source": "service-warranty",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /service-warranty",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "pain",
+      "steps",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/ses/10kw",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "power_page",
+    "template": "B — Power Page",
+    "title": "Сонячна електростанція 10 кВт під ключ | Solomiya Energy",
+    "metaTitle": "Сонячна електростанція 10 кВт під ключ | Solomiya Energy",
+    "metaDescription": "СЕС 10 кВт під ключ для будинку або малого бізнесу. Надійне обладнання, монтаж і запуск. Висока економія та швидка окупність.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Сонячна електростанція 10 кВт під ключ",
+    "canonical": "https://solomiya-energy.com/ses/10kw",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Сонячна електростанція 10 кВт під ключ",
+            "subtitle": "Проєкт, обладнання та монтаж під ключ.",
+            "cta": "Розрахувати окупність"
+          },
+          "order": 1
+        },
+        {
+          "type": "numbers",
+          "data": {
+            "items": [
+              {
+                "value": "~?",
+                "label": "кВт·год/рік генерації*"
+              },
+              {
+                "value": "~?",
+                "label": "площа панелей*"
+              },
+              {
+                "value": "до −?%",
+                "label": "економія на світлі*"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Що входить у комплект",
+              "items": [
+                "Сонячні панелі",
+                "Гібридний інвертор",
+                "Кріплення",
+                "Монтаж і пусконалагодження",
+                "Опційно — акумулятор"
+              ],
+              "cta": "Отримати комплектацію та ціну"
+            }
+          },
+          "order": 3
+        },
+        {
+          "type": "roi_calculator",
+          "data": {
+            "title": "Розрахуйте економію",
+            "businessType": "home"
+          },
+          "order": 4
+        },
+        {
+          "type": "steps",
+          "data": {
+            "title": "Як ми працюємо",
+            "items": [
+              {
+                "title": "Заявка і консультація",
+                "description": "Визначаємо потужність, економію та орієнтовну окупність."
+              },
+              {
+                "title": "Виїзд і проєктування",
+                "description": "Огляд об'єкта, підбір обладнання та проєкт під ваш дах."
+              },
+              {
+                "title": "Монтаж і підключення",
+                "description": "Встановлення та пусконалагодження станції під ключ."
+              },
+              {
+                "title": "Реєстрація і запуск",
+                "description": "Офіційне оформлення та запуск генерації."
+              },
+              {
+                "title": "Сервіс і гарантія",
+                "description": "Технічна підтримка після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 6
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Замовити розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "ses_10kw"
+          },
+          "order": 7
+        }
+      ]
+    },
+    "cta": "Розрахувати окупність",
+    "leadForm": {
+      "present": true,
+      "source": "ses_10kw",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/ses",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "numbers* орієнтовні — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /ses/10kw",
+    "migrationQuality": "medium",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "numbers",
+      "offers",
+      "roi_calculator",
+      "steps",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/ses/20kw",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "power_page",
+    "template": "B — Power Page",
+    "title": "Сонячна електростанція 20 кВт під ключ | Solomiya Energy",
+    "metaTitle": "Сонячна електростанція 20 кВт під ключ | Solomiya Energy",
+    "metaDescription": "СЕС 20 кВт для бізнесу або великого будинку. Проєктування, монтаж, підбір обладнання. Економія електроенергії та стабільність роботи.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Сонячна електростанція 20 кВт під ключ",
+    "canonical": "https://solomiya-energy.com/ses/20kw",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Сонячна електростанція 20 кВт під ключ",
+            "subtitle": "Проєкт, обладнання та монтаж під ключ.",
+            "cta": "Розрахувати окупність"
+          },
+          "order": 1
+        },
+        {
+          "type": "numbers",
+          "data": {
+            "items": [
+              {
+                "value": "~?",
+                "label": "кВт·год/рік генерації*"
+              },
+              {
+                "value": "~?",
+                "label": "площа панелей*"
+              },
+              {
+                "value": "до −?%",
+                "label": "економія на світлі*"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Що входить у комплект",
+              "items": [
+                "Сонячні панелі",
+                "Гібридний інвертор",
+                "Кріплення",
+                "Монтаж і пусконалагодження",
+                "Опційно — акумулятор"
+              ],
+              "cta": "Отримати комплектацію та ціну"
+            }
+          },
+          "order": 3
+        },
+        {
+          "type": "roi_calculator",
+          "data": {
+            "title": "Розрахуйте економію",
+            "businessType": "home"
+          },
+          "order": 4
+        },
+        {
+          "type": "steps",
+          "data": {
+            "title": "Як ми працюємо",
+            "items": [
+              {
+                "title": "Заявка і консультація",
+                "description": "Визначаємо потужність, економію та орієнтовну окупність."
+              },
+              {
+                "title": "Виїзд і проєктування",
+                "description": "Огляд об'єкта, підбір обладнання та проєкт під ваш дах."
+              },
+              {
+                "title": "Монтаж і підключення",
+                "description": "Встановлення та пусконалагодження станції під ключ."
+              },
+              {
+                "title": "Реєстрація і запуск",
+                "description": "Офіційне оформлення та запуск генерації."
+              },
+              {
+                "title": "Сервіс і гарантія",
+                "description": "Технічна підтримка після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 6
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Замовити розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "ses_20kw"
+          },
+          "order": 7
+        }
+      ]
+    },
+    "cta": "Розрахувати окупність",
+    "leadForm": {
+      "present": true,
+      "source": "ses_20kw",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/ses",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "numbers* орієнтовні — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /ses/20kw",
+    "migrationQuality": "medium",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "numbers",
+      "offers",
+      "roi_calculator",
+      "steps",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/ses/30kw",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "power_page",
+    "template": "B — Power Page",
+    "title": "Сонячна електростанція 30 кВт під ключ для бізнесу | Solomiya Energy",
+    "metaTitle": "Сонячна електростанція 30 кВт під ключ для бізнесу | Solomiya Energy",
+    "metaDescription": "СЕС 30 кВт для підприємств. Надійні рішення під ключ: проєктування, монтаж, сервіс. Зниження витрат на електроенергію до 70%.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Сонячна електростанція 30 кВт під ключ для бізнесу",
+    "canonical": "https://solomiya-energy.com/ses/30kw",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Сонячна електростанція 30 кВт під ключ для бізнесу",
+            "subtitle": "Проєкт, обладнання та монтаж під ключ.",
+            "cta": "Розрахувати окупність"
+          },
+          "order": 1
+        },
+        {
+          "type": "numbers",
+          "data": {
+            "items": [
+              {
+                "value": "~?",
+                "label": "кВт·год/рік генерації*"
+              },
+              {
+                "value": "~?",
+                "label": "площа панелей*"
+              },
+              {
+                "value": "до −?%",
+                "label": "економія на світлі*"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Що входить у комплект",
+              "items": [
+                "Сонячні панелі",
+                "Гібридний інвертор",
+                "Кріплення",
+                "Монтаж і пусконалагодження",
+                "Опційно — акумулятор"
+              ],
+              "cta": "Отримати комплектацію та ціну"
+            }
+          },
+          "order": 3
+        },
+        {
+          "type": "roi_calculator",
+          "data": {
+            "title": "Розрахуйте економію",
+            "businessType": "home"
+          },
+          "order": 4
+        },
+        {
+          "type": "steps",
+          "data": {
+            "title": "Як ми працюємо",
+            "items": [
+              {
+                "title": "Заявка і консультація",
+                "description": "Визначаємо потужність, економію та орієнтовну окупність."
+              },
+              {
+                "title": "Виїзд і проєктування",
+                "description": "Огляд об'єкта, підбір обладнання та проєкт під ваш дах."
+              },
+              {
+                "title": "Монтаж і підключення",
+                "description": "Встановлення та пусконалагодження станції під ключ."
+              },
+              {
+                "title": "Реєстрація і запуск",
+                "description": "Офіційне оформлення та запуск генерації."
+              },
+              {
+                "title": "Сервіс і гарантія",
+                "description": "Технічна підтримка після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 6
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Замовити розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "ses_30kw"
+          },
+          "order": 7
+        }
+      ]
+    },
+    "cta": "Розрахувати окупність",
+    "leadForm": {
+      "present": true,
+      "source": "ses_30kw",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/ses",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "numbers* орієнтовні — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /ses/30kw",
+    "migrationQuality": "medium",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "numbers",
+      "offers",
+      "roi_calculator",
+      "steps",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/ses/50kw",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "power_page",
+    "template": "B — Power Page",
+    "title": "Сонячна електростанція 50 кВт під ключ | Solomiya Energy",
+    "metaTitle": "Сонячна електростанція 50 кВт під ключ | Solomiya Energy",
+    "metaDescription": "СЕС 50 кВт для бізнесу та виробництва. Максимальна економія електроенергії, стабільність роботи та швидка окупність. Під ключ по Україні.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Сонячна електростанція 50 кВт під ключ",
+    "canonical": "https://solomiya-energy.com/ses/50kw",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Сонячна електростанція 50 кВт під ключ",
+            "subtitle": "Проєкт, обладнання та монтаж під ключ.",
+            "cta": "Розрахувати окупність"
+          },
+          "order": 1
+        },
+        {
+          "type": "numbers",
+          "data": {
+            "items": [
+              {
+                "value": "~?",
+                "label": "кВт·год/рік генерації*"
+              },
+              {
+                "value": "~?",
+                "label": "площа панелей*"
+              },
+              {
+                "value": "до −?%",
+                "label": "економія на світлі*"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Що входить у комплект",
+              "items": [
+                "Сонячні панелі",
+                "Гібридний інвертор",
+                "Кріплення",
+                "Монтаж і пусконалагодження",
+                "Опційно — акумулятор"
+              ],
+              "cta": "Отримати комплектацію та ціну"
+            }
+          },
+          "order": 3
+        },
+        {
+          "type": "roi_calculator",
+          "data": {
+            "title": "Розрахуйте економію",
+            "businessType": "home"
+          },
+          "order": 4
+        },
+        {
+          "type": "steps",
+          "data": {
+            "title": "Як ми працюємо",
+            "items": [
+              {
+                "title": "Заявка і консультація",
+                "description": "Визначаємо потужність, економію та орієнтовну окупність."
+              },
+              {
+                "title": "Виїзд і проєктування",
+                "description": "Огляд об'єкта, підбір обладнання та проєкт під ваш дах."
+              },
+              {
+                "title": "Монтаж і підключення",
+                "description": "Встановлення та пусконалагодження станції під ключ."
+              },
+              {
+                "title": "Реєстрація і запуск",
+                "description": "Офіційне оформлення та запуск генерації."
+              },
+              {
+                "title": "Сервіс і гарантія",
+                "description": "Технічна підтримка після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 6
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Замовити розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "ses_50kw"
+          },
+          "order": 7
+        }
+      ]
+    },
+    "cta": "Розрахувати окупність",
+    "leadForm": {
+      "present": true,
+      "source": "ses_50kw",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/ses",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "numbers* орієнтовні — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /ses/50kw",
+    "migrationQuality": "medium",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "numbers",
+      "offers",
+      "roi_calculator",
+      "steps",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/ses/5kw",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "power_page",
+    "template": "B — Power Page",
+    "title": "Сонячна електростанція 5 кВт під ключ для дому | Solomiya Energy",
+    "metaTitle": "Сонячна електростанція 5 кВт під ключ для дому | Solomiya Energy",
+    "metaDescription": "Сонячна електростанція 5 кВт під ключ для приватного будинку. Проєктування, підбір обладнання, монтаж та запуск. Економія до 70% електроенергії. Гарантія та сервіс по всій Україні.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Сонячна електростанція 5 кВт під ключ для дому",
+    "canonical": "https://solomiya-energy.com/ses/5kw",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Сонячна електростанція 5 кВт під ключ для дому",
+            "subtitle": "Проєкт, обладнання та монтаж під ключ.",
+            "cta": "Розрахувати окупність"
+          },
+          "order": 1
+        },
+        {
+          "type": "numbers",
+          "data": {
+            "items": [
+              {
+                "value": "~?",
+                "label": "кВт·год/рік генерації*"
+              },
+              {
+                "value": "~?",
+                "label": "площа панелей*"
+              },
+              {
+                "value": "до −?%",
+                "label": "економія на світлі*"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Що входить у комплект",
+              "items": [
+                "Сонячні панелі",
+                "Гібридний інвертор",
+                "Кріплення",
+                "Монтаж і пусконалагодження",
+                "Опційно — акумулятор"
+              ],
+              "cta": "Отримати комплектацію та ціну"
+            }
+          },
+          "order": 3
+        },
+        {
+          "type": "roi_calculator",
+          "data": {
+            "title": "Розрахуйте економію",
+            "businessType": "home"
+          },
+          "order": 4
+        },
+        {
+          "type": "steps",
+          "data": {
+            "title": "Як ми працюємо",
+            "items": [
+              {
+                "title": "Заявка і консультація",
+                "description": "Визначаємо потужність, економію та орієнтовну окупність."
+              },
+              {
+                "title": "Виїзд і проєктування",
+                "description": "Огляд об'єкта, підбір обладнання та проєкт під ваш дах."
+              },
+              {
+                "title": "Монтаж і підключення",
+                "description": "Встановлення та пусконалагодження станції під ключ."
+              },
+              {
+                "title": "Реєстрація і запуск",
+                "description": "Офіційне оформлення та запуск генерації."
+              },
+              {
+                "title": "Сервіс і гарантія",
+                "description": "Технічна підтримка після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 6
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Замовити розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "ses_5kw"
+          },
+          "order": 7
+        }
+      ]
+    },
+    "cta": "Розрахувати окупність",
+    "leadForm": {
+      "present": true,
+      "source": "ses_5kw",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/ses",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "numbers* орієнтовні — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /ses/5kw",
+    "migrationQuality": "medium",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "numbers",
+      "offers",
+      "roi_calculator",
+      "steps",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/ses/business",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "segment_landing",
+    "template": "A — Service Landing",
+    "title": "Сонячна електростанція для бізнесу під ключ | Solomiya Energy",
+    "metaTitle": "Сонячна електростанція для бізнесу під ключ | Solomiya Energy",
+    "metaDescription": "Сонячні електростанції для бізнесу під ключ. Зниження витрат на електроенергію, стабільність роботи та окупність за індивідуальним розрахунком. Проєктування, монтаж і сервіс по Україні.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Сонячна електростанція для бізнесу під ключ",
+    "canonical": "https://solomiya-energy.com/ses/business",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Сонячна електростанція для бізнесу під ключ",
+            "subtitle": "Рішення під ключ для вашого об'єкта.",
+            "cta": "Отримати розрахунок"
+          },
+          "order": 1
+        },
+        {
+          "type": "pain",
+          "data": {
+            "title": "Що вирішуємо",
+            "items": [
+              {
+                "problem": "Високі рахунки за світло",
+                "solution": "Власна генерація знижує платіж"
+              },
+              {
+                "problem": "Відключення електроенергії",
+                "solution": "Станція з АКБ живить об'єкт під час блекаутів"
+              },
+              {
+                "problem": "Зростання тарифів",
+                "solution": "Фіксуєте вартість енергії наперед"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "steps",
+          "data": {
+            "title": "Як ми працюємо",
+            "items": [
+              {
+                "title": "Заявка і консультація",
+                "description": "Визначаємо потужність, економію та орієнтовну окупність."
+              },
+              {
+                "title": "Виїзд і проєктування",
+                "description": "Огляд об'єкта, підбір обладнання та проєкт під ваш дах."
+              },
+              {
+                "title": "Монтаж і підключення",
+                "description": "Встановлення та пусконалагодження станції під ключ."
+              },
+              {
+                "title": "Реєстрація і запуск",
+                "description": "Офіційне оформлення та запуск генерації."
+              },
+              {
+                "title": "Сервіс і гарантія",
+                "description": "Технічна підтримка після запуску."
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "roi_calculator",
+          "data": {
+            "title": "Розрахуйте економію",
+            "businessType": "business"
+          },
+          "order": 4
+        },
+        {
+          "type": "seo_text",
+          "order": 5,
+          "data": {
+            "title": "Окупність та економія",
+            "paragraphs": [
+              "Окупність сонячної електростанції залежить від споживання електроенергії, тарифу, графіка навантаження, вартості обладнання, типу системи, наявності акумуляторів та можливості продажу або заліку електроенергії. Для кожного об'єкта ми готуємо індивідуальний розрахунок після аналізу рахунків за електроенергію, технічних умов і потреб замовника.",
+              "Для комерційних об'єктів окремо аналізуємо денне споживання, пікові навантаження, графік роботи, доступну потужність і можливість масштабування системи."
+            ]
+          }
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "Гарантія на сонячні панелі — згідно з умовами виробника та паспортом конкретної моделі.",
+              "Гарантія на інвертор — згідно з умовами виробника та постачальника.",
+              "Гарантія на акумуляторні батареї — згідно з умовами виробника та обраною моделлю АКБ.",
+              "Гарантія на монтажні роботи — за умовами договору.",
+              "Після запуску надаємо консультації з експлуатації та підтримку щодо роботи системи."
+            ]
+          },
+          "order": 6
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 7
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "ses_business",
+            "fields": [
+              {
+                "name": "name",
+                "label": "Ім'я",
+                "type": "text",
+                "required": true
+              },
+              {
+                "name": "phone",
+                "label": "Телефон",
+                "type": "tel",
+                "required": true
+              },
+              {
+                "name": "city",
+                "label": "Місто / населений пункт",
+                "type": "text",
+                "required": false
+              },
+              {
+                "name": "objectType",
+                "label": "Тип об'єкта",
+                "type": "select",
+                "options": [
+                  "Будинок",
+                  "Бізнес",
+                  "Інше"
+                ],
+                "required": false
+              },
+              {
+                "name": "comment",
+                "label": "Коментар",
+                "type": "textarea",
+                "required": false
+              }
+            ],
+            "consent": "Даю згоду на обробку моїх персональних даних для зв'язку щодо консультації, підготовки пропозиції та опрацювання мого звернення.",
+            "consentRequired": true
+          },
+          "order": 8
+        },
+        {
+          "type": "seo_text",
+          "order": 9,
+          "data": {
+            "title": "Обробка персональних даних",
+            "paragraphs": [
+              "Оператор персональних даних: ТОВ «СОЛОМІЯ ЕНЕРГОЗБЕРЕЖЕННЯ», ЄДРПОУ 40446535, юридична адреса: вул. Степанська, 115, м. Костопіль, 35000, Україна. Контактний телефон: +380 67 555 4000. Електронна пошта: andriy555solar@gmail.com."
+            ]
+          }
+        },
+        {
+          "type": "contact_info",
+          "order": 10,
+          "data": {
+            "title": "Контакти",
+            "phone": "+380 67 555 4000",
+            "email": "andriy555solar@gmail.com",
+            "address": "вул. Стрийська, 45, м. Львів, 79000, Україна",
+            "hours": "",
+            "messengers": [],
+            "mapEmbed": ""
+          }
+        }
+      ]
+    },
+    "cta": "Отримати розрахунок",
+    "leadForm": {
+      "present": true,
+      "source": "ses_business",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/ses",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "URL збережено 1:1; canonical=self; category-A resolved (phone+email injected via contact_info)",
+    "migrationSource": "Tilda /ses/business",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": false,
+    "hasTodoPlaceholders": false,
+    "blockTypes": [
+      "hero",
+      "pain",
+      "steps",
+      "roi_calculator",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ],
+    "categoryAResolved": true,
+    "contact": {
+      "phone": "+38 (067) 555-40-00",
+      "tel": "tel:+380675554000",
+      "email": "andriy555solar@gmail.com",
+      "responsible": "Андрій / команда Solomiya Energy",
+      "leadsRouting": "SitePilot Leads Inbox + email andriy555solar@gmail.com"
+    },
+    "remainingBeforePublish": [
+      "guarantees 25/10/2 + 24/7 (підтвердити)",
+      "окупність/% економії (ROI)",
+      "згода на обробку ПД + реквізити/політика конфіденційності"
+    ],
+    "categoryBResolved": true
+  },
+  {
+    "path": "/ses/dom",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "segment_landing",
+    "template": "A — Service Landing",
+    "title": "Сонячна електростанція для дому під ключ | Solomiya Energy",
+    "metaTitle": "Сонячна електростанція для дому під ключ | Solomiya Energy",
+    "metaDescription": "Сонячні електростанції для приватних будинків під ключ. Проєктування, підбір обладнання, монтаж та запуск. Індивідуальний розрахунок економії, гарантія та сервіс по Україні.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Сонячна електростанція для дому під ключ",
+    "canonical": "https://solomiya-energy.com/ses/dom",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Сонячна електростанція для дому під ключ",
+            "subtitle": "Рішення під ключ для вашого об'єкта.",
+            "cta": "Отримати розрахунок"
+          },
+          "order": 1
+        },
+        {
+          "type": "pain",
+          "data": {
+            "title": "Що вирішуємо",
+            "items": [
+              {
+                "problem": "Високі рахунки за світло",
+                "solution": "Власна генерація знижує платіж"
+              },
+              {
+                "problem": "Відключення електроенергії",
+                "solution": "Станція з АКБ живить об'єкт під час блекаутів"
+              },
+              {
+                "problem": "Зростання тарифів",
+                "solution": "Фіксуєте вартість енергії наперед"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "steps",
+          "data": {
+            "title": "Як ми працюємо",
+            "items": [
+              {
+                "title": "Заявка і консультація",
+                "description": "Визначаємо потужність, економію та орієнтовну окупність."
+              },
+              {
+                "title": "Виїзд і проєктування",
+                "description": "Огляд об'єкта, підбір обладнання та проєкт під ваш дах."
+              },
+              {
+                "title": "Монтаж і підключення",
+                "description": "Встановлення та пусконалагодження станції під ключ."
+              },
+              {
+                "title": "Реєстрація і запуск",
+                "description": "Офіційне оформлення та запуск генерації."
+              },
+              {
+                "title": "Сервіс і гарантія",
+                "description": "Технічна підтримка після запуску."
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "roi_calculator",
+          "data": {
+            "title": "Розрахуйте економію",
+            "businessType": "home"
+          },
+          "order": 4
+        },
+        {
+          "type": "seo_text",
+          "order": 5,
+          "data": {
+            "title": "Окупність та економія",
+            "paragraphs": [
+              "Окупність сонячної електростанції залежить від споживання електроенергії, тарифу, графіка навантаження, вартості обладнання, типу системи, наявності акумуляторів та можливості продажу або заліку електроенергії. Для кожного об'єкта ми готуємо індивідуальний розрахунок після аналізу рахунків за електроенергію, технічних умов і потреб замовника.",
+              "Для приватного будинку окремо враховуємо сезонність споживання, роботу теплового насоса, бойлера, електроплити, зарядки електромобіля та потребу в резервному живленні."
+            ]
+          }
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "Гарантія на сонячні панелі — згідно з умовами виробника та паспортом конкретної моделі.",
+              "Гарантія на інвертор — згідно з умовами виробника та постачальника.",
+              "Гарантія на акумуляторні батареї — згідно з умовами виробника та обраною моделлю АКБ.",
+              "Гарантія на монтажні роботи — за умовами договору.",
+              "Після запуску надаємо консультації з експлуатації та підтримку щодо роботи системи."
+            ]
+          },
+          "order": 6
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 7
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "ses_dom",
+            "fields": [
+              {
+                "name": "name",
+                "label": "Ім'я",
+                "type": "text",
+                "required": true
+              },
+              {
+                "name": "phone",
+                "label": "Телефон",
+                "type": "tel",
+                "required": true
+              },
+              {
+                "name": "city",
+                "label": "Місто / населений пункт",
+                "type": "text",
+                "required": false
+              },
+              {
+                "name": "objectType",
+                "label": "Тип об'єкта",
+                "type": "select",
+                "options": [
+                  "Будинок",
+                  "Бізнес",
+                  "Інше"
+                ],
+                "required": false
+              },
+              {
+                "name": "comment",
+                "label": "Коментар",
+                "type": "textarea",
+                "required": false
+              }
+            ],
+            "consent": "Даю згоду на обробку моїх персональних даних для зв'язку щодо консультації, підготовки пропозиції та опрацювання мого звернення.",
+            "consentRequired": true
+          },
+          "order": 8
+        },
+        {
+          "type": "seo_text",
+          "order": 9,
+          "data": {
+            "title": "Обробка персональних даних",
+            "paragraphs": [
+              "Оператор персональних даних: ТОВ «СОЛОМІЯ ЕНЕРГОЗБЕРЕЖЕННЯ», ЄДРПОУ 40446535, юридична адреса: вул. Степанська, 115, м. Костопіль, 35000, Україна. Контактний телефон: +380 67 555 4000. Електронна пошта: andriy555solar@gmail.com."
+            ]
+          }
+        },
+        {
+          "type": "contact_info",
+          "order": 10,
+          "data": {
+            "title": "Контакти",
+            "phone": "+380 67 555 4000",
+            "email": "andriy555solar@gmail.com",
+            "address": "вул. Стрийська, 45, м. Львів, 79000, Україна",
+            "hours": "",
+            "messengers": [],
+            "mapEmbed": ""
+          }
+        }
+      ]
+    },
+    "cta": "Отримати розрахунок",
+    "leadForm": {
+      "present": true,
+      "source": "ses_dom",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/ses",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "URL збережено 1:1; canonical=self; category-A resolved (phone+email injected via contact_info)",
+    "migrationSource": "Tilda /ses/dom",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": false,
+    "hasTodoPlaceholders": false,
+    "blockTypes": [
+      "hero",
+      "pain",
+      "steps",
+      "roi_calculator",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ],
+    "categoryAResolved": true,
+    "contact": {
+      "phone": "+38 (067) 555-40-00",
+      "tel": "tel:+380675554000",
+      "email": "andriy555solar@gmail.com",
+      "responsible": "Андрій / команда Solomiya Energy",
+      "leadsRouting": "SitePilot Leads Inbox + email andriy555solar@gmail.com"
+    },
+    "remainingBeforePublish": [
+      "guarantees 25/10/2 + 24/7 (підтвердити)",
+      "окупність/% економії (ROI)",
+      "згода на обробку ПД + реквізити/політика конфіденційності"
+    ],
+    "categoryBResolved": true
+  },
+  {
+    "path": "/ses/ground",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "segment_landing",
+    "template": "A — Service Landing",
+    "title": "Наземні сонячні електростанції Львів — монтаж СЕС під ключ",
+    "metaTitle": "Наземні сонячні електростанції Львів — монтаж СЕС під ключ",
+    "metaDescription": "Монтаж наземних сонячних електростанцій у Львові. Проектування, підбір обладнання та встановлення СЕС під ключ для бізнесу і дому.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Наземні сонячні електростанції Львів — монтаж СЕС під ключ",
+    "canonical": "https://solomiya-energy.com/ses/ground",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Наземні сонячні електростанції Львів — монтаж СЕС під ключ",
+            "subtitle": "Рішення під ключ для вашого об'єкта.",
+            "cta": "Отримати розрахунок"
+          },
+          "order": 1
+        },
+        {
+          "type": "pain",
+          "data": {
+            "title": "Що вирішуємо",
+            "items": [
+              {
+                "problem": "Високі рахунки за світло",
+                "solution": "Власна генерація знижує платіж"
+              },
+              {
+                "problem": "Відключення електроенергії",
+                "solution": "Станція з АКБ живить об'єкт під час блекаутів"
+              },
+              {
+                "problem": "Зростання тарифів",
+                "solution": "Фіксуєте вартість енергії наперед"
+              }
+            ]
+          },
+          "order": 2
+        },
+        {
+          "type": "steps",
+          "data": {
+            "title": "Як ми працюємо",
+            "items": [
+              {
+                "title": "Заявка і консультація",
+                "description": "Визначаємо потужність, економію та орієнтовну окупність."
+              },
+              {
+                "title": "Виїзд і проєктування",
+                "description": "Огляд об'єкта, підбір обладнання та проєкт під ваш дах."
+              },
+              {
+                "title": "Монтаж і підключення",
+                "description": "Встановлення та пусконалагодження станції під ключ."
+              },
+              {
+                "title": "Реєстрація і запуск",
+                "description": "Офіційне оформлення та запуск генерації."
+              },
+              {
+                "title": "Сервіс і гарантія",
+                "description": "Технічна підтримка після запуску."
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "roi_calculator",
+          "data": {
+            "title": "Розрахуйте економію",
+            "businessType": "home"
+          },
+          "order": 4
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 6
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "ses_ground"
+          },
+          "order": 7
+        }
+      ]
+    },
+    "cta": "Отримати розрахунок",
+    "leadForm": {
+      "present": true,
+      "source": "ses_ground",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/ses",
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /ses/ground",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "pain",
+      "steps",
+      "roi_calculator",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/solar-panels",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "product_page",
+    "template": "D — Equipment/Vendor",
+    "title": "Сонячні панелі",
+    "metaTitle": "Сонячні панелі",
+    "metaDescription": "Сонячні панелі — Solomiya Energy. Проєктування, монтаж і підключення під ключ у Львові та області. Безкоштовний розрахунок, гарантія та сервіс.",
+    "metaDescriptionSource": "rewritten",
+    "h1": "Сонячні панелі",
+    "canonical": "https://solomiya-energy.com/solar-panels",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Сонячні панелі",
+            "subtitle": "Якісне обладнання для сонячних станцій.",
+            "cta": "Отримати консультацію"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Що пропонуємо",
+              "items": [
+                "[позиція 1*]",
+                "[позиція 2*]",
+                "[позиція 3*]"
+              ],
+              "cta": "Отримати ціну"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "seo_text",
+          "data": {
+            "title": "Сонячні панелі",
+            "paragraphs": [
+              "[SEO-текст з Tilda — нормалізувати]"
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "solar-panels"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Отримати консультацію",
+    "leadForm": {
+      "present": true,
+      "source": "solar-panels",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "metaDescription rewritten (Tilda порожній/слабкий); моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /solar-panels",
+    "migrationQuality": "low",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "seo_text",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/solar-panels-longi",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "vendor_page",
+    "template": "D — Equipment/Vendor",
+    "title": "Сонячні панелі Longi — купити у Львові та Україні | Solomiya Energy",
+    "metaTitle": "Сонячні панелі Longi — купити у Львові та Україні | Solomiya Energy",
+    "metaDescription": "Сонячні панелі Longi для дому та бізнесу. Підбір потужності, консультація, доставка по Львову та Україні. Допоможемо обрати панелі Longi для сонячної електростанції під ваші задачі.",
+    "metaDescriptionSource": "tilda",
+    "h1": "Сонячні панелі Longi — купити у Львові та Україні",
+    "canonical": "https://solomiya-energy.com/solar-panels-longi",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Сонячні панелі Longi — купити у Львові та Україні",
+            "subtitle": "Підбір, консультація, гарантія, монтаж.",
+            "cta": "Дізнатись ціну"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Доступні моделі",
+              "items": [
+                "[модель 1 — характеристики*]",
+                "[модель 2 — характеристики*]",
+                "[модель 3 — характеристики*]"
+              ],
+              "cta": "Отримати ціну та наявність"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "trust",
+          "data": {
+            "title": "Чому Solomiya Energy",
+            "items": [
+              {
+                "value": "24/7",
+                "label": "Сервіс і підтримка"
+              },
+              {
+                "value": "Офіційно",
+                "label": "Реєстрація та документи"
+              },
+              {
+                "value": "Фіксована",
+                "label": "Ціна у договорі"
+              }
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "solar-panels-longi"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Дізнатись ціну",
+    "leadForm": {
+      "present": true,
+      "source": "solar-panels-longi",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /solar-panels-longi",
+    "migrationQuality": "high",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "trust",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  },
+  {
+    "path": "/sonyachni-paneli-dlya-domu",
+    "status": "draft",
+    "isHomepage": false,
+    "pageType": "product_page",
+    "template": "D — Equipment/Vendor",
+    "title": "Сонячні панелі для дому",
+    "metaTitle": "Сонячні панелі для дому",
+    "metaDescription": "Сонячні панелі для дому — Solomiya Energy. Проєктування, монтаж і підключення під ключ у Львові та області. Безкоштовний розрахунок, гарантія та сервіс.",
+    "metaDescriptionSource": "rewritten",
+    "h1": "Сонячні панелі для дому",
+    "canonical": "https://solomiya-energy.com/sonyachni-paneli-dlya-domu",
+    "robotsIndex": true,
+    "robotsFollow": true,
+    "content": {
+      "blocks": [
+        {
+          "type": "hero",
+          "data": {
+            "title": "Сонячні панелі для дому",
+            "subtitle": "Якісне обладнання для сонячних станцій.",
+            "cta": "Отримати консультацію"
+          },
+          "order": 1
+        },
+        {
+          "type": "offers",
+          "data": {
+            "offer": {
+              "title": "Що пропонуємо",
+              "items": [
+                "[позиція 1*]",
+                "[позиція 2*]",
+                "[позиція 3*]"
+              ],
+              "cta": "Отримати ціну"
+            }
+          },
+          "order": 2
+        },
+        {
+          "type": "seo_text",
+          "data": {
+            "title": "Сонячні панелі для дому",
+            "paragraphs": [
+              "[SEO-текст з Tilda — нормалізувати]"
+            ]
+          },
+          "order": 3
+        },
+        {
+          "type": "guarantees",
+          "data": {
+            "items": [
+              "25 років гарантії на сонячні панелі",
+              "10 років гарантії на інвертор",
+              "2 роки гарантії на монтажні роботи",
+              "Сервіс і підтримка 24/7"
+            ]
+          },
+          "order": 4
+        },
+        {
+          "type": "faq",
+          "data": {
+            "items": [
+              {
+                "question": "Скільки це коштує?",
+                "answer": "Залежить від потужності та обладнання. Скористайтеся калькулятором або залиште заявку для точного розрахунку."
+              },
+              {
+                "question": "Чи є гарантія та сервіс?",
+                "answer": "Так, надаємо гарантію на обладнання й монтаж та сервісне обслуговування після запуску."
+              }
+            ]
+          },
+          "order": 5
+        },
+        {
+          "type": "lead_form",
+          "data": {
+            "title": "Отримати безкоштовний розрахунок",
+            "subtitle": "Залиште контакти — передзвонимо протягом 15 хвилин",
+            "source": "sonyachni-paneli-dlya-domu"
+          },
+          "order": 6
+        }
+      ]
+    },
+    "cta": "Отримати консультацію",
+    "leadForm": {
+      "present": true,
+      "source": "sonyachni-paneli-dlya-domu",
+      "placement": "end"
+    },
+    "internalLinks": [
+      "/",
+      "/contacts"
+    ],
+    "seoNotes": "metaDescription rewritten (Tilda порожній/слабкий); моделі/специфікації* — перевірити; URL збережено 1:1; canonical=self",
+    "migrationSource": "Tilda /sonyachni-paneli-dlya-domu",
+    "migrationQuality": "low",
+    "manualReviewRequired": true,
+    "needsOwnerVerification": true,
+    "hasTodoPlaceholders": true,
+    "blockTypes": [
+      "hero",
+      "offers",
+      "seo_text",
+      "guarantees",
+      "faq",
+      "lead_form"
+    ]
+  }
+]

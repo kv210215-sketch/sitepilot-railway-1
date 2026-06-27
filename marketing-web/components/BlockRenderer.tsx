@@ -1,5 +1,5 @@
 import type { PublicPageBlock } from '@/lib/public-api';
-import LeadForm from './LeadForm';
+import LeadForm, { type LeadFormField } from './LeadForm';
 import RoiCalculator from './RoiCalculator';
 
 function asString(value: unknown, fallback = ''): string {
@@ -257,6 +257,8 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
             source={asString(d.source) || 'website_form'}
             projectId={projectId}
             pageId={pageId}
+            fields={Array.isArray(d.fields) ? (d.fields as unknown as LeadFormField[]) : undefined}
+            consentText={asString(d.consent) || undefined}
           />
         </section>
       );
@@ -271,6 +273,57 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
               <h3>{asString(f.question)}</h3>
               <p>{asString(f.answer)}</p>
             </article>
+          ))}
+        </section>
+      );
+    }
+
+    case 'contact_info': {
+      const messengers = asArray<{ label?: string; href?: string }>(d.messengers);
+      const phone = asString(d.phone);
+      const telHref = phone ? `tel:${phone.replace(/[^+\d]/g, '')}` : '';
+      const email = asString(d.email);
+      // Empty-guard: with no contact fields at all there is nothing to render.
+      const hasAny =
+        !!phone || !!email || !!d.address || !!d.hours || messengers.length > 0 || !!d.mapEmbed;
+      if (!hasAny) return <UnknownBlock type={block.type} />;
+      return (
+        <section className="block block-contact-info">
+          {d.title ? <h2>{asString(d.title)}</h2> : null}
+          <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: 8 }}>
+            {phone ? <li>Телефон: <a href={telHref}>{phone}</a></li> : null}
+            {email ? <li>Email: <a href={`mailto:${email}`}>{email}</a></li> : null}
+            {d.address ? <li>Адреса: {asString(d.address)}</li> : null}
+            {d.hours ? <li>Графік: {asString(d.hours)}</li> : null}
+            {messengers.length ? (
+              <li>
+                {messengers.map((m, i) => (
+                  <a key={i} href={asString(m.href)} style={{ marginRight: 12, color: '#0a8f4e' }}>
+                    {asString(m.label)}
+                  </a>
+                ))}
+              </li>
+            ) : null}
+          </ul>
+          {/* mapEmbed is trusted admin-only (CMS), same trust level as the `custom` block.
+              TODO(security): in future, restrict to an allowlisted <iframe src> (e.g. Google
+              Maps embed) instead of accepting arbitrary HTML. */}
+          {d.mapEmbed ? (
+            <div className="contact-map" dangerouslySetInnerHTML={{ __html: asString(d.mapEmbed) }} />
+          ) : null}
+        </section>
+      );
+    }
+
+    case 'seo_text': {
+      // Structured rich text — safe alternative to `custom` (no dangerouslySetInnerHTML).
+      const paragraphs = asArray<string>(d.paragraphs);
+      if (paragraphs.length === 0) return <UnknownBlock type={block.type} />;
+      return (
+        <section className="block block-seo-text">
+          {d.title ? <h2>{asString(d.title)}</h2> : null}
+          {paragraphs.map((p, i) => (
+            <p key={i}>{asString(p)}</p>
           ))}
         </section>
       );

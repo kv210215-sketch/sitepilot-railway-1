@@ -15,6 +15,8 @@ export type PublicPageBlockType =
   | 'lead_form'
   | 'links'
   | 'city_links'
+  | 'contact_info'
+  | 'seo_text'
   | 'custom'
   | (string & {});
 
