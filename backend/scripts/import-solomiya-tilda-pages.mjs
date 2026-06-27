@@ -18,6 +18,11 @@
  *   --include-homepage            Allow creating/touching '/' (off by default).
  *   --update-existing             With --apply, update pages whose path already
  *                                 exists (default: skip existing, never overwrite).
+ *   --only=<p1,p2,...>            Restrict the ENTIRE run to this path allowlist.
+ *                                 Any page in the file whose path is not listed is
+ *                                 ignored (never created, updated, or read). A path
+ *                                 in the list but absent from the file aborts the run.
+ *                                 Use this to guarantee a tightly-scoped re-sync.
  *   --file=<path>                 Override draft JSON path.
  *
  * NEVER: publishes, changes DNS/env/Cloudflare/Tilda, deploys, or deletes pages.
@@ -36,6 +41,8 @@ const CONFIRM = has('--confirm-apply');
 const CHECK_EXISTING = has('--check-existing');
 const INCLUDE_HOMEPAGE = has('--include-homepage');
 const UPDATE_EXISTING = has('--update-existing');
+const ONLY = valOf('--only'); // comma-separated path allowlist, or null
+const ONLY_SET = ONLY ? new Set(ONLY.split(',').map((s) => s.trim()).filter(Boolean)) : null;
 const FILE = valOf('--file') || join(__dirname, 'data', 'solomiya-tilda-pages.draft.json');
 const PROJECT_SLUG = process.env.PUBLIC_DEFAULT_PROJECT_SLUG || 'solomiya-energy';
 
@@ -202,8 +209,21 @@ async function main() {
   console.log(`file: ${FILE}`);
   console.log(`mode: ${APPLY ? 'APPLY' : CHECK_EXISTING ? 'DRY-RUN + check-existing' : 'DRY-RUN (default)'}`);
 
-  const pages = loadDrafts();
+  let pages = loadDrafts();
   console.log(`loaded: ${pages.length} pages`);
+
+  // ── --only path allowlist: hard scope guard applied BEFORE anything else ──
+  if (ONLY_SET) {
+    const inFile = new Set(pages.map((p) => p.path));
+    const missing = [...ONLY_SET].filter((p) => !inFile.has(p));
+    if (missing.length) {
+      console.log(`\n✗ --only includes path(s) not present in the draft file — refusing to proceed:`);
+      missing.forEach((m) => console.log('  - ' + m));
+      process.exit(1);
+    }
+    pages = pages.filter((p) => ONLY_SET.has(p.path));
+    console.log(`scope: --only restricts run to ${pages.length} page(s): ${[...ONLY_SET].join(', ')}`);
+  }
 
   const { errors, warnings } = validate(pages);
   if (warnings.length) { console.log(`\n⚠ warnings (${warnings.length}):`); warnings.forEach((w) => console.log('  - ' + w)); }
@@ -228,9 +248,15 @@ async function main() {
   }
 
   const plan = classify(pages, existing);
-  console.log(printPlan(`WOULD CREATE (${plan.create.length})`, plan.create, projectName).join('\n'));
-  console.log(printPlan(`WOULD SKIP — already exists (${plan.skipExisting.length})`, plan.skipExisting, projectName).join('\n') || '  (none / DB not queried)');
+  // Existing in-scope pages are UPDATE candidates only when --update-existing is set;
+  // otherwise they are skipped (never overwritten). New pages are CREATE candidates.
+  const wouldUpdate = UPDATE_EXISTING ? plan.skipExisting : [];
+  const wouldSkipExisting = UPDATE_EXISTING ? [] : plan.skipExisting;
+  console.log(printPlan(`WOULD CREATE (${plan.create.length})`, plan.create, projectName).join('\n') || '  (none)');
+  console.log(printPlan(`WOULD UPDATE — existing draft, --update-existing (${wouldUpdate.length})`, wouldUpdate, projectName).join('\n') || '  (none)');
+  console.log(printPlan(`WOULD SKIP — already exists (${wouldSkipExisting.length})`, wouldSkipExisting, projectName).join('\n') || '  (none / DB not queried)');
   console.log(printPlan(`WOULD SKIP — homepage guard (${plan.skipHomepage.length})`, plan.skipHomepage, projectName).join('\n') || '  (none)');
+  console.log(`\nplan summary → create:${plan.create.length} update:${wouldUpdate.length} delete:0 publish:0 (homepage-guard:${plan.skipHomepage.length}, skip-existing:${wouldSkipExisting.length})`);
 
   // quality rollup
   const byQ = pages.reduce((a, p) => ((a[p.migrationQuality] = (a[p.migrationQuality]||0)+1), a), {});
@@ -249,9 +275,12 @@ async function main() {
     if (ctx) await ctx.client.end();
     process.exit(2);
   }
-  console.log('\n● APPLY mode: inserting missing pages as status=draft (never published)…');
-  const res = await apply(ctx, plan.create);
-  console.log(`✓ created ${res.created}, updated ${res.updated}, skipped-existing ${plan.skipExisting.length}, homepage-guard ${plan.skipHomepage.length}`);
+  console.log('\n● APPLY mode: writing pages as status=draft (never published)…');
+  // apply() re-checks existence per page and routes to UPDATE (only when --update-existing)
+  // or INSERT. Pass new pages plus, when updating, the existing in-scope pages.
+  const applySet = UPDATE_EXISTING ? [...plan.create, ...plan.skipExisting] : plan.create;
+  const res = await apply(ctx, applySet);
+  console.log(`✓ created ${res.created}, updated ${res.updated}, skipped-existing ${wouldSkipExisting.length}, homepage-guard ${plan.skipHomepage.length}`);
   console.log('NOTE: all pages are DRAFT. Nothing published, no DNS/env/deploy changes.');
   await ctx.client.end();
 }
