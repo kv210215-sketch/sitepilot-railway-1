@@ -106,8 +106,9 @@ Tilda origin**; **MX = Namecheap email forwarding + SPF — MUST NOT touch**; Ra
 ## 6. Current PR #39 status
 
 - **[PR #39](https://github.com/andriy555solar-afk/sitepilot-railway/pull/39)** —
-  `solomiya/integration-content-design-assets` → `main`. **draft / OPEN / unmerged.** Head `5eff291`. [V]
-- 9 commits (3 cherry-picked base + 5 feature + 1 docs-clarify), 23 files, ~+13,215 / −46. [V]
+  `solomiya/integration-content-design-assets` → `main`. **draft / OPEN / unmerged.** Head `2063e18`
+  (snapshot at last consolidation; later docs-only commits may advance it — check `git log`). [V]
+- 10 commits (3 cherry-picked base + 4 feature/content + 3 docs), 23 files, ~+13,575 / −43. [V]
 - Contents: 31 review-drafts · tenant theme token layer · scoped Solomiya dark+gold theme (exact
   landing replication) · image migration manifest/tooling/plan/scaffold · self-hosted
   `image`/`gallery` block renderer · `/batteries` title fix · SEO migration checklist · doc
