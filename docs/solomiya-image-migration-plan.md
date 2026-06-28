@@ -80,7 +80,17 @@ node backend/scripts/optimize-solomiya-images.mjs            # dry-run -> writes
 node backend/scripts/optimize-solomiya-images.mjs --apply    # actually encode
 
 # 4. wire `image`/`gallery` blocks in CMS content (renderer already supports them)
+#    BEFORE going live with image blocks: add `sharp` to marketing-web *runtime*
+#    dependencies — next/image's production optimizer (next start) requires it.
+cd marketing-web && npm i sharp && cd ..
 ```
+
+> **next/image + sharp:** step 3's `npm i -D sharp` installs sharp only for the offline
+> optimize *script*. The marketing-web `image`/`gallery` block renderer uses `next/image`,
+> whose **production** image optimizer (`next start`) needs `sharp` as a regular dependency.
+> No current draft emits image blocks, so nothing is required today — but **before the first
+> live image block**, add `sharp` to `marketing-web` dependencies (`npm i sharp`). Until then
+> this is a no-op.
 
 ## 8. Risks / owner decisions
 

@@ -1,9 +1,12 @@
 # Solomiya Energy — SEO Migration Checklist (content integration)
 
 > **Scope:** SEO readiness of the **31 integrated review-drafts** (`backend/scripts/data/solomiya-review-drafts.json`)
-> and how marketing-web emits sitemap / canonical / meta / OG for them. **Companion (do not duplicate):**
-> `SOLOMIYA_URL_COVERAGE_AND_REDIRECT_PLAN.md` (the per-URL keep/redirect/retire map + cutover options) and
-> `docs/solomiya-image-migration-plan.md` (image SEO).
+> and how marketing-web emits sitemap / canonical / meta / OG for them.
+> **In-PR companion:** `docs/solomiya-image-migration-plan.md` (image SEO).
+> **External planning artifact (NOT part of this PR):** the per-URL keep/redirect/retire map + cutover options
+> live in a separate planning PR as `SOLOMIYA_URL_COVERAGE_AND_REDIRECT_PLAN.md`. This checklist is self-contained
+> for the content-integration scope; that redirect plan should be available/landed **before** any publish or cutover.
+> Not duplicated here on purpose.
 > **Status:** review-only. No publish, no DNS, no redirect infra created here.
 
 ## 1. 31 URLs preserved 1:1
