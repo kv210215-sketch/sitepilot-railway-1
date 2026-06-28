@@ -1,0 +1,112 @@
+{
+  "api": "https://sitepilot-railway-staging.up.railway.app",
+  "account": {
+    "note": "credentials are not stored — set DEMO_EMAIL / DEMO_PASSWORD env vars (see .env.example)"
+  },
+  "steps": {
+    "auth": {
+      "status": 200,
+      "userId": "198b032e-22ce-48c4-a135-212908c1b7c0"
+    },
+    "org": {
+      "id": "b85521e4-2d34-41dc-9e96-a0e6261fb121",
+      "name": "Solomiya Energy",
+      "slug": "solomiya-energy"
+    },
+    "project": {
+      "id": "bc2a7b69-5b11-4b09-8a64-3a473b0db99f",
+      "name": "Solomiya Energy Commercial Solar",
+      "slug": "solomiya-energy",
+      "domain": "solomiya-energy.com"
+    },
+    "aiProbe": {
+      "status": 403,
+      "note": "plan-gated/unavailable — content authored manually",
+      "sample": "This feature requires a starter or pro or agency plan. Current plan: free"
+    },
+    "page": {
+      "id": "8de29a42-b11d-4021-a92e-6d7783c42dea",
+      "title": "Сонячні електростанції для бізнесу у Львові",
+      "slug": "ses-dlya-biznesu-lviv",
+      "path": "/ses-dlya-biznesu-lviv",
+      "blocks": 6,
+      "status": "ready"
+    },
+    "publish": {
+      "jobId": "3ad59111-5166-416d-a43e-98059705be91",
+      "status": "success",
+      "pagesTotal": 1,
+      "pagesSuccess": 1,
+      "pagesFailed": 0,
+      "durationMs": 371
+    },
+    "publicApi": {
+      "url": "https://sitepilot-railway-staging.up.railway.app/public/v1/pages/ses-dlya-biznesu-lviv",
+      "status": 200,
+      "title": "Сонячні електростанції для бізнесу у Львові | Solomiya Energy",
+      "path": "/ses-dlya-biznesu-lviv",
+      "blocks": 6,
+      "canonicalUrl": "https://solomiya-energy.com/ses-dlya-biznesu-lviv"
+    },
+    "sitemap": {
+      "status": 200,
+      "count": 1,
+      "entries": [
+        {
+          "path": "/ses-dlya-biznesu-lviv",
+          "robotsIndex": true,
+          "updatedAt": "2026-06-15T12:05:54.638Z",
+          "publishedAt": "2026-06-15T12:05:54.633Z",
+          "isHomepage": false
+        }
+      ]
+    },
+    "preview": {
+      "status": 200,
+      "htmlBytes": 3444,
+      "file": "artifacts/rendered-page.html"
+    },
+    "activity": {
+      "status": 200,
+      "total": 4,
+      "actions": [
+        {
+          "action": "publish_success",
+          "entity": "project — 1/1 сторінок",
+          "at": "2026-06-15T12:05:54.661Z",
+          "user": "Solomiya Energy Demo"
+        },
+        {
+          "action": "publish_started",
+          "entity": "project (1 сторінок)",
+          "at": "2026-06-15T12:05:54.268Z",
+          "user": "Solomiya Energy Demo"
+        },
+        {
+          "action": "publish_success",
+          "entity": "project — 1/1 сторінок",
+          "at": "2026-06-15T12:03:04.564Z",
+          "user": "Solomiya Energy Demo"
+        },
+        {
+          "action": "publish_started",
+          "entity": "project (1 сторінок)",
+          "at": "2026-06-15T12:03:03.999Z",
+          "user": "Solomiya Energy Demo"
+        }
+      ]
+    },
+    "publishStats": {
+      "status": 200,
+      "data": {
+        "total": 2,
+        "statusCounts": {
+          "success": 2
+        },
+        "avgDurationMs": 457,
+        "successRate": 100,
+        "activeJobs": 0
+      }
+    }
+  }
+}
