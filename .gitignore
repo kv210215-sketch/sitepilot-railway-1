@@ -35,3 +35,17 @@ Thumbs.db
 
 # Playwright
 /backend/src/**/playwright-chromium/
+
+# Solomiya image migration — local scratch only, never committed.
+# Downloaded originals + generated download/optimization maps are reproducible
+# from solomiya-image-manifest.json; binaries must not enter the repo.
+/.solomiya-image-import/
+/marketing-web/public/images/solomiya/_optimization-plan.json
+/marketing-web/public/images/solomiya/_download-map.json
+# Optimized binary outputs (kept out until owner confirms asset licensing);
+# the directory scaffold + README + .gitkeep are tracked, image files are not.
+/marketing-web/public/images/solomiya/**/*.avif
+/marketing-web/public/images/solomiya/**/*.webp
+/marketing-web/public/images/solomiya/**/*.png
+/marketing-web/public/images/solomiya/**/*.jpg
+/marketing-web/public/images/solomiya/**/*.jpeg

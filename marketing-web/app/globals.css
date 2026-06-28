@@ -1,3 +1,438 @@
+/*
+ * marketing-web global styles + per-tenant theme TOKEN layer.
+ *
+ * PHASE 1 (this file): a NEUTRAL token layer only. Every token's default value
+ * equals the value that was previously hardcoded, so the DEFAULT theme renders
+ * byte-identically to before. Components reference colors/radii via var(--mw-*).
+ *
+ * A tenant opts into a different look by setting NEXT_PUBLIC_SITE_THEME (see
+ * lib/theme.ts), which puts data-theme="<name>" on <html>. Tenants that do not
+ * set it stay on "default" and are visually unchanged — this is what keeps a
+ * future Solomiya re-skin from leaking onto every other SitePilot tenant.
+ *
+ * PHASE 2 (separate, gated): fill [data-theme="solomiya"] with the dark+gold
+ * landing palette. Do NOT add the final Solomiya look in this file.
+ */
+
+:root,
+[data-theme='default'] {
+  /* typography */
+  --mw-font-sans: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  /* serif/mono are defined for theming; the DEFAULT components never reference
+     them, so adding them here changes nothing for default/other tenants. */
+  --mw-font-serif: Georgia, 'Times New Roman', serif;
+  --mw-font-mono: ui-monospace, 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+
+  /* surfaces */
+  --mw-bg: #fff;
+  --mw-divider: #eee;
+  --mw-card-bg: #f7faf8;
+  --mw-card-border: #e0e8e3;
+  --mw-card-radius: 10px;
+  --mw-result-bg: #f1f9f4;
+  --mw-result-border: #bfe3cd;
+
+  /* text */
+  --mw-fg: #1a1a1a;
+  --mw-fg-muted: #334;
+  --mw-fg-subtle: #557;
+  --mw-fg-faint: #778;
+  --mw-fg-mute: #555;
+  --mw-fg-disabled: #888;
+
+  /* accent / interactive */
+  --mw-accent: #0a8f4e;
+  --mw-accent-strong: #0a6b3b;
+  --mw-on-accent: #fff;
+  --mw-star: #f5a623;
+  --mw-danger: #c00;
+
+  /* form controls */
+  --mw-input-border: #ccd;
+  --mw-input-radius: 8px;
+}
+
+/* =====================================================================
+ * SOLOMIYA THEME (Phase 2) — dark + gold, landing-like.
+ * Everything below is scoped under [data-theme='solomiya'] so it ONLY
+ * affects the Solomiya deployment (NEXT_PUBLIC_SITE_THEME=solomiya).
+ * Default and every other tenant are untouched.
+ * Reference: https://solomiya-energy-landing.pages.dev/
+ * ===================================================================== */
+
+/* --- token overrides (consumed by the existing var(--mw-*) component styles) ---
+ * Values are ported 1:1 from the landing's css/main.css :root (the source of truth).
+ * --line=0.08, --line-2=0.14, --fg-dim=0.62, --fg-mute=0.42, gold #C9A961/#E0C076. */
+[data-theme='solomiya'] {
+  /* landing fonts: Instrument Serif (italic), Inter, JetBrains Mono (loaded in layout.tsx) */
+  --mw-font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mw-font-serif: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+  --mw-font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  --mw-bg: #0a0a0a;          /* --bg */
+  --mw-bg-2: #111111;        /* --bg-2 */
+  --mw-bg-3: #161616;        /* --bg-3 */
+  --mw-divider: rgba(255, 255, 255, 0.08);  /* --line */
+
+  --mw-card-bg: #111111;
+  --mw-card-border: rgba(255, 255, 255, 0.14);  /* --line-2 */
+  --mw-card-radius: 0px;
+  --mw-result-bg: #161208;   /* final-CTA gradient base */
+  --mw-result-border: rgba(201, 169, 97, 0.35);
+
+  --mw-fg: #f5f1ea;                          /* --fg */
+  --mw-fg-muted: rgba(245, 241, 234, 0.62);  /* --fg-dim (body copy) */
+  --mw-fg-subtle: rgba(245, 241, 234, 0.62); /* --fg-dim */
+  --mw-fg-faint: rgba(245, 241, 234, 0.42);  /* --fg-mute */
+  --mw-fg-mute: rgba(245, 241, 234, 0.42);   /* --fg-mute */
+  --mw-fg-disabled: rgba(245, 241, 234, 0.42);
+
+  --mw-accent: #c9a961;        /* --gold */
+  --mw-accent-strong: #e0c076; /* --gold-2 */
+  --mw-on-accent: #0a0a0a;
+  --mw-star: #e0c076;
+  --mw-danger: #e07a5f;        /* --danger */
+
+  --mw-input-border: rgba(255, 255, 255, 0.14);
+  --mw-input-radius: 0px;
+
+  /* landing extras (used by chrome + accents below) */
+  --mw-gold-deep: #8c7437;
+  --mw-line-2: rgba(255, 255, 255, 0.14);
+}
+
+/* gold text selection, exactly like the landing */
+[data-theme='solomiya'] ::selection { background: var(--mw-accent); color: #0a0a0a; }
+
+/* --- page + rhythm --- */
+[data-theme='solomiya'] body {
+  background:
+    radial-gradient(900px 420px at 50% -8%, rgba(201, 169, 97, 0.08), transparent 60%),
+    var(--mw-bg);
+  -webkit-font-smoothing: antialiased;
+}
+[data-theme='solomiya'] main {
+  max-width: 1240px;       /* landing .container is 1440; content pages read better a touch narrower */
+  margin: 0 auto;
+  padding: 0 32px 64px;    /* landing container padding: 0 32px */
+}
+/* landing sections: 120px block rhythm, hairline divider between */
+[data-theme='solomiya'] .block {
+  margin: 0;
+  padding: 120px 0;
+  border-bottom: 1px solid var(--mw-divider);
+}
+[data-theme='solomiya'] .block:last-child { border-bottom: 0; }
+
+/* --- typography (serif display headings, italic-gold accents) --- */
+[data-theme='solomiya'] h1,
+[data-theme='solomiya'] h2 {
+  font-family: var(--mw-font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--mw-fg);
+  line-height: 0.98;
+}
+/* landing h2.sec-title: clamp(40px,5.5vw,84px) — kept a hair tighter for block subheads */
+[data-theme='solomiya'] h2 { font-size: clamp(34px, 5vw, 76px); margin: 0 0 28px; }
+[data-theme='solomiya'] h3 { color: var(--mw-fg); font-family: var(--mw-font-serif); font-weight: 400; }
+/* the landing's signature: italic gold emphasis inside serif headings */
+[data-theme='solomiya'] h1 em,
+[data-theme='solomiya'] h2 em,
+[data-theme='solomiya'] h3 em { font-style: italic; color: var(--mw-accent); }
+[data-theme='solomiya'] p { color: var(--mw-fg-muted); }
+[data-theme='solomiya'] a { color: var(--mw-accent); text-decoration: none; }
+[data-theme='solomiya'] .block a:hover { color: var(--mw-accent-strong); }
+
+/* --- hero (landing .hero / h1.hero-title) --- */
+[data-theme='solomiya'] .block-hero {
+  padding: 96px 0 88px;
+  border-bottom: 1px solid var(--mw-divider);
+  position: relative;
+  /* landing .hero-overlay gold glow */
+  background:
+    radial-gradient(ellipse at 70% 25%, rgba(201, 169, 97, 0.10), transparent 55%);
+}
+[data-theme='solomiya'] .block-hero h1 {
+  font-family: var(--mw-font-serif);
+  font-weight: 400;
+  font-size: clamp(44px, 7vw, 104px);   /* landing: clamp(44px,7.4vw,118px) */
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  margin: 0 0 24px;
+  max-width: 18ch;
+}
+[data-theme='solomiya'] .block-hero p {
+  color: var(--mw-fg);
+  opacity: 0.92;
+  font-size: clamp(16px, 1.4vw, 20px);   /* landing .hero-sub */
+  line-height: 1.5;
+  max-width: 620px;
+}
+/* hero CTA (rendered as <strong>) → landing .btn.btn-gold (FLAT gold, sharp) */
+[data-theme='solomiya'] .block-hero strong {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 32px;
+  padding: 18px 28px;
+  background: var(--mw-accent);
+  color: #0a0a0a;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  border-radius: 0;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+[data-theme='solomiya'] .block-hero strong:hover {
+  background: var(--mw-accent-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 40px rgba(201, 169, 97, 0.35);
+}
+
+/* --- mono eyebrow-style small labels --- */
+[data-theme='solomiya'] .block-numbers dd,
+[data-theme='solomiya'] .block-trust div > div:last-child {
+  font-family: var(--mw-font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+}
+
+/* --- numbers (power pages): big gold serif --- */
+[data-theme='solomiya'] .block-numbers dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+  margin: 0;
+}
+[data-theme='solomiya'] .block-numbers dt {
+  font-family: var(--mw-font-serif);
+  font-size: clamp(32px, 4.4vw, 60px);
+  color: var(--mw-accent);
+  text-shadow: 0 0 32px rgba(201, 169, 97, 0.22);
+}
+[data-theme='solomiya'] .block-numbers dd { color: var(--mw-fg-subtle); margin: 6px 0 0; }
+
+/* --- cards (benefits / cases / testimonials): dark grid cells + gold hover --- */
+[data-theme='solomiya'] .block-benefits article,
+[data-theme='solomiya'] .block-cases article,
+[data-theme='solomiya'] .block-testimonials figure {
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+[data-theme='solomiya'] .block-benefits article:hover,
+[data-theme='solomiya'] .block-cases article:hover,
+[data-theme='solomiya'] .block-testimonials figure:hover {
+  border-color: rgba(201, 169, 97, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* --- lists (audience/guarantees/offers/pain/steps/faq) --- */
+[data-theme='solomiya'] .block-guarantees li,
+[data-theme='solomiya'] .block-offers li,
+[data-theme='solomiya'] .block-pain li { color: var(--mw-fg-muted); }
+[data-theme='solomiya'] .block-faq article {
+  border-bottom: 1px solid var(--mw-divider);
+  padding: 14px 0;
+}
+[data-theme='solomiya'] .block-faq h3 { margin: 0 0 6px; }
+
+/* --- form controls (dark fields; gold buttons come from tokens) --- */
+[data-theme='solomiya'] input,
+[data-theme='solomiya'] textarea,
+[data-theme='solomiya'] select {
+  background: #0e0e0e;
+  color: var(--mw-fg);
+}
+[data-theme='solomiya'] input::placeholder,
+[data-theme='solomiya'] textarea::placeholder { color: var(--mw-fg-faint); }
+[data-theme='solomiya'] input:focus,
+[data-theme='solomiya'] textarea:focus,
+[data-theme='solomiya'] select:focus { outline: 1px solid var(--mw-accent); }
+/* gold submit button = landing .btn.btn-gold (flat gold, sharp, weight 600) */
+[data-theme='solomiya'] form button {
+  background: var(--mw-accent);
+  color: #0a0a0a;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  border-radius: 0;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+[data-theme='solomiya'] form button:hover:not(:disabled) {
+  /* !important: LeadForm sets background inline (token base), which would otherwise
+     beat this hover rule — match the landing's btn-gold:hover → gold-2 */
+  background: var(--mw-accent-strong) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 40px rgba(201, 169, 97, 0.35);
+}
+
+/* =====================================================================
+ * SOLOMIYA chrome — header / footer (rendered only for this theme, see
+ * app/layout.tsx). Ported 1:1 from the landing's nav.top + footer.
+ * Classes appear only when those components render.
+ * ===================================================================== */
+[data-theme='solomiya'] .mw-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--mw-divider);
+}
+[data-theme='solomiya'] .mw-header-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+/* brand: bordered gold "SE" mark + serif wordmark, gold second word */
+[data-theme='solomiya'] .mw-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--mw-fg);
+  text-decoration: none;
+}
+[data-theme='solomiya'] .mw-brand-mark {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--mw-accent);
+  color: var(--mw-accent);
+  font-family: var(--mw-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+[data-theme='solomiya'] .mw-brand-name {
+  font-family: var(--mw-font-serif);
+  font-size: 24px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+[data-theme='solomiya'] .mw-brand-energy { color: var(--mw-accent); }
+[data-theme='solomiya'] .mw-brand-stacked { align-items: flex-start; gap: 14px; }
+[data-theme='solomiya'] .mw-brand-stacked .mw-brand-mark { margin-top: 6px; }
+[data-theme='solomiya'] .mw-brand-stack {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.95;
+  font-family: var(--mw-font-serif);
+  font-size: 28px;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+[data-theme='solomiya'] .mw-brand-stack .mw-brand-energy { color: var(--mw-accent); }
+[data-theme='solomiya'] .mw-gold-dot { color: var(--mw-accent); }
+
+[data-theme='solomiya'] .mw-nav { display: flex; align-items: center; gap: 16px; }
+[data-theme='solomiya'] .mw-phone {
+  font-family: var(--mw-font-mono);
+  font-size: 13px;
+  color: var(--mw-fg);
+  text-decoration: none;
+}
+[data-theme='solomiya'] .mw-phone:hover { color: var(--mw-accent); }
+/* nav CTA = landing .btn.btn-gold.nav-cta-btn (flat gold, sharp) */
+[data-theme='solomiya'] .mw-cta {
+  padding: 13px 22px;
+  background: var(--mw-accent);
+  color: #0a0a0a;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+[data-theme='solomiya'] .mw-cta:hover {
+  background: var(--mw-accent-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 40px rgba(201, 169, 97, 0.35);
+}
+
+/* footer (landing footer + .foot-grid + .foot-bot) */
+[data-theme='solomiya'] .mw-footer {
+  background: var(--mw-bg);
+  border-top: 1px solid var(--mw-divider);
+  color: var(--mw-fg-subtle);
+}
+[data-theme='solomiya'] .mw-footer-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 56px 32px 32px;
+}
+[data-theme='solomiya'] .mw-foot-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 56px;
+}
+[data-theme='solomiya'] .mw-foot-col h4 {
+  font-family: var(--mw-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mw-fg-mute);
+  margin: 0 0 20px;
+  font-weight: 500;
+}
+[data-theme='solomiya'] .mw-foot-col a {
+  display: block;
+  color: var(--mw-fg-dim, var(--mw-fg-muted));
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+[data-theme='solomiya'] .mw-foot-col a:hover { color: var(--mw-accent); }
+[data-theme='solomiya'] .mw-foot-cta { color: var(--mw-accent); margin-top: 8px; }
+[data-theme='solomiya'] .mw-footer-tagline {
+  font-size: 14px;
+  color: var(--mw-fg-muted);
+  line-height: 1.65;
+  max-width: 340px;
+  margin: 18px 0 0;
+}
+[data-theme='solomiya'] .mw-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--mw-divider);
+  font-family: var(--mw-font-mono);
+  font-size: 11px;
+  color: var(--mw-fg-mute);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+[data-theme='solomiya'] .mw-footer-bottom a { color: var(--mw-fg-mute); text-decoration: none; }
+[data-theme='solomiya'] .mw-footer-bottom a:hover { color: var(--mw-accent); }
+
+/* --- mobile (landing breakpoint: 720px → sections 80px, container 20px) --- */
+@media (max-width: 720px) {
+  [data-theme='solomiya'] main { padding: 0 20px 56px; }
+  [data-theme='solomiya'] .block { padding: 80px 0; }
+  [data-theme='solomiya'] .block-hero { padding: 64px 0 56px; }
+  [data-theme='solomiya'] .header-inner,
+  [data-theme='solomiya'] .mw-header-inner { padding: 14px 20px; }
+  [data-theme='solomiya'] .mw-phone { display: none; }
+  [data-theme='solomiya'] .mw-footer-inner { padding: 48px 20px 28px; }
+  [data-theme='solomiya'] .mw-foot-grid { grid-template-columns: 1fr 1fr; gap: 36px 24px; }
+  [data-theme='solomiya'] .mw-foot-col a { font-size: 15px; padding: 4px 0; }
+  [data-theme='solomiya'] .mw-footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; font-size: 10px; }
+  [data-theme='solomiya'] .block-numbers dl { gap: 24px; }
+}
+
 *,
 *::before,
 *::after {
@@ -6,10 +441,10 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family: var(--mw-font-sans);
   line-height: 1.5;
-  color: #1a1a1a;
-  background: #fff;
+  color: var(--mw-fg);
+  background: var(--mw-bg);
 }
 
 main {
@@ -21,11 +456,11 @@ main {
 .block {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--mw-divider);
 }
 
 .block-unknown {
-  color: #888;
+  color: var(--mw-fg-disabled);
   text-align: center;
 }
 
