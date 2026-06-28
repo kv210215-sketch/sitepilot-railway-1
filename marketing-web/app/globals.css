@@ -1,3 +1,64 @@
+/*
+ * marketing-web global styles + per-tenant theme TOKEN layer.
+ *
+ * PHASE 1 (this file): a NEUTRAL token layer only. Every token's default value
+ * equals the value that was previously hardcoded, so the DEFAULT theme renders
+ * byte-identically to before. Components reference colors/radii via var(--mw-*).
+ *
+ * A tenant opts into a different look by setting NEXT_PUBLIC_SITE_THEME (see
+ * lib/theme.ts), which puts data-theme="<name>" on <html>. Tenants that do not
+ * set it stay on "default" and are visually unchanged — this is what keeps a
+ * future Solomiya re-skin from leaking onto every other SitePilot tenant.
+ *
+ * PHASE 2 (separate, gated): fill [data-theme="solomiya"] with the dark+gold
+ * landing palette. Do NOT add the final Solomiya look in this file.
+ */
+
+:root,
+[data-theme='default'] {
+  /* typography */
+  --mw-font-sans: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+
+  /* surfaces */
+  --mw-bg: #fff;
+  --mw-divider: #eee;
+  --mw-card-bg: #f7faf8;
+  --mw-card-border: #e0e8e3;
+  --mw-card-radius: 10px;
+  --mw-result-bg: #f1f9f4;
+  --mw-result-border: #bfe3cd;
+
+  /* text */
+  --mw-fg: #1a1a1a;
+  --mw-fg-muted: #334;
+  --mw-fg-subtle: #557;
+  --mw-fg-faint: #778;
+  --mw-fg-mute: #555;
+  --mw-fg-disabled: #888;
+
+  /* accent / interactive */
+  --mw-accent: #0a8f4e;
+  --mw-accent-strong: #0a6b3b;
+  --mw-on-accent: #fff;
+  --mw-star: #f5a623;
+  --mw-danger: #c00;
+
+  /* form controls */
+  --mw-input-border: #ccd;
+  --mw-input-radius: 8px;
+}
+
+/*
+ * Per-tenant theme scope — PREPARED, intentionally EMPTY in Phase 1.
+ * Because it overrides nothing yet, the "solomiya" theme is currently identical
+ * to "default". Phase 2 will set the dark+gold tokens here, e.g.:
+ *   --mw-bg: #0A0A0A;  --mw-fg: #F5F1EA;  --mw-accent: #C9A961;
+ *   --mw-card-radius: 0;  --mw-font-sans: Inter, ...;  (+ serif/mono)
+ */
+[data-theme='solomiya'] {
+  /* Phase 2 fills this scope. Empty by design in Phase 1. */
+}
+
 *,
 *::before,
 *::after {
@@ -6,10 +67,10 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family: var(--mw-font-sans);
   line-height: 1.5;
-  color: #1a1a1a;
-  background: #fff;
+  color: var(--mw-fg);
+  background: var(--mw-bg);
 }
 
 main {
@@ -21,11 +82,11 @@ main {
 .block {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--mw-divider);
 }
 
 .block-unknown {
-  color: #888;
+  color: var(--mw-fg-disabled);
   text-align: center;
 }
 

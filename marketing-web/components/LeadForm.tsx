@@ -52,12 +52,12 @@ const wrap: CSSProperties = {
   maxWidth: 480, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 12,
 };
 const field: CSSProperties = {
-  padding: '12px 14px', fontSize: 16, border: '1px solid #ccd',
-  borderRadius: 8, width: '100%', boxSizing: 'border-box',
+  padding: '12px 14px', fontSize: 16, border: '1px solid var(--mw-input-border)',
+  borderRadius: 'var(--mw-input-radius)', width: '100%', boxSizing: 'border-box',
 };
 const button: CSSProperties = {
-  padding: '14px 20px', fontSize: 16, fontWeight: 600, color: '#fff',
-  background: '#0a8f4e', border: 'none', borderRadius: 8, cursor: 'pointer',
+  padding: '14px 20px', fontSize: 16, fontWeight: 600, color: 'var(--mw-on-accent)',
+  background: 'var(--mw-accent)', border: 'none', borderRadius: 'var(--mw-input-radius)', cursor: 'pointer',
 };
 
 function FieldInput({ f }: { f: LeadFormField }) {
@@ -182,7 +182,7 @@ export default function LeadForm({
       <div style={{ ...wrap, textAlign: 'center', padding: 24 }}>
         <div style={{ fontSize: 40 }}>✅</div>
         <h3 style={{ margin: 0 }}>Дякуємо! Заявку отримано.</h3>
-        <p style={{ margin: 0, color: '#555' }}>
+        <p style={{ margin: 0, color: 'var(--mw-fg-mute)' }}>
           Наш менеджер звʼяжеться з вами найближчим часом.
         </p>
       </div>
@@ -193,7 +193,7 @@ export default function LeadForm({
     <form onSubmit={handleSubmit} style={wrap} noValidate>
       {title ? <h3 style={{ margin: 0, textAlign: 'center' }}>{title}</h3> : null}
       {subtitle ? (
-        <p style={{ margin: 0, textAlign: 'center', color: '#555' }}>{subtitle}</p>
+        <p style={{ margin: 0, textAlign: 'center', color: 'var(--mw-fg-mute)' }}>{subtitle}</p>
       ) : null}
 
       {effectiveFields.map((f) => <FieldInput key={f.name} f={f} />)}
@@ -208,7 +208,7 @@ export default function LeadForm({
         style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
       />
 
-      <label style={{ display: 'flex', gap: 8, alignItems: 'flex-start', fontSize: 13, color: '#555' }}>
+      <label style={{ display: 'flex', gap: 8, alignItems: 'flex-start', fontSize: 13, color: 'var(--mw-fg-mute)' }}>
         <input
           type="checkbox"
           name="consent"
@@ -218,13 +218,13 @@ export default function LeadForm({
         />
         <span>
           {consentLabel}{' '}
-          <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#0a8f4e' }}>
+          <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--mw-accent)' }}>
             Політика конфіденційності
           </a>
         </span>
       </label>
 
-      {error ? <p style={{ color: '#c00', margin: 0 }}>{error}</p> : null}
+      {error ? <p style={{ color: 'var(--mw-danger)', margin: 0 }}>{error}</p> : null}
 
       <button
         type="submit"

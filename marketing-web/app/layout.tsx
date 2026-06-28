@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import './globals.css';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import { getSiteTheme } from '@/lib/theme';
 
 // Google Search Console verification — emits
 // <meta name="google-site-verification" content="..."> when the token is set.
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="uk">
+    <html lang="uk" data-theme={getSiteTheme()}>
       <body>
         {children}
         <GoogleAnalytics />

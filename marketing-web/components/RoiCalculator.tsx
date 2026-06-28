@@ -16,8 +16,8 @@ const card: CSSProperties = {
 const field: CSSProperties = {
   padding: '12px 14px',
   fontSize: 16,
-  border: '1px solid #ccd',
-  borderRadius: 8,
+  border: '1px solid var(--mw-input-border)',
+  borderRadius: 'var(--mw-input-radius)',
   width: '100%',
   boxSizing: 'border-box',
 };
@@ -26,24 +26,24 @@ const button: CSSProperties = {
   padding: '14px 20px',
   fontSize: 16,
   fontWeight: 600,
-  color: '#fff',
-  background: '#0a8f4e',
+  color: 'var(--mw-on-accent)',
+  background: 'var(--mw-accent)',
   border: 'none',
-  borderRadius: 8,
+  borderRadius: 'var(--mw-input-radius)',
   cursor: 'pointer',
 };
 const resultBox: CSSProperties = {
-  background: '#f1f9f4',
-  border: '1px solid #bfe3cd',
-  borderRadius: 10,
+  background: 'var(--mw-result-bg)',
+  border: '1px solid var(--mw-result-border)',
+  borderRadius: 'var(--mw-card-radius)',
   padding: 18,
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
   gap: 12,
 };
 const metric: CSSProperties = { display: 'flex', flexDirection: 'column' };
-const metricValue: CSSProperties = { fontSize: 22, fontWeight: 700, color: '#0a6b3b' };
-const metricLabel: CSSProperties = { fontSize: 13, color: '#557' };
+const metricValue: CSSProperties = { fontSize: 22, fontWeight: 700, color: 'var(--mw-accent-strong)' };
+const metricLabel: CSSProperties = { fontSize: 13, color: 'var(--mw-fg-subtle)' };
 
 export default function RoiCalculator({
   title = 'Калькулятор економії на сонячній станції',
@@ -193,7 +193,7 @@ export default function RoiCalculator({
               <span style={metricLabel}>Економія за 25 років</span>
             </div>
           </div>
-          <p style={{ fontSize: 12, color: '#888', margin: 0, textAlign: 'center' }}>
+          <p style={{ fontSize: 12, color: 'var(--mw-fg-disabled)', margin: 0, textAlign: 'center' }}>
             Орієнтовний розрахунок. Точну пропозицію підготуємо після консультації.
           </p>
 
@@ -201,7 +201,7 @@ export default function RoiCalculator({
             <div style={{ textAlign: 'center', padding: 16 }}>
               <div style={{ fontSize: 36 }}>✅</div>
               <h4 style={{ margin: '8px 0' }}>Дякуємо! Заявку отримано.</h4>
-              <p style={{ margin: 0, color: '#555' }}>
+              <p style={{ margin: 0, color: 'var(--mw-fg-mute)' }}>
                 Менеджер підготує детальний розрахунок і звʼяжеться з вами.
               </p>
             </div>
@@ -215,18 +215,18 @@ export default function RoiCalculator({
                 style={field} type="tel" inputMode="tel" placeholder="Телефон *" autoComplete="tel"
                 value={phone} onChange={(e) => setPhone(e.target.value)}
               />
-              {error ? <p style={{ color: '#c00', margin: 0 }}>{error}</p> : null}
+              {error ? <p style={{ color: 'var(--mw-danger)', margin: 0 }}>{error}</p> : null}
               <button type="submit" style={button} disabled={status === 'submitting'}>
                 {status === 'submitting' ? 'Надсилання…' : 'Отримати безкоштовний розрахунок'}
               </button>
-              <p style={{ fontSize: 12, color: '#888', textAlign: 'center', margin: 0 }}>
+              <p style={{ fontSize: 12, color: 'var(--mw-fg-disabled)', textAlign: 'center', margin: 0 }}>
                 Натискаючи кнопку, ви погоджуєтесь на обробку персональних даних.
               </p>
             </form>
           )}
         </>
       ) : (
-        error ? <p style={{ color: '#c00', margin: 0, textAlign: 'center' }}>{error}</p> : null
+        error ? <p style={{ color: 'var(--mw-danger)', margin: 0, textAlign: 'center' }}>{error}</p> : null
       )}
     </div>
   );

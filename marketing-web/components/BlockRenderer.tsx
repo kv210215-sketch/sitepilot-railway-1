@@ -85,9 +85,9 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
           {d.title ? <h2>{asString(d.title)}</h2> : null}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
             {items.map((b, i) => (
-              <article key={i} style={{ background: '#f7faf8', border: '1px solid #e0e8e3', borderRadius: 10, padding: 18 }}>
+              <article key={i} style={{ background: 'var(--mw-card-bg)', border: '1px solid var(--mw-card-border)', borderRadius: 'var(--mw-card-radius)', padding: 18 }}>
                 {b.title ? <h3 style={{ margin: '0 0 6px' }}>{asString(b.title)}</h3> : null}
-                {b.text ? <p style={{ margin: 0, color: '#334' }}>{asString(b.text)}</p> : null}
+                {b.text ? <p style={{ margin: 0, color: 'var(--mw-fg-muted)' }}>{asString(b.text)}</p> : null}
               </article>
             ))}
           </div>
@@ -180,8 +180,8 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, justifyContent: 'center' }}>
             {items.map((b, i) => (
               <div key={i} style={{ textAlign: 'center', minWidth: 120 }}>
-                <div style={{ fontSize: 28, fontWeight: 800, color: '#0a8f4e' }}>{asString(b.value)}</div>
-                <div style={{ fontSize: 13, color: '#557' }}>{asString(b.label)}</div>
+                <div style={{ fontSize: 28, fontWeight: 800, color: 'var(--mw-accent)' }}>{asString(b.value)}</div>
+                <div style={{ fontSize: 13, color: 'var(--mw-fg-subtle)' }}>{asString(b.label)}</div>
               </div>
             ))}
           </div>
@@ -199,11 +199,11 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
             {items.map((t, i) => {
               const rating = typeof t.rating === 'number' ? Math.max(0, Math.min(5, Math.round(t.rating))) : 0;
               return (
-                <figure key={i} style={{ margin: 0, background: '#f7faf8', border: '1px solid #e0e8e3', borderRadius: 10, padding: 18 }}>
-                  {rating > 0 ? <div style={{ color: '#f5a623', letterSpacing: 2 }}>{'★'.repeat(rating)}{'☆'.repeat(5 - rating)}</div> : null}
-                  <blockquote style={{ margin: '8px 0', fontStyle: 'italic', color: '#334' }}>{asString(t.text)}</blockquote>
+                <figure key={i} style={{ margin: 0, background: 'var(--mw-card-bg)', border: '1px solid var(--mw-card-border)', borderRadius: 'var(--mw-card-radius)', padding: 18 }}>
+                  {rating > 0 ? <div style={{ color: 'var(--mw-star)', letterSpacing: 2 }}>{'★'.repeat(rating)}{'☆'.repeat(5 - rating)}</div> : null}
+                  <blockquote style={{ margin: '8px 0', fontStyle: 'italic', color: 'var(--mw-fg-muted)' }}>{asString(t.text)}</blockquote>
                   <figcaption style={{ fontSize: 13, fontWeight: 600 }}>
-                    {asString(t.author)}{t.role ? <span style={{ fontWeight: 400, color: '#778' }}>, {asString(t.role)}</span> : null}
+                    {asString(t.author)}{t.role ? <span style={{ fontWeight: 400, color: 'var(--mw-fg-faint)' }}>, {asString(t.role)}</span> : null}
                   </figcaption>
                 </figure>
               );
@@ -222,11 +222,11 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
           <h2>{asString(d.title, 'Наші роботи')}</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
             {items.map((c, i) => (
-              <article key={i} style={{ border: '1px solid #e0e8e3', borderRadius: 10, padding: 16 }}>
+              <article key={i} style={{ border: '1px solid var(--mw-card-border)', borderRadius: 'var(--mw-card-radius)', padding: 16 }}>
                 <h3 style={{ margin: '0 0 6px' }}>{asString(c.title)}</h3>
-                {c.location ? <p style={{ margin: 0, fontSize: 13, color: '#778' }}>{asString(c.location)}</p> : null}
+                {c.location ? <p style={{ margin: 0, fontSize: 13, color: 'var(--mw-fg-faint)' }}>{asString(c.location)}</p> : null}
                 {c.power ? <p style={{ margin: '4px 0 0', fontWeight: 600 }}>{asString(c.power)}</p> : null}
-                {c.result ? <p style={{ margin: '6px 0 0', color: '#0a8f4e', fontWeight: 600 }}>{asString(c.result)}</p> : null}
+                {c.result ? <p style={{ margin: '6px 0 0', color: 'var(--mw-accent)', fontWeight: 600 }}>{asString(c.result)}</p> : null}
               </article>
             ))}
           </div>
@@ -245,7 +245,7 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
             {items.map((l, i) => (
               <li key={i}>
                 {/* Plain anchors so internal links are crawlable in SSR HTML */}
-                <a href={asString(l.href)} style={{ color: '#0a8f4e', textDecoration: 'none' }}>
+                <a href={asString(l.href)} style={{ color: 'var(--mw-accent)', textDecoration: 'none' }}>
                   {asString(l.label)}
                 </a>
               </li>
@@ -336,7 +336,7 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
             {messengers.length ? (
               <li>
                 {messengers.map((m, i) => (
-                  <a key={i} href={asString(m.href)} style={{ marginRight: 12, color: '#0a8f4e' }}>
+                  <a key={i} href={asString(m.href)} style={{ marginRight: 12, color: 'var(--mw-accent)' }}>
                     {asString(m.label)}
                   </a>
                 ))}
