@@ -22,6 +22,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const isSolomiya = theme === 'solomiya';
   return (
     <html lang="uk" data-theme={theme}>
+      {/* Solomiya design fonts — identical request to the landing source of truth.
+          Instrument Serif is loaded italic-only (ital@1): upright serif headings
+          fall back to Times New Roman, only <em> accents use Instrument Serif italic,
+          exactly like solomiya-energy-landing.pages.dev. Loaded only for this theme;
+          Next hoists these <link>s into <head>. */}
+      {isSolomiya ? (
+        <>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          {/* eslint-disable-next-line @next/next/no-page-custom-font -- App Router <head> hoist, not pages/_document */}
+          <link
+            href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+          />
+        </>
+      ) : null}
       <body>
         {isSolomiya ? <SiteHeader /> : null}
         {children}

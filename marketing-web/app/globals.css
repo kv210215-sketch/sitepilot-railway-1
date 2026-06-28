@@ -60,35 +60,49 @@
  * Reference: https://solomiya-energy-landing.pages.dev/
  * ===================================================================== */
 
-/* --- token overrides (consumed by the existing var(--mw-*) component styles) --- */
+/* --- token overrides (consumed by the existing var(--mw-*) component styles) ---
+ * Values are ported 1:1 from the landing's css/main.css :root (the source of truth).
+ * --line=0.08, --line-2=0.14, --fg-dim=0.62, --fg-mute=0.42, gold #C9A961/#E0C076. */
 [data-theme='solomiya'] {
-  --mw-bg: #0a0a0a;
-  --mw-bg-2: #121212;
-  --mw-bg-3: #171717;
-  --mw-divider: rgba(255, 255, 255, 0.1);
+  /* landing fonts: Instrument Serif (italic), Inter, JetBrains Mono (loaded in layout.tsx) */
+  --mw-font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mw-font-serif: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+  --mw-font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
 
-  --mw-card-bg: #121212;
-  --mw-card-border: rgba(255, 255, 255, 0.12);
+  --mw-bg: #0a0a0a;          /* --bg */
+  --mw-bg-2: #111111;        /* --bg-2 */
+  --mw-bg-3: #161616;        /* --bg-3 */
+  --mw-divider: rgba(255, 255, 255, 0.08);  /* --line */
+
+  --mw-card-bg: #111111;
+  --mw-card-border: rgba(255, 255, 255, 0.14);  /* --line-2 */
   --mw-card-radius: 0px;
-  --mw-result-bg: #14110a;
+  --mw-result-bg: #161208;   /* final-CTA gradient base */
   --mw-result-border: rgba(201, 169, 97, 0.35);
 
-  --mw-fg: #f5f1ea;
-  --mw-fg-muted: rgba(245, 241, 234, 0.78);
-  --mw-fg-subtle: rgba(245, 241, 234, 0.62);
-  --mw-fg-faint: rgba(245, 241, 234, 0.45);
-  --mw-fg-mute: rgba(245, 241, 234, 0.62);
-  --mw-fg-disabled: rgba(245, 241, 234, 0.4);
+  --mw-fg: #f5f1ea;                          /* --fg */
+  --mw-fg-muted: rgba(245, 241, 234, 0.62);  /* --fg-dim (body copy) */
+  --mw-fg-subtle: rgba(245, 241, 234, 0.62); /* --fg-dim */
+  --mw-fg-faint: rgba(245, 241, 234, 0.42);  /* --fg-mute */
+  --mw-fg-mute: rgba(245, 241, 234, 0.42);   /* --fg-mute */
+  --mw-fg-disabled: rgba(245, 241, 234, 0.42);
 
-  --mw-accent: #c9a961;
-  --mw-accent-strong: #e0c076;
+  --mw-accent: #c9a961;        /* --gold */
+  --mw-accent-strong: #e0c076; /* --gold-2 */
   --mw-on-accent: #0a0a0a;
   --mw-star: #e0c076;
-  --mw-danger: #e07a5f;
+  --mw-danger: #e07a5f;        /* --danger */
 
-  --mw-input-border: rgba(255, 255, 255, 0.18);
+  --mw-input-border: rgba(255, 255, 255, 0.14);
   --mw-input-radius: 0px;
+
+  /* landing extras (used by chrome + accents below) */
+  --mw-gold-deep: #8c7437;
+  --mw-line-2: rgba(255, 255, 255, 0.14);
 }
+
+/* gold text selection, exactly like the landing */
+[data-theme='solomiya'] ::selection { background: var(--mw-accent); color: #0a0a0a; }
 
 /* --- page + rhythm --- */
 [data-theme='solomiya'] body {
@@ -98,67 +112,82 @@
   -webkit-font-smoothing: antialiased;
 }
 [data-theme='solomiya'] main {
-  max-width: 1200px;
-  padding: 0 24px 72px;
+  max-width: 1240px;       /* landing .container is 1440; content pages read better a touch narrower */
+  margin: 0 auto;
+  padding: 0 32px 64px;    /* landing container padding: 0 32px */
 }
+/* landing sections: 120px block rhythm, hairline divider between */
 [data-theme='solomiya'] .block {
   margin: 0;
-  padding: 56px 0;
+  padding: 120px 0;
   border-bottom: 1px solid var(--mw-divider);
 }
 [data-theme='solomiya'] .block:last-child { border-bottom: 0; }
 
-/* --- typography --- */
+/* --- typography (serif display headings, italic-gold accents) --- */
 [data-theme='solomiya'] h1,
 [data-theme='solomiya'] h2 {
   font-family: var(--mw-font-serif);
   font-weight: 400;
   letter-spacing: -0.02em;
   color: var(--mw-fg);
-  line-height: 1.04;
+  line-height: 0.98;
 }
-[data-theme='solomiya'] h2 { font-size: clamp(28px, 4vw, 52px); margin: 0 0 24px; }
-[data-theme='solomiya'] h3 { color: var(--mw-fg); }
+/* landing h2.sec-title: clamp(40px,5.5vw,84px) — kept a hair tighter for block subheads */
+[data-theme='solomiya'] h2 { font-size: clamp(34px, 5vw, 76px); margin: 0 0 28px; }
+[data-theme='solomiya'] h3 { color: var(--mw-fg); font-family: var(--mw-font-serif); font-weight: 400; }
+/* the landing's signature: italic gold emphasis inside serif headings */
+[data-theme='solomiya'] h1 em,
+[data-theme='solomiya'] h2 em,
+[data-theme='solomiya'] h3 em { font-style: italic; color: var(--mw-accent); }
 [data-theme='solomiya'] p { color: var(--mw-fg-muted); }
-[data-theme='solomiya'] a { color: var(--mw-accent); }
+[data-theme='solomiya'] a { color: var(--mw-accent); text-decoration: none; }
+[data-theme='solomiya'] .block a:hover { color: var(--mw-accent-strong); }
 
-/* --- hero --- */
+/* --- hero (landing .hero / h1.hero-title) --- */
 [data-theme='solomiya'] .block-hero {
-  padding: 84px 0 64px;
+  padding: 96px 0 88px;
   border-bottom: 1px solid var(--mw-divider);
+  position: relative;
+  /* landing .hero-overlay gold glow */
+  background:
+    radial-gradient(ellipse at 70% 25%, rgba(201, 169, 97, 0.10), transparent 55%);
 }
 [data-theme='solomiya'] .block-hero h1 {
   font-family: var(--mw-font-serif);
   font-weight: 400;
-  font-size: clamp(40px, 6.4vw, 92px);
-  line-height: 0.98;
+  font-size: clamp(44px, 7vw, 104px);   /* landing: clamp(44px,7.4vw,118px) */
+  line-height: 0.95;
   letter-spacing: -0.025em;
-  margin: 0 0 20px;
-  max-width: 16ch;
+  margin: 0 0 24px;
+  max-width: 18ch;
 }
 [data-theme='solomiya'] .block-hero p {
-  color: var(--mw-fg-subtle);
-  font-size: clamp(16px, 2vw, 21px);
-  line-height: 1.6;
-  max-width: 60ch;
+  color: var(--mw-fg);
+  opacity: 0.92;
+  font-size: clamp(16px, 1.4vw, 20px);   /* landing .hero-sub */
+  line-height: 1.5;
+  max-width: 620px;
 }
-/* hero CTA (rendered as <strong>) → gold pill */
+/* hero CTA (rendered as <strong>) → landing .btn.btn-gold (FLAT gold, sharp) */
 [data-theme='solomiya'] .block-hero strong {
-  display: inline-block;
-  margin-top: 24px;
-  padding: 15px 30px;
-  background: linear-gradient(90deg, #c9a961, #e0c076 50%, #c9a961);
-  background-size: 200% 100%;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 32px;
+  padding: 18px 28px;
+  background: var(--mw-accent);
   color: #0a0a0a;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 15px;
-  letter-spacing: 0.01em;
-  transition: background-position 0.35s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  border-radius: 0;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 [data-theme='solomiya'] .block-hero strong:hover {
-  background-position: 100% 0;
-  transform: translateY(-2px);
-  box-shadow: 0 14px 40px rgba(201, 169, 97, 0.32);
+  background: var(--mw-accent-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 40px rgba(201, 169, 97, 0.35);
 }
 
 /* --- mono eyebrow-style small labels --- */
@@ -221,94 +250,186 @@
 [data-theme='solomiya'] input:focus,
 [data-theme='solomiya'] textarea:focus,
 [data-theme='solomiya'] select:focus { outline: 1px solid var(--mw-accent); }
-/* gold button hover/glow (bg/colour/radius already set via tokens) */
+/* gold submit button = landing .btn.btn-gold (flat gold, sharp, weight 600) */
 [data-theme='solomiya'] form button {
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
-  letter-spacing: 0.01em;
+  background: var(--mw-accent);
+  color: #0a0a0a;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  border-radius: 0;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 [data-theme='solomiya'] form button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(201, 169, 97, 0.32);
-  filter: brightness(1.04);
+  /* !important: LeadForm sets background inline (token base), which would otherwise
+     beat this hover rule — match the landing's btn-gold:hover → gold-2 */
+  background: var(--mw-accent-strong) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 40px rgba(201, 169, 97, 0.35);
 }
 
 /* =====================================================================
- * SOLOMIYA chrome — header / footer (rendered only for this theme,
- * see app/layout.tsx). Classes appear only when those components render.
+ * SOLOMIYA chrome — header / footer (rendered only for this theme, see
+ * app/layout.tsx). Ported 1:1 from the landing's nav.top + footer.
+ * Classes appear only when those components render.
  * ===================================================================== */
 [data-theme='solomiya'] .mw-header {
   position: sticky;
   top: 0;
   z-index: 50;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--mw-divider);
+}
+[data-theme='solomiya'] .mw-header-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 18px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 16px 24px;
-  background: rgba(10, 10, 10, 0.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--mw-divider);
 }
+/* brand: bordered gold "SE" mark + serif wordmark, gold second word */
 [data-theme='solomiya'] .mw-brand {
-  font-family: var(--mw-font-serif);
-  font-size: 21px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   color: var(--mw-fg);
   text-decoration: none;
-  letter-spacing: -0.01em;
 }
-[data-theme='solomiya'] .mw-nav { display: flex; align-items: center; gap: 20px; }
+[data-theme='solomiya'] .mw-brand-mark {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--mw-accent);
+  color: var(--mw-accent);
+  font-family: var(--mw-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+[data-theme='solomiya'] .mw-brand-name {
+  font-family: var(--mw-font-serif);
+  font-size: 24px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+[data-theme='solomiya'] .mw-brand-energy { color: var(--mw-accent); }
+[data-theme='solomiya'] .mw-brand-stacked { align-items: flex-start; gap: 14px; }
+[data-theme='solomiya'] .mw-brand-stacked .mw-brand-mark { margin-top: 6px; }
+[data-theme='solomiya'] .mw-brand-stack {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.95;
+  font-family: var(--mw-font-serif);
+  font-size: 28px;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+[data-theme='solomiya'] .mw-brand-stack .mw-brand-energy { color: var(--mw-accent); }
+[data-theme='solomiya'] .mw-gold-dot { color: var(--mw-accent); }
+
+[data-theme='solomiya'] .mw-nav { display: flex; align-items: center; gap: 16px; }
 [data-theme='solomiya'] .mw-phone {
   font-family: var(--mw-font-mono);
-  font-size: 14px;
+  font-size: 13px;
   color: var(--mw-fg);
   text-decoration: none;
 }
+[data-theme='solomiya'] .mw-phone:hover { color: var(--mw-accent); }
+/* nav CTA = landing .btn.btn-gold.nav-cta-btn (flat gold, sharp) */
 [data-theme='solomiya'] .mw-cta {
-  padding: 11px 20px;
-  background: linear-gradient(90deg, #c9a961, #e0c076 50%, #c9a961);
-  background-size: 200% 100%;
+  padding: 13px 22px;
+  background: var(--mw-accent);
   color: #0a0a0a;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
+  letter-spacing: -0.01em;
   text-decoration: none;
-  transition: background-position 0.35s ease, transform 0.15s ease;
+  border: 1px solid transparent;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
-[data-theme='solomiya'] .mw-cta:hover { background-position: 100% 0; transform: translateY(-1px); }
+[data-theme='solomiya'] .mw-cta:hover {
+  background: var(--mw-accent-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 40px rgba(201, 169, 97, 0.35);
+}
 
+/* footer (landing footer + .foot-grid + .foot-bot) */
 [data-theme='solomiya'] .mw-footer {
-  margin-top: 24px;
-  padding: 56px 24px 40px;
   background: var(--mw-bg);
   border-top: 1px solid var(--mw-divider);
   color: var(--mw-fg-subtle);
 }
-[data-theme='solomiya'] .mw-footer-brand {
-  font-family: var(--mw-font-serif);
-  font-size: 24px;
-  color: var(--mw-fg);
-  margin-bottom: 10px;
+[data-theme='solomiya'] .mw-footer-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 56px 32px 32px;
 }
-[data-theme='solomiya'] .mw-footer-tagline { margin: 0 0 24px; max-width: 48ch; }
+[data-theme='solomiya'] .mw-foot-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 56px;
+}
+[data-theme='solomiya'] .mw-foot-col h4 {
+  font-family: var(--mw-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mw-fg-mute);
+  margin: 0 0 20px;
+  font-weight: 500;
+}
+[data-theme='solomiya'] .mw-foot-col a {
+  display: block;
+  color: var(--mw-fg-dim, var(--mw-fg-muted));
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+[data-theme='solomiya'] .mw-foot-col a:hover { color: var(--mw-accent); }
+[data-theme='solomiya'] .mw-foot-cta { color: var(--mw-accent); margin-top: 8px; }
+[data-theme='solomiya'] .mw-footer-tagline {
+  font-size: 14px;
+  color: var(--mw-fg-muted);
+  line-height: 1.65;
+  max-width: 340px;
+  margin: 18px 0 0;
+}
 [data-theme='solomiya'] .mw-footer-bottom {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 24px;
+  justify-content: space-between;
   align-items: center;
-  padding-top: 20px;
+  gap: 16px;
+  padding-top: 24px;
   border-top: 1px solid var(--mw-divider);
   font-family: var(--mw-font-mono);
-  font-size: 12px;
+  font-size: 11px;
+  color: var(--mw-fg-mute);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  flex-wrap: wrap;
 }
-[data-theme='solomiya'] .mw-footer-bottom a { color: var(--mw-fg-subtle); text-decoration: none; }
+[data-theme='solomiya'] .mw-footer-bottom a { color: var(--mw-fg-mute); text-decoration: none; }
 [data-theme='solomiya'] .mw-footer-bottom a:hover { color: var(--mw-accent); }
 
-/* --- mobile --- */
+/* --- mobile (landing breakpoint: 720px → sections 80px, container 20px) --- */
 @media (max-width: 720px) {
-  [data-theme='solomiya'] .block { padding: 40px 0; }
-  [data-theme='solomiya'] .block-hero { padding: 56px 0 44px; }
+  [data-theme='solomiya'] main { padding: 0 20px 56px; }
+  [data-theme='solomiya'] .block { padding: 80px 0; }
+  [data-theme='solomiya'] .block-hero { padding: 64px 0 56px; }
+  [data-theme='solomiya'] .header-inner,
+  [data-theme='solomiya'] .mw-header-inner { padding: 14px 20px; }
   [data-theme='solomiya'] .mw-phone { display: none; }
+  [data-theme='solomiya'] .mw-footer-inner { padding: 48px 20px 28px; }
+  [data-theme='solomiya'] .mw-foot-grid { grid-template-columns: 1fr 1fr; gap: 36px 24px; }
+  [data-theme='solomiya'] .mw-foot-col a { font-size: 15px; padding: 4px 0; }
+  [data-theme='solomiya'] .mw-footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; font-size: 10px; }
   [data-theme='solomiya'] .block-numbers dl { gap: 24px; }
 }
 
