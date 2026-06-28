@@ -14,7 +14,9 @@
  * `sharp` is OPTIONAL. If it is not installed, this script DOES NOT FAIL: it writes an
  * exact per-file optimization checklist + planned-output mapping JSON and exits 0, so the
  * plan is reproducible without adding a dependency. Install sharp to actually encode:
- *     (cd marketing-web && npm i -D sharp)   # or: npm i -D sharp in backend
+ *     (cd marketing-web && npm i -D sharp)
+ * sharp is resolved from marketing-web/node_modules (that is where the optimized public
+ * images belong), with a fallback to default resolution if it is installed elsewhere.
  *
  * Modes:
  *   (no flags) | --dry-run     Print plan / write checklist. Encodes nothing.
@@ -31,9 +33,11 @@
 import { readFileSync, existsSync, mkdirSync, writeFileSync, copyFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
+import { createRequire } from 'node:module';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..', '..');
+const marketingWebPkg = join(repoRoot, 'marketing-web', 'package.json');
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
 const valOf = (k) => { const a = argv.find((x) => x.startsWith(k + '=')); return a ? a.split('=').slice(1).join('=') : null; };
@@ -50,6 +54,19 @@ const manifest = JSON.parse(readFileSync(MANIFEST, 'utf8'));
 const assets = (manifest.assets || []).filter((a) => !a.skip && !a.isLogo);
 
 async function loadSharp() {
+  // Optimized images are written into marketing-web/public, and the docs install sharp
+  // there: `(cd marketing-web && npm i -D sharp)`. A bare `import('sharp')` from this
+  // script (backend/scripts) only searches backend/* and repo-root node_modules, NOT the
+  // sibling marketing-web/node_modules — so the documented install would look "missing".
+  // Resolve from marketing-web first (where the docs say to install it), then fall back to
+  // default resolution (covers a backend/repo-root install), then null (graceful fallback).
+  if (existsSync(marketingWebPkg)) {
+    try {
+      const mwRequire = createRequire(marketingWebPkg);
+      const m = mwRequire('sharp');
+      return m && m.default ? m.default : m;
+    } catch { /* not installed in marketing-web — try default resolution below */ }
+  }
   try { const m = await import('sharp'); return m.default || m; } catch { return null; }
 }
 
