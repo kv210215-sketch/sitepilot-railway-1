@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import './globals.css';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import { SiteHeader, SiteFooter } from '@/components/SiteChrome';
 import { getSiteTheme } from '@/lib/theme';
 
 // Google Search Console verification — emits
@@ -17,10 +18,14 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const theme = getSiteTheme();
+  const isSolomiya = theme === 'solomiya';
   return (
-    <html lang="uk" data-theme={getSiteTheme()}>
+    <html lang="uk" data-theme={theme}>
       <body>
+        {isSolomiya ? <SiteHeader /> : null}
         {children}
+        {isSolomiya ? <SiteFooter /> : null}
         <GoogleAnalytics />
       </body>
     </html>

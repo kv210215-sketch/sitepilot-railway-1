@@ -18,6 +18,10 @@
 [data-theme='default'] {
   /* typography */
   --mw-font-sans: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  /* serif/mono are defined for theming; the DEFAULT components never reference
+     them, so adding them here changes nothing for default/other tenants. */
+  --mw-font-serif: Georgia, 'Times New Roman', serif;
+  --mw-font-mono: ui-monospace, 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
 
   /* surfaces */
   --mw-bg: #fff;
@@ -48,15 +52,264 @@
   --mw-input-radius: 8px;
 }
 
-/*
- * Per-tenant theme scope — PREPARED, intentionally EMPTY in Phase 1.
- * Because it overrides nothing yet, the "solomiya" theme is currently identical
- * to "default". Phase 2 will set the dark+gold tokens here, e.g.:
- *   --mw-bg: #0A0A0A;  --mw-fg: #F5F1EA;  --mw-accent: #C9A961;
- *   --mw-card-radius: 0;  --mw-font-sans: Inter, ...;  (+ serif/mono)
- */
+/* =====================================================================
+ * SOLOMIYA THEME (Phase 2) — dark + gold, landing-like.
+ * Everything below is scoped under [data-theme='solomiya'] so it ONLY
+ * affects the Solomiya deployment (NEXT_PUBLIC_SITE_THEME=solomiya).
+ * Default and every other tenant are untouched.
+ * Reference: https://solomiya-energy-landing.pages.dev/
+ * ===================================================================== */
+
+/* --- token overrides (consumed by the existing var(--mw-*) component styles) --- */
 [data-theme='solomiya'] {
-  /* Phase 2 fills this scope. Empty by design in Phase 1. */
+  --mw-bg: #0a0a0a;
+  --mw-bg-2: #121212;
+  --mw-bg-3: #171717;
+  --mw-divider: rgba(255, 255, 255, 0.1);
+
+  --mw-card-bg: #121212;
+  --mw-card-border: rgba(255, 255, 255, 0.12);
+  --mw-card-radius: 0px;
+  --mw-result-bg: #14110a;
+  --mw-result-border: rgba(201, 169, 97, 0.35);
+
+  --mw-fg: #f5f1ea;
+  --mw-fg-muted: rgba(245, 241, 234, 0.78);
+  --mw-fg-subtle: rgba(245, 241, 234, 0.62);
+  --mw-fg-faint: rgba(245, 241, 234, 0.45);
+  --mw-fg-mute: rgba(245, 241, 234, 0.62);
+  --mw-fg-disabled: rgba(245, 241, 234, 0.4);
+
+  --mw-accent: #c9a961;
+  --mw-accent-strong: #e0c076;
+  --mw-on-accent: #0a0a0a;
+  --mw-star: #e0c076;
+  --mw-danger: #e07a5f;
+
+  --mw-input-border: rgba(255, 255, 255, 0.18);
+  --mw-input-radius: 0px;
+}
+
+/* --- page + rhythm --- */
+[data-theme='solomiya'] body {
+  background:
+    radial-gradient(900px 420px at 50% -8%, rgba(201, 169, 97, 0.08), transparent 60%),
+    var(--mw-bg);
+  -webkit-font-smoothing: antialiased;
+}
+[data-theme='solomiya'] main {
+  max-width: 1200px;
+  padding: 0 24px 72px;
+}
+[data-theme='solomiya'] .block {
+  margin: 0;
+  padding: 56px 0;
+  border-bottom: 1px solid var(--mw-divider);
+}
+[data-theme='solomiya'] .block:last-child { border-bottom: 0; }
+
+/* --- typography --- */
+[data-theme='solomiya'] h1,
+[data-theme='solomiya'] h2 {
+  font-family: var(--mw-font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--mw-fg);
+  line-height: 1.04;
+}
+[data-theme='solomiya'] h2 { font-size: clamp(28px, 4vw, 52px); margin: 0 0 24px; }
+[data-theme='solomiya'] h3 { color: var(--mw-fg); }
+[data-theme='solomiya'] p { color: var(--mw-fg-muted); }
+[data-theme='solomiya'] a { color: var(--mw-accent); }
+
+/* --- hero --- */
+[data-theme='solomiya'] .block-hero {
+  padding: 84px 0 64px;
+  border-bottom: 1px solid var(--mw-divider);
+}
+[data-theme='solomiya'] .block-hero h1 {
+  font-family: var(--mw-font-serif);
+  font-weight: 400;
+  font-size: clamp(40px, 6.4vw, 92px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  margin: 0 0 20px;
+  max-width: 16ch;
+}
+[data-theme='solomiya'] .block-hero p {
+  color: var(--mw-fg-subtle);
+  font-size: clamp(16px, 2vw, 21px);
+  line-height: 1.6;
+  max-width: 60ch;
+}
+/* hero CTA (rendered as <strong>) → gold pill */
+[data-theme='solomiya'] .block-hero strong {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 15px 30px;
+  background: linear-gradient(90deg, #c9a961, #e0c076 50%, #c9a961);
+  background-size: 200% 100%;
+  color: #0a0a0a;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  transition: background-position 0.35s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+[data-theme='solomiya'] .block-hero strong:hover {
+  background-position: 100% 0;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(201, 169, 97, 0.32);
+}
+
+/* --- mono eyebrow-style small labels --- */
+[data-theme='solomiya'] .block-numbers dd,
+[data-theme='solomiya'] .block-trust div > div:last-child {
+  font-family: var(--mw-font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+}
+
+/* --- numbers (power pages): big gold serif --- */
+[data-theme='solomiya'] .block-numbers dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+  margin: 0;
+}
+[data-theme='solomiya'] .block-numbers dt {
+  font-family: var(--mw-font-serif);
+  font-size: clamp(32px, 4.4vw, 60px);
+  color: var(--mw-accent);
+  text-shadow: 0 0 32px rgba(201, 169, 97, 0.22);
+}
+[data-theme='solomiya'] .block-numbers dd { color: var(--mw-fg-subtle); margin: 6px 0 0; }
+
+/* --- cards (benefits / cases / testimonials): dark grid cells + gold hover --- */
+[data-theme='solomiya'] .block-benefits article,
+[data-theme='solomiya'] .block-cases article,
+[data-theme='solomiya'] .block-testimonials figure {
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+[data-theme='solomiya'] .block-benefits article:hover,
+[data-theme='solomiya'] .block-cases article:hover,
+[data-theme='solomiya'] .block-testimonials figure:hover {
+  border-color: rgba(201, 169, 97, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* --- lists (audience/guarantees/offers/pain/steps/faq) --- */
+[data-theme='solomiya'] .block-guarantees li,
+[data-theme='solomiya'] .block-offers li,
+[data-theme='solomiya'] .block-pain li { color: var(--mw-fg-muted); }
+[data-theme='solomiya'] .block-faq article {
+  border-bottom: 1px solid var(--mw-divider);
+  padding: 14px 0;
+}
+[data-theme='solomiya'] .block-faq h3 { margin: 0 0 6px; }
+
+/* --- form controls (dark fields; gold buttons come from tokens) --- */
+[data-theme='solomiya'] input,
+[data-theme='solomiya'] textarea,
+[data-theme='solomiya'] select {
+  background: #0e0e0e;
+  color: var(--mw-fg);
+}
+[data-theme='solomiya'] input::placeholder,
+[data-theme='solomiya'] textarea::placeholder { color: var(--mw-fg-faint); }
+[data-theme='solomiya'] input:focus,
+[data-theme='solomiya'] textarea:focus,
+[data-theme='solomiya'] select:focus { outline: 1px solid var(--mw-accent); }
+/* gold button hover/glow (bg/colour/radius already set via tokens) */
+[data-theme='solomiya'] form button {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  letter-spacing: 0.01em;
+}
+[data-theme='solomiya'] form button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(201, 169, 97, 0.32);
+  filter: brightness(1.04);
+}
+
+/* =====================================================================
+ * SOLOMIYA chrome — header / footer (rendered only for this theme,
+ * see app/layout.tsx). Classes appear only when those components render.
+ * ===================================================================== */
+[data-theme='solomiya'] .mw-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--mw-divider);
+}
+[data-theme='solomiya'] .mw-brand {
+  font-family: var(--mw-font-serif);
+  font-size: 21px;
+  color: var(--mw-fg);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+[data-theme='solomiya'] .mw-nav { display: flex; align-items: center; gap: 20px; }
+[data-theme='solomiya'] .mw-phone {
+  font-family: var(--mw-font-mono);
+  font-size: 14px;
+  color: var(--mw-fg);
+  text-decoration: none;
+}
+[data-theme='solomiya'] .mw-cta {
+  padding: 11px 20px;
+  background: linear-gradient(90deg, #c9a961, #e0c076 50%, #c9a961);
+  background-size: 200% 100%;
+  color: #0a0a0a;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background-position 0.35s ease, transform 0.15s ease;
+}
+[data-theme='solomiya'] .mw-cta:hover { background-position: 100% 0; transform: translateY(-1px); }
+
+[data-theme='solomiya'] .mw-footer {
+  margin-top: 24px;
+  padding: 56px 24px 40px;
+  background: var(--mw-bg);
+  border-top: 1px solid var(--mw-divider);
+  color: var(--mw-fg-subtle);
+}
+[data-theme='solomiya'] .mw-footer-brand {
+  font-family: var(--mw-font-serif);
+  font-size: 24px;
+  color: var(--mw-fg);
+  margin-bottom: 10px;
+}
+[data-theme='solomiya'] .mw-footer-tagline { margin: 0 0 24px; max-width: 48ch; }
+[data-theme='solomiya'] .mw-footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--mw-divider);
+  font-family: var(--mw-font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+[data-theme='solomiya'] .mw-footer-bottom a { color: var(--mw-fg-subtle); text-decoration: none; }
+[data-theme='solomiya'] .mw-footer-bottom a:hover { color: var(--mw-accent); }
+
+/* --- mobile --- */
+@media (max-width: 720px) {
+  [data-theme='solomiya'] .block { padding: 40px 0; }
+  [data-theme='solomiya'] .block-hero { padding: 56px 0 44px; }
+  [data-theme='solomiya'] .mw-phone { display: none; }
+  [data-theme='solomiya'] .block-numbers dl { gap: 24px; }
 }
 
 *,
