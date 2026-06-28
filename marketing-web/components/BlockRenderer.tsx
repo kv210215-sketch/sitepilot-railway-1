@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { PublicPageBlock } from '@/lib/public-api';
 import LeadForm, { type LeadFormField } from './LeadForm';
 import RoiCalculator from './RoiCalculator';
@@ -8,6 +9,54 @@ function asString(value: unknown, fallback = ''): string {
 
 function asArray<T>(value: unknown): T[] {
   return Array.isArray(value) ? (value as T[]) : [];
+}
+
+function asNum(value: unknown): number | undefined {
+  const n = typeof value === 'number' ? value : typeof value === 'string' ? Number(value) : NaN;
+  return Number.isFinite(n) && n > 0 ? n : undefined;
+}
+
+/**
+ * Self-hosted-only image. `src` must be a root-relative path (e.g.
+ * `/images/solomiya/hero/foo-1280.webp`) — external URLs (tildacdn, etc.) are
+ * rejected, which keeps hero/LCP off third-party CDNs and means no
+ * next.config `images.remotePatterns` is needed. Explicit width/height prevents
+ * CLS; without them we fall back to a fixed-aspect fill box (still no layout
+ * shift). `priority` for above-the-fold (hero); everything else lazy-loads by default.
+ */
+function isLocalSrc(src: string): boolean {
+  return src.startsWith('/') && !src.startsWith('//');
+}
+
+function SafeImage({
+  src, alt, width, height, priority, sizes,
+}: {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  priority?: boolean;
+  sizes?: string;
+}) {
+  if (!src || !isLocalSrc(src)) return null;
+  if (width && height) {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        priority={priority}
+        sizes={sizes ?? '(max-width: 768px) 100vw, 50vw'}
+        style={{ width: '100%', height: 'auto' }}
+      />
+    );
+  }
+  return (
+    <span style={{ position: 'relative', display: 'block', width: '100%', aspectRatio: '16 / 9' }}>
+      <Image src={src} alt={alt} fill priority={priority} sizes={sizes ?? '100vw'} style={{ objectFit: 'cover' }} />
+    </span>
+  );
 }
 
 function UnknownBlock({ type }: { type: string }) {
@@ -363,6 +412,61 @@ function BlockSectionInner({ block, projectId, pageId }: { block: PublicPageBloc
           {paragraphs.map((p, i) => (
             <p key={i}>{asString(p)}</p>
           ))}
+        </section>
+      );
+    }
+
+    case 'image':
+    case 'picture': {
+      // Single self-hosted image. Renders nothing for missing/external src.
+      const src = asString(d.src);
+      if (!src || !isLocalSrc(src)) return <UnknownBlock type={block.type} />;
+      const caption = asString(d.caption);
+      return (
+        <section className="block block-image">
+          {d.title ? <h2>{asString(d.title)}</h2> : null}
+          <figure style={{ margin: 0 }}>
+            <SafeImage
+              src={src}
+              alt={asString(d.alt)}
+              width={asNum(d.width)}
+              height={asNum(d.height)}
+              priority={d.priority === true}
+              sizes={asString(d.sizes) || undefined}
+            />
+            {caption ? (
+              <figcaption style={{ marginTop: 8, fontSize: 13, color: 'var(--mw-fg-faint)' }}>{caption}</figcaption>
+            ) : null}
+          </figure>
+        </section>
+      );
+    }
+
+    case 'gallery': {
+      // Grid of self-hosted images; first image may be marked priority for LCP.
+      const items = asArray<{ src?: string; alt?: string; width?: unknown; height?: unknown; caption?: string; priority?: boolean }>(d.items)
+        .filter((it) => isLocalSrc(asString(it.src)));
+      if (items.length === 0) return <UnknownBlock type={block.type} />;
+      return (
+        <section className="block block-gallery">
+          {d.title ? <h2>{asString(d.title)}</h2> : null}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+            {items.map((it, i) => (
+              <figure key={i} style={{ margin: 0 }}>
+                <SafeImage
+                  src={asString(it.src)}
+                  alt={asString(it.alt)}
+                  width={asNum(it.width)}
+                  height={asNum(it.height)}
+                  priority={it.priority === true || (d.priorityFirst === true && i === 0)}
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                {it.caption ? (
+                  <figcaption style={{ marginTop: 6, fontSize: 13, color: 'var(--mw-fg-faint)' }}>{asString(it.caption)}</figcaption>
+                ) : null}
+              </figure>
+            ))}
+          </div>
         </section>
       );
     }
