@@ -248,8 +248,36 @@ real page later is safe and non-disruptive (just remove that redirect entry and 
 1. **GO 1** — review + merge this plan + the 301 infra PR (docs/code only; no deploy).
 2. **GO 2** — owner fills `/contacts` support email; signs off `/service-warranty`, `/ses/ground`,
    `/contacts`; **approves the §6 redirect map**.
-3. **GO 3** — gated prod-DB publish of the 3 ready pages
-   (`import-solomiya-tilda-pages.mjs --update-existing --apply --confirm-apply` for those paths).
+3. **GO 3** — gated prod-DB re-sync of **only** the 3 ready pages, **then an explicit publish step**.
+   ⚠️ The importer scopes the run **only** via `--only=`. Running `--update-existing --apply
+   --confirm-apply` *without* `--only=` re-syncs **all 31 in-scope drafts**, flips every existing
+   page (including already-live ones) to `status='draft'`, and **never re-publishes** them
+   (the plan summary always reports `publish:0`) — that would unpublish live pages such as `/ses`
+   and `/installation` and 404 them. Scope the command explicitly to the 3 approved paths:
+
+   ```bash
+   import-solomiya-tilda-pages.mjs \
+     --only=/service-warranty,/ses/ground,/contacts \
+     --update-existing \
+     --apply \
+     --confirm-apply
+   ```
+
+   **Then** publish the three pages explicitly (the importer never publishes — `publish:0`).
+   Use the owner dashboard "Publish" action or the publish API, one page at a time:
+   - publish `/service-warranty`
+   - publish `/ses/ground`
+   - publish `/contacts`
+
+   **GO 3 guardrails (production):**
+   - **Never** run `--update-existing --apply --confirm-apply` without `--only=` against the
+     production DB — it unpublishes every already-live page in the import scope.
+   - **Before GO 3:** record the current already-live page list as a baseline (production
+     `/public/v1/sitemap-entries` — expected `/`, `/ses`, `/ses/dom`, `/ses/business`,
+     `/installation`).
+   - **After GO 3:** confirm every previously already-live page is still `published` (none flipped
+     to draft), in addition to the 3 newly published pages.
+   - **QA:** verify there is **no 404 regression** on any already-live page before proceeding to GO 4.
 4. **GO 4** — deploy marketing-web with the 301 redirects (§9) + any backend changes.
 5. **GO 5** — env: set `NEXT_PUBLIC_SITE_ORIGIN=https://solomiya-energy.com`; add apex+www to
    backend `CORS_ORIGINS` (per `SOLOMIYA_DOMAIN_MIGRATION.md` §5); redeploy both.
