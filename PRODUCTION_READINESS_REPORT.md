@@ -157,7 +157,7 @@ default-off. Set it in Railway. **Verify after deploy:** `GET /health` returns
 
 | Item | Result | Evidence |
 |---|---|---|
-| Helmet | ❌ **FAIL** | **Not installed and not used.** No `helmet` in `backend/package.json`; no `app.use(helmet())` in `main.ts`. (Frontend sets 3 headers in `next.config.js`, but the backend API has none.) |
+| Helmet | ✅ **PASS** *(fixed in this branch)* | `helmet@^8.2.0` added to `backend/package.json` + lockfile; `app.use(helmet())` registered in `main.ts` right after shutdown hooks, before the health endpoint / CORS / routes. Runtime smoke confirms hardened headers (HSTS, `X-Content-Type-Options: nosniff`, `X-Frame-Options`, CSP). |
 | CORS | ✅ PASS | `main.ts:74-79`, origins from `CORS_ORIGINS`. Lock to exact origin in prod. |
 | ValidationPipe | ✅ PASS | Global, `whitelist + forbidNonWhitelisted + transform` (`app.module.ts:127-132`). |
 | JWT | ✅ PASS | Global `JwtAuthGuard` (`app.module.ts:123`); secrets validated at boot. |
@@ -167,10 +167,14 @@ default-off. Set it in Railway. **Verify after deploy:** `GET /health` returns
 | Stack traces hidden | ✅ PASS | `GlobalExceptionFilter` returns a generic message, no stack/`error` detail leaked for 500s (`http-exception.filter.ts:25-65`). |
 | No debug endpoints | ✅ PASS | None found. `start:debug` is a dev-only npm script, not a route. |
 
-**One genuine security gap: Helmet is missing.** Fixing it is a 1-dependency, ~2-line change
-(`npm i helmet` + `app.use(helmet())` in `main.ts`). I did **not** apply it because the task
-scope says "verify only / no changes beyond the checklist," and I cannot build-test it against
-the live deploy from here. Recommend doing it before first production deploy.
+**Update (this branch): the Helmet gap is now fixed.** Added `helmet@^8.2.0` and
+`app.use(helmet())` (default config) in `main.ts`. `npm run build` (tsc) passes, and a
+standalone runtime smoke confirms the security headers are emitted. The middleware is registered
+before routes so every response — including `/health` and CORS preflights — carries the headers.
+Helmet's default CSP only affects HTML responses; this is a JSON API, and the dev-only Swagger UI
+(`@nestjs/swagger` v7) loads external scripts, so dev mode is unaffected. **No business logic,
+auth, RBAC, CORS, migrations, or frontend code was touched.** The security checklist is now
+fully green.
 
 ---
 
@@ -206,10 +210,10 @@ failures) must be exercised manually in a browser against the live URLs.
 | Migrations present | PASS; **manual run required & unverified** |
 | Health endpoint | **NOT VERIFIABLE FROM HERE** |
 | Smoke test | **NOT VERIFIABLE FROM HERE** |
-| Security checklist | **FAIL — Helmet missing**; everything else PASS |
+| Security checklist | ✅ **PASS** — Helmet added; all other controls already passing |
 
 ### Remaining blockers
-1. **Helmet not installed** in the backend (security checklist item fails).
+1. ~~Helmet not installed~~ → **RESOLVED** in this branch (`helmet@^8.2.0` + `app.use(helmet())`).
 2. **Live env vars unverified** — must confirm in Railway: `JWT_SECRET`, `JWT_REFRESH_SECRET`,
    `ADMIN_PASSWORD` (secrets you provide), plus `NODE_ENV=production`, `DB_SYNC=false`,
    `CORS_ORIGINS=<frontend origin>`, `FRONTEND_URL=<frontend origin>`.
@@ -222,12 +226,19 @@ failures) must be exercised manually in a browser against the live URLs.
 
 ## ⛔ DO NOT DEPLOY — yet
 
-The application code is well-built and most controls pass, but first production deploy is gated on:
-- adding **Helmet** (or an explicit, signed-off decision to skip it);
-- confirming the **required env vars/secrets** are set in Railway;
-- running and confirming **migrations**;
-- executing the **live health + smoke + CORS** checks (which require Railway access this
-  environment does not have).
+The application code is well-built and the security checklist is now fully green (Helmet added in
+this branch). First production deploy remains gated **only on live-environment confirmations that
+this environment cannot perform**:
+- confirming the **required env vars/secrets** are set in Railway
+  (`JWT_SECRET`, `JWT_REFRESH_SECRET`, `ADMIN_PASSWORD`, `NODE_ENV=production`, `DB_SYNC=false`,
+  `CORS_ORIGINS`, `FRONTEND_URL`);
+- running and confirming **migrations** (`railway run npm run migration:run`, zero pending);
+- executing the **live health + smoke + CORS** checks against the deployed URLs.
 
-Once items 1–4 above are green, this flips to **READY FOR FIRST PRODUCTION DEPLOY**.
-None of these require business-logic changes.
+**Do NOT add `DATABASE_SSL`.** The codebase never reads that variable — TLS to Postgres is already
+controlled by the `DATABASE_URL` host logic (`ssl` enabled whenever the DB host ≠ `localhost`,
+`configuration.ts:39`), with `DB_SSL` as the only fallback flag on the no-`DATABASE_URL` path.
+Adding `DATABASE_SSL=true` would be a silent no-op.
+
+Once the three live confirmations above are green, this flips to
+**READY FOR FIRST PRODUCTION DEPLOY**. No remaining item requires business-logic changes.
