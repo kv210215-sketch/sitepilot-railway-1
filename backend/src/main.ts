@@ -7,6 +7,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger, RequestMethod } from '@nestjs/common';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import type { Request, Response } from 'express';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
 
 // Load .env before NestJS starts so PORT is available for the pre-start health server.
@@ -59,6 +60,13 @@ async function bootstrap(): Promise<void> {
 
   // ── Graceful shutdown ─────────────────────────────────────────────────────
   app.enableShutdownHooks();
+
+  // ── Security headers ──────────────────────────────────────────────────────
+  // Helmet sets hardened HTTP response headers (HSTS, X-Content-Type-Options,
+  // X-Frame-Options, etc.). Registered first so every response — including
+  // /health and CORS preflights — carries them. Defaults only; no business
+  // logic touched.
+  app.use(helmet());
 
   // ── Health endpoint (outside global prefix) ───────────────────────────────
   app.use('/health', (_req: Request, res: Response) => {
